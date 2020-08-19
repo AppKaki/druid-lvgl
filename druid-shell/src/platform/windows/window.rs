@@ -62,7 +62,7 @@ use crate::dialog::{FileDialogOptions, FileDialogType, FileInfo};
 use crate::error::Error as ShellError;
 use crate::keyboard::{KbKey, KeyState};
 use crate::mouse::{Cursor, MouseButton, MouseButtons, MouseEvent};
-use crate::scale::{Scale, Scalable, ScaledArea};
+use crate::scale::{Scalable, Scale, ScaledArea};
 use crate::window::{IdleToken, Text, TimerToken, WinHandler};
 
 /// The platform target DPI.
@@ -279,7 +279,7 @@ impl WndState {
         rt.begin_draw();
         let anim;
         {
-            let mut piet_ctx = Piet::new(d2d, dw, rt);
+            let mut piet_ctx = Piet::new(d2d, dw.clone(), rt);
             // The documentation on DXGI_PRESENT_PARAMETERS says we "must not update any
             // pixel outside of the dirty rectangles."
             piet_ctx.clip(invalid_rect);
@@ -1349,7 +1349,7 @@ impl WindowHandle {
     }
 
     pub fn text(&self) -> Text {
-        Text::new(&self.dwrite_factory)
+        Text::new(self.dwrite_factory.clone())
     }
 
     /// Request a timer event.

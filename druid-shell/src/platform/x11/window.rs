@@ -591,8 +591,8 @@ impl Window {
         self.update_cairo_surface()?;
         {
             let surface = borrow!(self.cairo_surface)?;
-            let mut cairo_ctx = cairo::Context::new(&surface);
-            let mut piet_ctx = Piet::new(&mut cairo_ctx);
+            let cairo_ctx = cairo::Context::new(&surface);
+            let mut piet_ctx = Piet::new(&cairo_ctx);
             piet_ctx.clip(invalid_rect);
 
             // We need to be careful with earlier returns here, because piet_ctx
