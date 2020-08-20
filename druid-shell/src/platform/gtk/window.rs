@@ -181,8 +181,7 @@ impl WindowBuilder {
         // Get the scale factor based on the GTK reported DPI
         let scale_factor = window
             .get_display()
-            .map(|c| c.get_default_screen().get_resolution())
-            .unwrap_or(SCALE_TARGET_DPI)
+            .get_default_screen().get_resolution()
             / SCALE_TARGET_DPI;
         let scale = Scale::new(scale_factor, scale_factor);
         let area = ScaledArea::from_dp(self.size, scale);
@@ -296,12 +295,12 @@ impl WindowBuilder {
 
                 if let Ok(mut handler_borrow) = state.handler.try_borrow_mut() {
                     // For some reason piet needs a mutable context, so give it one I guess.
-                    let mut context = context.clone();
+                    let context = context.clone();
                     context.scale(scale.x(), scale.y());
                     let (x0, y0, x1, y1) = context.clip_extents();
                     let invalid_rect = Rect::new(x0, y0, x1, y1);
 
-                    let mut piet_context = Piet::new(&mut context);
+                    let mut piet_context = Piet::new(&context);
                     let anim = handler_borrow
                         .paint(&mut piet_context, invalid_rect);
                     if let Err(e) = piet_context.finish() {
@@ -627,14 +626,14 @@ impl WindowHandle {
         let token = TimerToken::next();
         let handle = self.clone();
 
-        gdk::threads_add_timeout(interval, move || {
+        glib::timeout_add_local(interval, move || {
             if let Some(state) = handle.state.upgrade() {
                 if let Ok(mut handler_borrow) = state.handler.try_borrow_mut() {
                     handler_borrow.timer(token);
-                    return false;
+                    return glib::Continue(false);
                 }
             }
-            true
+            glib::Continue(true)
         });
         token
     }
@@ -794,7 +793,7 @@ fn run_idle(state: &Arc<WindowState>) -> glib::source::Continue {
 }
 
 fn make_gdk_cursor(cursor: &Cursor, gdk_window: &gdk::Window) -> Option<gdk::Cursor> {
-    gdk::Cursor::new_from_name(
+    gdk::Cursor::from_name(
         &gdk_window.get_display(),
         match cursor {
             // cursor name values from https://www.w3.org/TR/css-ui-3/#cursor
@@ -882,9 +881,9 @@ fn make_key_event(key: &EventKey, repeat: bool, state: KeyState) -> KeyEvent {
     let keyval = key.get_keyval();
     let hardware_keycode = key.get_hardware_keycode();
 
-    let keycode = hardware_keycode_to_keyval(hardware_keycode).unwrap_or(keyval);
+    let keycode = hardware_keycode_to_keyval(hardware_keycode).unwrap_or_else(|| keyval.clone());
 
-    let text = gdk::keyval_to_unicode(keyval);
+    let text = gdk::keys::keyval_to_unicode(*keyval);
     let mods = get_modifiers(key.get_state());
     let key = keycodes::raw_key_to_key(keyval).unwrap_or_else(|| {
         if let Some(c) = text {
@@ -914,7 +913,8 @@ fn make_key_event(key: &EventKey, repeat: bool, state: KeyState) -> KeyEvent {
 
 /// Map a hardware keycode to a keyval by performing a lookup in the keymap and finding the
 /// keyval with the lowest group and level
-fn hardware_keycode_to_keyval(keycode: u16) -> Option<u32> {
+fn hardware_keycode_to_keyval(keycode: u16) -> Option<keycodes::RawKey> {
+    use glib::translate::FromGlib;
     unsafe {
         let keymap = gdk_sys::gdk_keymap_get_default();
 
@@ -937,7 +937,7 @@ fn hardware_keycode_to_keyval(keycode: u16) -> Option<u32> {
 
             let resolved_keyval = keys_slice.iter().enumerate().find_map(|(i, key)| {
                 if key.group == 0 && key.level == 0 {
-                    Some(keyvals_slice[i])
+                    Some(keycodes::RawKey::from_glib(keyvals_slice[i]))
                 } else {
                     None
                 }
