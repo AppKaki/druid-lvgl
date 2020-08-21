@@ -40,7 +40,8 @@ use winapi::um::winbase::{FILE_TYPE_UNKNOWN, STD_ERROR_HANDLE, STD_OUTPUT_HANDLE
 use winapi::um::wincon::{AttachConsole, ATTACH_PARENT_PROCESS};
 use winapi::um::winnt::{FILE_SHARE_WRITE, GENERIC_READ, GENERIC_WRITE};
 
-use crate::kurbo::Rect;
+use crate::Rect; ////
+////use crate::kurbo::Rect;
 
 use super::error::Error;
 

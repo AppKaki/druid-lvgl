@@ -45,7 +45,7 @@ pub mod window;
 // Basically, go from HwndRenderTarget or DxgiSurfaceRenderTarget (2d or 3d) to a Device Context.
 // Go back up for particular needs.
 
-use piet_common::d2d::{D2DFactory, DeviceContext};
+////use piet_common::d2d::{D2DFactory, DeviceContext};
 use std::fmt::{Debug, Display, Formatter};
 use winapi::shared::windef::HWND;
 use winapi::shared::winerror::{HRESULT, SUCCEEDED};

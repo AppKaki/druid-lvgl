@@ -39,7 +39,6 @@ pub type ScreenCoord = u8;  //  Previously f64
 
 /// A 2D point.
 #[derive(Clone, Copy, Default, PartialEq)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Point { ////
     /// The x coordinate.
     pub x: ScreenCoord,
@@ -49,7 +48,6 @@ pub struct Point { ////
 
 /// A 2D size.
 #[derive(Clone, Copy, Default, PartialEq)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Size { ////
     /// The width.
     pub width: ScreenCoord,
@@ -108,6 +106,15 @@ pub struct Insets { ////
 /// A 2D affine transform.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Affine([ScreenCoord; 6]); ////
+
+/// A single line.
+#[derive(Clone, Copy, /* Debug, */ PartialEq)] ////
+pub struct Line { ////
+    /// The line's start point.
+    pub p0: Point,
+    /// The line's end point.
+    pub p1: Point,
+}
 ////End
 
 #[macro_use]
