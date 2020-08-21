@@ -245,34 +245,35 @@ impl<T0: Data, T1: Data, T2: Data, T3: Data, T4: Data, T5: Data> Data for (T0, T
     }
 }
 
-impl Data for Scale {
-    fn same(&self, other: &Self) -> bool {
+impl Data for crate::Scale { ////
+///impl Data for Scale {
+        fn same(&self, other: &Self) -> bool {
         self == other
     }
 }
 
-impl Data for Point { ////
+impl Data for crate::Point { ////
 ////impl Data for kurbo::Point {
     fn same(&self, other: &Self) -> bool {
         self.x.same(&other.x) && self.y.same(&other.y)
     }
 }
 
-impl Data for Vec2 { ////
+impl Data for crate::Vec2 { ////
 ////impl Data for kurbo::Vec2 {
     fn same(&self, other: &Self) -> bool {
         self.x.same(&other.x) && self.y.same(&other.y)
     }
 }
 
-impl Data for Size { ////
+impl Data for crate::Size { ////
 ////impl Data for kurbo::Size {
         fn same(&self, other: &Self) -> bool {
         self.width.same(&other.width) && self.height.same(&other.height)
     }
 }
 
-impl Data for Affine { ////
+impl Data for crate::Affine { ////
 ////impl Data for kurbo::Affine {
     fn same(&self, other: &Self) -> bool {
         let rhs = self.as_coeffs();
@@ -281,7 +282,7 @@ impl Data for Affine { ////
     }
 }
 
-impl Data for Insets { ////
+impl Data for crate::Insets { ////
 ////impl Data for kurbo::Insets {
     fn same(&self, other: &Self) -> bool {
         self.x0.same(&other.x0)
@@ -291,7 +292,7 @@ impl Data for Insets { ////
     }
 }
 
-impl Data for Rect { ////
+impl Data for crate::Rect { ////
 ////impl Data for kurbo::Rect {
     fn same(&self, other: &Self) -> bool {
         self.x0.same(&other.x0)
@@ -301,14 +302,14 @@ impl Data for Rect { ////
     }
 }
 
-impl Data for RoundedRect { ////
+impl Data for crate::RoundedRect { ////
 ////impl Data for kurbo::RoundedRect {
     fn same(&self, other: &Self) -> bool {
         self.rect().same(&other.rect()) && self.radius().same(&self.radius())
     }
 }
 
-impl Data for Arc { ////
+impl Data for crate::Arc { ////
 ////impl Data for kurbo::Arc {
     fn same(&self, other: &Self) -> bool {
         self.center.same(&other.center)
@@ -319,7 +320,7 @@ impl Data for Arc { ////
     }
 }
 
-impl Data for PathEl { ////
+impl Data for crate::PathEl { ////
 ////impl Data for kurbo::PathEl {
     fn same(&self, other: &Self) -> bool {
         use crate::PathEl::*; ////
@@ -335,7 +336,7 @@ impl Data for PathEl { ////
     }
 }
 
-impl Data for PathSeg { ////
+impl Data for crate::PathSeg { ////
 ////impl Data for kurbo::PathSeg {
     fn same(&self, other: &Self) -> bool {
         use crate::PathSeg; ////
@@ -349,7 +350,7 @@ impl Data for PathSeg { ////
     }
 }
 
-impl Data for BezPath { ////
+impl Data for crate::BezPath { ////
 ////impl Data for kurbo::BezPath {
     fn same(&self, other: &Self) -> bool {
         let rhs = self.elements();
@@ -362,14 +363,14 @@ impl Data for BezPath { ////
     }
 }
 
-impl Data for Circle { ////
+impl Data for crate::Circle { ////
 ////impl Data for kurbo::Circle {
     fn same(&self, other: &Self) -> bool {
         self.center.same(&other.center) && self.radius.same(&other.radius)
     }
 }
 
-impl Data for CubicBez { ////
+impl Data for crate::CubicBez { ////
 ////impl Data for kurbo::CubicBez {
     fn same(&self, other: &Self) -> bool {
         self.p0.same(&other.p0)
@@ -379,28 +380,28 @@ impl Data for CubicBez { ////
     }
 }
 
-impl Data for Line { ////
+impl Data for crate::Line { ////
 ////impl Data for kurbo::Line {
     fn same(&self, other: &Self) -> bool {
         self.p0.same(&other.p0) && self.p1.same(&other.p1)
     }
 }
 
-impl Data for ConstPoint { ////
+impl Data for crate::ConstPoint { ////
 ////impl Data for kurbo::ConstPoint {
     fn same(&self, other: &Self) -> bool {
         self.eval(0.).same(&other.eval(0.))
     }
 }
 
-impl Data for QuadBez { ////
+impl Data for crate::QuadBez { ////
 ////impl Data for kurbo::QuadBez {
     fn same(&self, other: &Self) -> bool {
         self.p0.same(&other.p0) && self.p1.same(&other.p1) && self.p2.same(&other.p2)
     }
 }
 
-impl Data for Color { ////
+impl Data for crate::Color { ////
 ////impl Data for piet::Color {
     fn same(&self, other: &Self) -> bool {
         self.as_rgba_u32().same(&other.as_rgba_u32())
