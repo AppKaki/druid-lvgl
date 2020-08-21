@@ -18,6 +18,7 @@ use crate::widget::prelude::*;
 use crate::widget::{Click, ControllerHost, Label, LabelText};
 
 use crate::{Affine, Data, Insets, LinearGradient, Point, Rect, RenderContext, UnitPoint, Widget};
+use crate::String; ////
 
 // the minimum padding added to a button.
 // NOTE: these values are chosen to match the existing look of TextBox; these

@@ -127,6 +127,12 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
 ////Begin
+type StringLength = heapless::consts::U20; //// Max length of strings
+type String = heapless::String::<StringLength>; //// Alias for standard String
+
+type VectorLength = heapless::consts::U10; //// Max length of vectors
+type Vector = heapless::Vec::<VectorLength>; //// Alias for standard Vector
+
 /// Numeric type for screen coordinates
 pub type ScreenCoord = u8;  //  Previously f64
 
