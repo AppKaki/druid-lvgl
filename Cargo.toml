@@ -3,9 +3,9 @@ members = [
     "druid",
     "druid-shell",
     "druid-derive",
-    "docs/book_examples",
-    "druid/examples/web",
-    "druid/examples/hello_web",
+    ####////"docs/book_examples",
+    ####////"druid/examples/web",
+    ####////"druid/examples/hello_web",
 ]
 default-members = [
     "druid",
