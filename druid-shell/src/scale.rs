@@ -14,7 +14,8 @@
 
 //! Resolution scale related helpers.
 
-use crate::kurbo::{Insets, Line, Point, Rect, Size, Vec2};
+use crate::{Insets, Line, Point, Rect, Size, Vec2}; ////
+////use crate::kurbo::{Insets, Line, Point, Rect, Size, Vec2};
 
 /// Coordinate scaling between pixels and display points.
 ///

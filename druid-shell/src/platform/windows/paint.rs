@@ -33,7 +33,7 @@ use winapi::um::dcommon::*;
 use winapi::um::winuser::*;
 use winapi::Interface;
 
-use piet_common::d2d::D2DFactory;
+////use piet_common::d2d::D2DFactory;
 
 use crate::platform::windows::{DeviceContext, DxgiSurfaceRenderTarget, HwndRenderTarget};
 use crate::scale::Scale;

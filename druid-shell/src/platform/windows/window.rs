@@ -38,13 +38,14 @@ use winapi::um::unknwnbase::*;
 use winapi::um::winnt::*;
 use winapi::um::winuser::*;
 
-use piet_common::d2d::{D2DFactory, DeviceContext};
-use piet_common::dwrite::DwriteFactory;
+////use piet_common::d2d::{D2DFactory, DeviceContext};
+////use piet_common::dwrite::DwriteFactory;
 
 use crate::platform::windows::HwndRenderTarget;
 
-use crate::kurbo::{Point, Rect, Size, Vec2};
-use crate::piet::{Piet, RenderContext};
+use crate::{Point, Rect, Size, Vec2}; ////
+////use crate::kurbo::{Point, Rect, Size, Vec2};
+////use crate::piet::{Piet, RenderContext};
 
 use super::accels::register_accel;
 use super::application::Application;

@@ -14,7 +14,8 @@
 
 //! Common types for representing mouse events and state
 
-use crate::kurbo::{Point, Vec2};
+use crate::{Point, Vec2}; ////
+////use crate::kurbo::{Point, Vec2};
 
 use crate::Modifiers;
 
