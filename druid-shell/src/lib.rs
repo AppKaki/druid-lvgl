@@ -26,6 +26,7 @@
 //! - `DRUID_SHELL_DISABLE_X11_PRESENT`: if this is set and `druid-shell` is using the `x11`
 //! backend, it will avoid using the Present extension.
 
+#![no_std] //  Don't link with standard Rust library, which is not compatible with embedded systems ////
 #![deny(intra_doc_link_resolution_failure)]
 #![allow(clippy::new_without_default)]
 #![deny(clippy::trivially_copy_pass_by_ref)]
@@ -114,6 +115,12 @@ pub struct Line { ////
     pub p0: Point,
     /// The line's end point.
     pub p1: Point,
+}
+
+impl fmt::Debug for Point {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "({:?}, {:?})", self.x, self.y)
+    }
 }
 ////End
 
