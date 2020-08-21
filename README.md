@@ -12,6 +12,8 @@ TODO
 
 1. Remove piet and kurbo dependencies
 
+1. Change to `no_std` to compile with embedded platforms
+
 1. Change Screen Coordinates from `f64` to `u8` (alias `ScreenCoord`) to conserve memory on embedded platforms. See `Point`, `Size`, `Vec2`, `Rect`, `Insets`, `Affine` in [`druid-shell/src/lib.rs`](druid-shell/src/lib.rs#L33-L111)
 
 # Druid
