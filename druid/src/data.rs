@@ -14,12 +14,12 @@
 
 //! Traits for handling value types.
 
-use std::rc::Rc;
-use std::sync::Arc;
+////use std::rc::Rc;
+////use std::sync::Arc;
 
 ////use crate::kurbo::{self, ParamCurve};
-use crate::piet;
-use crate::shell::Scale;
+////use crate::piet;
+////use crate::shell::Scale;
 
 pub use druid_derive::Data;
 

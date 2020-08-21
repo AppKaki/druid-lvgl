@@ -14,9 +14,9 @@
 
 //! Simple handle for submitting external events.
 
-use std::any::Any;
-use std::collections::VecDeque;
-use std::sync::{Arc, Mutex};
+////use std::any::Any;
+////use std::collections::VecDeque;
+////use std::sync::{Arc, Mutex};
 
 use crate::shell::IdleHandle;
 use crate::win_handler::EXT_EVENT_IDLE_TOKEN;

@@ -14,8 +14,8 @@
 
 //! A simple Bloom filter, used to track child widgets.
 
-use std::hash::{Hash, Hasher};
-use std::marker::PhantomData;
+////use std::hash::{Hash, Hasher};
+////use std::marker::PhantomData;
 
 use fnv::FnvHasher;
 

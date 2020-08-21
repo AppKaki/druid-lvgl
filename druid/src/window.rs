@@ -14,8 +14,8 @@
 
 //! Management of multiple windows.
 
-use std::collections::HashMap;
-use std::mem;
+////use std::collections::HashMap;
+////use std::mem;
 
 // Automatically defaults to std::time::Instant on non Wasm platforms
 use instant::Instant;

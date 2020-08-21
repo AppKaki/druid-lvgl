@@ -24,6 +24,7 @@ use crate::window::WindowId;
 use crate::{
     theme, AppDelegate, Data, DruidHandler, Env, LocalizedString, MenuDesc, Widget, WidgetExt,
 };
+use crate::Vec; ////
 
 /// A function that modifies the initial environment.
 type EnvSetupFn<T> = dyn FnOnce(&mut Env, &T);

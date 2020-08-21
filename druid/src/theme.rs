@@ -14,7 +14,7 @@
 
 //! Theme keys and initial values.
 
-use crate::piet::Color;
+////use crate::piet::Color;
 
 use crate::{Env, Key};
 

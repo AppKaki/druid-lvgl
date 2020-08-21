@@ -20,6 +20,7 @@ use super::{
     IdentityWrapper, Padding, Parse, SizedBox, WidgetId,
 };
 use crate::{Color, Data, Env, EventCtx, Insets, KeyOrValue, Lens, LensWrap, UnitPoint, Widget};
+use crate::String; ////
 
 /// A trait that provides extra methods for combining `Widget`s.
 pub trait WidgetExt<T: Data>: Widget<T> + Sized + 'static {

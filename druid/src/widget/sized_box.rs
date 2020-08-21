@@ -14,7 +14,7 @@
 
 //! A widget with predefined size.
 
-use std::f64::INFINITY;
+////use std::f64::INFINITY;
 
 use crate::shell::kurbo::Size;
 use crate::{

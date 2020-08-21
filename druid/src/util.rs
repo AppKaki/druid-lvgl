@@ -14,9 +14,9 @@
 
 //! Miscellaneous utility functions.
 
-use std::collections::HashMap;
-use std::hash::Hash;
-use std::mem;
+////use std::collections::HashMap;
+////use std::hash::Hash;
+////use std::mem;
 
 /// Fast path for equal type extend + drain.
 pub trait ExtendDrain {

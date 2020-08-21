@@ -14,8 +14,8 @@
 
 //! Traits for text editing and a basic String implementation.
 
-use std::borrow::Cow;
-use std::ops::Range;
+////use std::borrow::Cow;
+////use std::ops::Range;
 
 use unicode_segmentation::{GraphemeCursor, UnicodeSegmentation};
 

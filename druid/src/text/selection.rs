@@ -14,8 +14,8 @@
 
 //! A Selection type for text editing.
 
-use std::cmp::{max, min};
-use std::ops::Range;
+////use std::cmp::{max, min};
+////use std::ops::Range;
 
 use crate::text::EditableText;
 

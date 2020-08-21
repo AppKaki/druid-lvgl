@@ -18,6 +18,7 @@ use crate::common::FloatExt; ////
 ////use crate::kurbo::common::FloatExt;
 use crate::{Point, Rect, Size}; ////
 ////use crate::kurbo::{Point, Rect, Size};
+use crate::Vec; ////
 
 use crate::widget::SizedBox;
 use crate::{
@@ -782,6 +783,7 @@ impl From<f64> for FlexParams {
     }
 }
 
+/* ////
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -856,3 +858,4 @@ mod tests {
         assert_eq!(vec(a, 39., 5), vec![4., 8., 7., 8., 8., 4.]);
     }
 }
+*/ ////
