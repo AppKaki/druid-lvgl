@@ -1,7 +1,7 @@
 [workspace]
 members = [
     "druid",
-    "druid-shell",
+    ####////"druid-shell",
     "druid-derive",
     ####////"docs/book_examples",
     ####////"druid/examples/web",
@@ -9,6 +9,6 @@ members = [
 ]
 default-members = [
     "druid",
-    "druid-shell",
+    ####////"druid-shell",
     "druid-derive",
 ]
