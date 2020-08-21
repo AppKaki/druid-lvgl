@@ -17,7 +17,7 @@
 use std::rc::Rc;
 use std::sync::Arc;
 
-use crate::kurbo::{self, ParamCurve};
+////use crate::kurbo::{self, ParamCurve};
 use crate::piet;
 use crate::shell::Scale;
 
@@ -251,25 +251,29 @@ impl Data for Scale {
     }
 }
 
-impl Data for kurbo::Point {
+impl Data for Point { ////
+////impl Data for kurbo::Point {
     fn same(&self, other: &Self) -> bool {
         self.x.same(&other.x) && self.y.same(&other.y)
     }
 }
 
-impl Data for kurbo::Vec2 {
+impl Data for Vec2 { ////
+////impl Data for kurbo::Vec2 {
     fn same(&self, other: &Self) -> bool {
         self.x.same(&other.x) && self.y.same(&other.y)
     }
 }
 
-impl Data for kurbo::Size {
-    fn same(&self, other: &Self) -> bool {
+impl Data for Size { ////
+////impl Data for kurbo::Size {
+        fn same(&self, other: &Self) -> bool {
         self.width.same(&other.width) && self.height.same(&other.height)
     }
 }
 
-impl Data for kurbo::Affine {
+impl Data for Affine { ////
+////impl Data for kurbo::Affine {
     fn same(&self, other: &Self) -> bool {
         let rhs = self.as_coeffs();
         let lhs = other.as_coeffs();
@@ -277,7 +281,8 @@ impl Data for kurbo::Affine {
     }
 }
 
-impl Data for kurbo::Insets {
+impl Data for Insets { ////
+////impl Data for kurbo::Insets {
     fn same(&self, other: &Self) -> bool {
         self.x0.same(&other.x0)
             && self.y0.same(&other.y0)
@@ -286,7 +291,8 @@ impl Data for kurbo::Insets {
     }
 }
 
-impl Data for kurbo::Rect {
+impl Data for Rect { ////
+////impl Data for kurbo::Rect {
     fn same(&self, other: &Self) -> bool {
         self.x0.same(&other.x0)
             && self.y0.same(&other.y0)
@@ -295,13 +301,15 @@ impl Data for kurbo::Rect {
     }
 }
 
-impl Data for kurbo::RoundedRect {
+impl Data for RoundedRect { ////
+////impl Data for kurbo::RoundedRect {
     fn same(&self, other: &Self) -> bool {
         self.rect().same(&other.rect()) && self.radius().same(&self.radius())
     }
 }
 
-impl Data for kurbo::Arc {
+impl Data for Arc { ////
+////impl Data for kurbo::Arc {
     fn same(&self, other: &Self) -> bool {
         self.center.same(&other.center)
             && self.radii.same(&other.radii)
@@ -311,9 +319,11 @@ impl Data for kurbo::Arc {
     }
 }
 
-impl Data for kurbo::PathEl {
+impl Data for PathEl { ////
+////impl Data for kurbo::PathEl {
     fn same(&self, other: &Self) -> bool {
-        use kurbo::PathEl::*;
+        use crate::PathEl::*; ////
+        ////use kurbo::PathEl::*;
         match (self, other) {
             (MoveTo(p1), MoveTo(p2)) => p1.same(p2),
             (LineTo(p1), LineTo(p2)) => p1.same(p2),
@@ -325,9 +335,11 @@ impl Data for kurbo::PathEl {
     }
 }
 
-impl Data for kurbo::PathSeg {
+impl Data for PathSeg { ////
+////impl Data for kurbo::PathSeg {
     fn same(&self, other: &Self) -> bool {
-        use kurbo::PathSeg;
+        use crate::PathSeg; ////
+        ////use kurbo::PathSeg;
         match (self, other) {
             (PathSeg::Line(l1), PathSeg::Line(l2)) => l1.same(l2),
             (PathSeg::Quad(q1), PathSeg::Quad(q2)) => q1.same(q2),
@@ -337,7 +349,8 @@ impl Data for kurbo::PathSeg {
     }
 }
 
-impl Data for kurbo::BezPath {
+impl Data for BezPath { ////
+////impl Data for kurbo::BezPath {
     fn same(&self, other: &Self) -> bool {
         let rhs = self.elements();
         let lhs = other.elements();
@@ -349,13 +362,15 @@ impl Data for kurbo::BezPath {
     }
 }
 
-impl Data for kurbo::Circle {
+impl Data for Circle { ////
+////impl Data for kurbo::Circle {
     fn same(&self, other: &Self) -> bool {
         self.center.same(&other.center) && self.radius.same(&other.radius)
     }
 }
 
-impl Data for kurbo::CubicBez {
+impl Data for CubicBez { ////
+////impl Data for kurbo::CubicBez {
     fn same(&self, other: &Self) -> bool {
         self.p0.same(&other.p0)
             && self.p1.same(&other.p1)
@@ -364,25 +379,29 @@ impl Data for kurbo::CubicBez {
     }
 }
 
-impl Data for kurbo::Line {
+impl Data for Line { ////
+////impl Data for kurbo::Line {
     fn same(&self, other: &Self) -> bool {
         self.p0.same(&other.p0) && self.p1.same(&other.p1)
     }
 }
 
-impl Data for kurbo::ConstPoint {
+impl Data for ConstPoint { ////
+////impl Data for kurbo::ConstPoint {
     fn same(&self, other: &Self) -> bool {
         self.eval(0.).same(&other.eval(0.))
     }
 }
 
-impl Data for kurbo::QuadBez {
+impl Data for QuadBez { ////
+////impl Data for kurbo::QuadBez {
     fn same(&self, other: &Self) -> bool {
         self.p0.same(&other.p0) && self.p1.same(&other.p1) && self.p2.same(&other.p2)
     }
 }
 
-impl Data for piet::Color {
+impl Data for Color { ////
+////impl Data for piet::Color {
     fn same(&self, other: &Self) -> bool {
         self.as_rgba_u32().same(&other.as_rgba_u32())
     }

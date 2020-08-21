@@ -20,7 +20,8 @@ use std::sync::Arc;
 #[cfg(feature = "im")]
 use crate::im::Vector;
 
-use crate::kurbo::{Point, Rect, Size};
+use crate::{Point, Rect, Size}; ////
+////use crate::kurbo::{Point, Rect, Size};
 
 use crate::{
     BoxConstraints, Data, Env, Event, EventCtx, LayoutCtx, LifeCycle, LifeCycleCtx, PaintCtx,

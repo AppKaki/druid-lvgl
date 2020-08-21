@@ -208,7 +208,7 @@ pub use druid_derive::Lens;
 
 use druid_shell as shell;
 #[doc(inline)]
-pub use druid_shell::{kurbo, piet};
+////pub use druid_shell::{kurbo, piet};
 
 // the im crate provides immutable data structures that play well with druid
 #[cfg(feature = "im")]

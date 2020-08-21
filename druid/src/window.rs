@@ -20,8 +20,9 @@ use std::mem;
 // Automatically defaults to std::time::Instant on non Wasm platforms
 use instant::Instant;
 
-use crate::kurbo::{Point, Rect, Size};
-use crate::piet::{Piet, RenderContext};
+use crate::{Point, Rect, Size}; ////
+////use crate::kurbo::{Point, Rect, Size};
+////use crate::piet::{Piet, RenderContext};
 use crate::shell::{Counter, Cursor, WindowHandle};
 
 use crate::contexts::ContextState;

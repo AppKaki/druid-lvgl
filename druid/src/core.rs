@@ -18,7 +18,8 @@ use std::collections::{HashMap, VecDeque};
 
 use crate::bloom::Bloom;
 use crate::contexts::ContextState;
-use crate::kurbo::{Affine, Insets, Point, Rect, Shape, Size, Vec2};
+use crate::{Affine, Insets, Point, Rect, Shape, Size, Vec2}; ////
+////use crate::kurbo::{Affine, Insets, Point, Rect, Shape, Size, Vec2};
 use crate::piet::{
     FontBuilder, PietTextLayout, RenderContext, Text, TextLayout, TextLayoutBuilder,
 };

@@ -14,7 +14,8 @@
 
 //! Events.
 
-use crate::kurbo::{Rect, Shape, Size, Vec2};
+use crate::{Rect, Shape, Size, Vec2}; ////
+////use crate::kurbo::{Rect, Shape, Size, Vec2};
 
 use druid_shell::{Clipboard, KeyEvent, TimerToken};
 

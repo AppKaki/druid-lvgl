@@ -19,8 +19,9 @@ use std::cell::RefCell;
 use std::collections::{HashMap, VecDeque};
 use std::rc::Rc;
 
-use crate::kurbo::{Rect, Size};
-use crate::piet::Piet;
+use crate::{Rect, Size}; ////
+////use crate::kurbo::{Rect, Size};
+////use crate::piet::Piet;
 use crate::shell::{Application, IdleToken, MouseEvent, Scale, WinHandler, WindowHandle};
 
 use crate::app_delegate::{AppDelegate, DelegateCtx};
