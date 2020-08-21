@@ -6,7 +6,7 @@ https://github.com/AppKaki/lvgl-wasm/tree/rust
 
 TODO
 
-1. `Vec2` and screen coordinates changed to `u8` to conserve memory on embedded platforms
+1. `Vec2` and screen coordinates changed from `f64` to `u8` to conserve memory on embedded platforms
 
 1. druid Widgets rendered as LVGL widgets
 
