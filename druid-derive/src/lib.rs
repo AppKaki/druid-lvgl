@@ -14,7 +14,6 @@
 
 //! derive macros for druid.
 
-#![no_std] //  Don't link with standard Rust library, which is not compatible with embedded systems ////
 #![deny(clippy::trivially_copy_pass_by_ref)]
 
 extern crate proc_macro;
