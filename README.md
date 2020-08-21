@@ -4,13 +4,15 @@ So that we can have a Declarative Rust UI for PineTime Watch Faces...
 
 https://github.com/AppKaki/lvgl-wasm/tree/rust
 
+https://lupyuen.github.io/pinetime-rust-riot/articles/watch_face
+
 TODO
 
-1. druid Widgets rendered as LVGL Widgets
+1. Render druid Widgets as LVGL Widgets
 
 1. Remove piet and kurbo dependencies
 
-1. Screen coordinates changed from `f64` to `u8` (alias `ScreenCoord`) to conserve memory on embedded platforms: See `Point`, `Size`, `Vec2`, `Rect`, `Insets`, `Affine` in [`druid/src/lib.rs`](druid/src/lib.rs#L128-L203)
+1. Change Screen Coordinates from `f64` to `u8` (alias `ScreenCoord`) to conserve memory on embedded platforms. See `Point`, `Size`, `Vec2`, `Rect`, `Insets`, `Affine` in [`druid/src/lib.rs`](druid/src/lib.rs#L128-L203)
 
 # Druid
 
