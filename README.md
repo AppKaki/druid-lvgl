@@ -1,3 +1,17 @@
+# Experimental Port of Druid to LVGL
+
+So that we can have a Declarative Rust UI for PineTime Watch Faces...
+
+https://github.com/AppKaki/lvgl-wasm/tree/rust
+
+TODO
+
+1. `Vec2` and screen coordinates changed to `u8` to conserve memory on embedded platforms
+
+1. druid Widgets rendered as LVGL widgets
+
+1. Remove piet and kurbo dependencies
+
 # Druid
 
 ## A data-first Rust-native UI toolkit.
