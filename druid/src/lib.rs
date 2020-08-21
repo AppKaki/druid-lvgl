@@ -125,6 +125,83 @@
 #![deny(clippy::trivially_copy_pass_by_ref)]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
+////
+/// Numeric type for screen coordinates
+pub type ScreenCoord = u8;  //  Previously f64
+
+/// A 2D point.
+#[derive(Clone, Copy, Default, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct Point { ////
+    /// The x coordinate.
+    pub x: ScreenCoord,
+    /// The y coordinate.
+    pub y: ScreenCoord,
+}
+
+/// A 2D size.
+#[derive(Clone, Copy, Default, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct Size { ////
+    /// The width.
+    pub width: ScreenCoord,
+    /// The height.
+    pub height: ScreenCoord,
+}
+
+/// A 2D vector.
+///
+/// This is intended primarily for a vector in the mathematical sense,
+/// but it can be interpreted as a translation, and converted to and
+/// from a point (vector relative to the origin) and size.
+#[derive(Clone, Copy, Default, Debug, PartialEq)]
+pub struct Vec2 { ////
+    /// The x-coordinate.
+    pub x: ScreenCoord,
+    /// The y-coordinate.
+    pub y: ScreenCoord,
+}
+
+/// A rectangle.
+#[derive(Clone, Copy, Default, PartialEq)]
+pub struct Rect { ////
+    /// The minimum x coordinate (left edge).
+    pub x0: ScreenCoord,
+    /// The minimum y coordinate (top edge in y-down spaces).
+    pub y0: ScreenCoord,
+    /// The maximum x coordinate (right edge).
+    pub x1: ScreenCoord,
+    /// The maximum y coordinate (bottom edge in y-down spaces).
+    pub y1: ScreenCoord,
+}
+
+/// Insets from the edges of a rectangle.
+///
+///
+/// The inset value for each edge can be thought of as a delta computed from
+/// the center of the rect to that edge. For instance, with an inset of `2.0` on
+/// the x-axis, a rectange with the origin `(0.0, 0.0)` with that inset added
+/// will have the new origin at `(-2.0, 0.0)`.
+///
+/// Put alternatively, a positive inset represents increased distance from center,
+/// and a negative inset represents decreased distance from center.
+#[derive(Clone, Copy, Default, Debug, PartialEq)]
+pub struct Insets { ////
+    /// The minimum x coordinate (left edge).
+    pub x0: ScreenCoord,
+    /// The minimum y coordinate (top edge in y-down spaces).
+    pub y0: ScreenCoord,
+    /// The maximum x coordinate (right edge).
+    pub x1: ScreenCoord,
+    /// The maximum y coordinate (bottom edge in y-down spaces).
+    pub y1: ScreenCoord,
+}
+
+/// A 2D affine transform.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Affine([ScreenCoord; 6]); ////
+////
+
 // Allows to use macros from druid_derive in this crate
 extern crate self as druid;
 pub use druid_derive::Lens;
@@ -164,7 +241,7 @@ mod win_handler;
 mod window;
 
 // Types from kurbo & piet that are required by public API.
-pub use kurbo::{Affine, Insets, Point, Rect, Size, Vec2};
+////pub use kurbo::{Affine, Insets, Point, Rect, Size, Vec2};
 pub use piet::{Color, LinearGradient, RadialGradient, RenderContext, UnitPoint};
 // these are the types from shell that we expose; others we only use internally.
 pub use shell::keyboard_types;

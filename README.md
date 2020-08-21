@@ -6,11 +6,11 @@ https://github.com/AppKaki/lvgl-wasm/tree/rust
 
 TODO
 
-1. `Vec2` and screen coordinates changed from `f64` to `u8` to conserve memory on embedded platforms
-
-1. druid Widgets rendered as LVGL widgets
+1. druid Widgets rendered as LVGL Widgets
 
 1. Remove piet and kurbo dependencies
+
+1. Screen coordinates changed from `f64` to `u8` (alias `ScreenCoord`) to conserve memory on embedded platforms: See `Point`, `Size`, `Vec2`, `Rect`, `Insets`, `Affine` in [`druid/src/lib.rs`](druid/src/lib.rs#L128-L203)
 
 # Druid
 
