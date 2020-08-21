@@ -14,7 +14,7 @@ TODO
 
 1. Change to `no_std` to compile with embedded platforms
 
-1. Change Screen Coordinates from `f64` to `u8` (alias `ScreenCoord`) to conserve memory on embedded platforms. See `Point`, `Size`, `Vec2`, `Rect`, `Insets`, `Affine` in [`druid-shell/src/lib.rs`](druid-shell/src/lib.rs#L33-L111)
+1. Change Screen Coordinates from `f64` to `u8` (alias `ScreenCoord`) to conserve memory on embedded platforms. See `Point`, `Size`, `Vec2`, `Rect`, `Insets`, `Affine` in [`druid/src/lib.rs`](druid/src/lib.rs#L129-L217)
 
 # Druid
 
