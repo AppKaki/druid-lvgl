@@ -108,7 +108,7 @@ pub struct Insets { ////
 pub struct Affine([ScreenCoord; 6]); ////
 
 /// A single line.
-#[derive(Clone, Copy, /* Debug, */ PartialEq)] ////
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Line { ////
     /// The line's start point.
     pub p0: Point,
