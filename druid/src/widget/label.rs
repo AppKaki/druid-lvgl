@@ -22,6 +22,7 @@ use crate::{
     theme, BoxConstraints, Data, Env, Event, EventCtx, KeyOrValue, LayoutCtx, LifeCycle,
     LifeCycleCtx, LocalizedString, PaintCtx, Point, Size, UpdateCtx, Widget,
 };
+use crate::String; ////
 
 // a fudgey way to get an approximate line height from a font size
 const LINE_HEIGHT_FACTOR: f64 = 1.2;

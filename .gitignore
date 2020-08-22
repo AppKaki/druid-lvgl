@@ -6,7 +6,7 @@ Cargo.lock
 .idea/
 
 ## Visual Studio Code
-.vscode/
+## .vscode/
 
 ## Sublime Text
 *.sublime-workspace

@@ -49,6 +49,7 @@ use fluent_bundle::{
 use fluent_langneg::{negotiate_languages, NegotiationStrategy};
 use fluent_syntax::ast::Pattern as FluentPattern;
 use unic_langid::LanguageIdentifier;
+use crate::{String, Vec};
 
 // Localization looks for string files in druid/resources, but this path is hardcoded;
 // it will only work if you're running an example from the druid/ directory.

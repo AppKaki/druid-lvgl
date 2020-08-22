@@ -16,6 +16,7 @@
 
 use super::Movement;
 use crate::{HotKey, KbKey, KeyEvent, Modifiers, SysMods};
+use crate::String;
 
 // This following enumerations are heavily inspired by xi-editors enumerations found at
 // https://github.com/xi-editor/xi-editor/blob/e2589974fc4050beb33af82481aa71b258358e48/rust/core-lib/src/edit_types.rs

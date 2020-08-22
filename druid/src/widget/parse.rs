@@ -22,6 +22,7 @@ use crate::{
     BoxConstraints, Data, Env, Event, EventCtx, LayoutCtx, LifeCycle, LifeCycleCtx, PaintCtx,
     UpdateCtx, Widget, WidgetId,
 };
+use crate::String; ////
 
 /// Converts a `Widget<String>` to a `Widget<Option<T>>`, mapping parse errors to None
 pub struct Parse<T> {

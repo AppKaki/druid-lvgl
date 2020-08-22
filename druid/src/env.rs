@@ -24,6 +24,7 @@
 
 use crate::localization::L10nManager;
 use crate::{Color, Data, Point, Rect, Size};
+use crate::{String, Vec}; ////
 
 /// An environment passed down through all widget traversals.
 ///

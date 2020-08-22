@@ -18,6 +18,7 @@
 ////use std::ops::Range;
 
 use unicode_segmentation::{GraphemeCursor, UnicodeSegmentation};
+use crate::String; ////
 
 /// An EditableText trait.
 pub trait EditableText: Sized {

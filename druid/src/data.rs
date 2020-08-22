@@ -22,6 +22,7 @@
 ////use crate::shell::Scale;
 
 pub use druid_derive::Data;
+use crate::String; ////
 
 /// A trait used to represent value types.
 ///
