@@ -262,14 +262,14 @@ mod window;
 
 // Types from kurbo & piet that are required by public API.
 ////pub use kurbo::{Affine, Insets, Point, Rect, Size, Vec2};
-pub use piet::{Color, LinearGradient, RadialGradient, RenderContext, UnitPoint};
+////pub use piet::{Color, LinearGradient, RadialGradient, RenderContext, UnitPoint};
 // these are the types from shell that we expose; others we only use internally.
-pub use shell::keyboard_types;
-pub use shell::{
-    Application, Clipboard, ClipboardFormat, Code, Cursor, Error as PlatformError,
-    FileDialogOptions, FileInfo, FileSpec, FormatId, HotKey, KbKey, KeyEvent, Location, Modifiers,
-    MouseButton, MouseButtons, RawMods, Scalable, Scale, SysMods, Text, TimerToken, WindowHandle,
-};
+////pub use shell::keyboard_types;
+////pub use shell::{
+    ////Application, Clipboard, ClipboardFormat, Code, Cursor, Error as PlatformError,
+    ////FileDialogOptions, FileInfo, FileSpec, FormatId, HotKey, KbKey, KeyEvent, Location, Modifiers,
+    ////MouseButton, MouseButtons, RawMods, Scalable, Scale, SysMods, Text, TimerToken, WindowHandle,
+////};
 
 pub use crate::core::WidgetPod;
 pub use app::{AppLauncher, WindowDesc};
