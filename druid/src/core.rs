@@ -29,6 +29,7 @@ use crate::{
     LayoutCtx, LifeCycle, LifeCycleCtx, PaintCtx, Region, Target, TimerToken, UpdateCtx, Widget,
     WidgetId,
 };
+use crate::Vec; ////
 
 /// Our queue type
 pub(crate) type CommandQueue = VecDeque<(Target, Command)>;
