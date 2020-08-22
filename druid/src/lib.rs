@@ -307,4 +307,5 @@ pub type KeyCode = KbKey;
 #[deprecated(since = "0.7.0", note = "Use Modifiers instead")]
 pub type KeyModifiers = Modifiers;
 
+pub type PlatformError = String; ////
 mod hello; ////
