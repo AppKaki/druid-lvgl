@@ -226,7 +226,7 @@ impl fmt::Debug for Point {
 extern crate self as druid;
 pub use druid_derive::Lens;
 
-use druid_shell as shell;
+////use druid_shell as shell;
 #[doc(inline)]
 ////pub use druid_shell::{kurbo, piet};
 
@@ -237,24 +237,24 @@ pub use im;
 
 mod app;
 mod app_delegate;
-mod bloom;
+////mod bloom;
 mod box_constraints;
-mod command;
+////mod command;
 mod contexts;
 mod core;
 mod data;
-mod env;
+////mod env;
 mod event;
-mod ext_event;
+////mod ext_event;
 pub mod lens;
-mod localization;
-mod menu;
-mod mouse;
+////mod localization;
+////mod menu;
+////mod mouse;
 #[cfg(not(target_arch = "wasm32"))]
 #[cfg(test)]
-mod tests;
-pub mod text;
-pub mod theme;
+////mod tests;
+////pub mod text;
+////pub mod theme;
 mod util;
 pub mod widget;
 mod win_handler;
@@ -275,16 +275,16 @@ pub use crate::core::WidgetPod;
 pub use app::{AppLauncher, WindowDesc};
 pub use app_delegate::{AppDelegate, DelegateCtx};
 pub use box_constraints::BoxConstraints;
-pub use command::{sys as commands, Command, Selector, SingleUse, Target};
+////pub use command::{sys as commands, Command, Selector, SingleUse, Target};
 pub use contexts::{EventCtx, LayoutCtx, LifeCycleCtx, PaintCtx, Region, UpdateCtx};
 pub use data::Data;
-pub use env::{Env, Key, KeyOrValue, Value, ValueType};
+////pub use env::{Env, Key, KeyOrValue, Value, ValueType};
 pub use event::{Event, InternalEvent, InternalLifeCycle, LifeCycle};
-pub use ext_event::{ExtEventError, ExtEventSink};
+////pub use ext_event::{ExtEventError, ExtEventSink};
 pub use lens::{Lens, LensExt, LensWrap};
-pub use localization::LocalizedString;
-pub use menu::{sys as platform_menus, ContextMenu, MenuDesc, MenuItem};
-pub use mouse::MouseEvent;
+////pub use localization::LocalizedString;
+////pub use menu::{sys as platform_menus, ContextMenu, MenuDesc, MenuItem};
+////pub use mouse::MouseEvent;
 pub use widget::{Widget, WidgetExt, WidgetId};
 pub use win_handler::DruidHandler;
 pub use window::{Window, WindowId};

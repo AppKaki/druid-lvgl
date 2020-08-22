@@ -15,75 +15,75 @@
 //! Common widgets.
 
 mod align;
-mod button;
-mod checkbox;
-mod click;
+////mod button;
+////mod checkbox;
+////mod click;
 mod common;
-mod container;
-mod controller;
-mod either;
-mod env_scope;
+////mod container;
+////mod controller;
+////mod either;
+////mod env_scope;
 mod flex;
-mod identity_wrapper;
-mod image;
-mod invalidation;
+////mod identity_wrapper;
+////mod image;
+////mod invalidation;
 mod label;
-mod list;
+////mod list;
 mod padding;
-mod painter;
-mod parse;
-mod progress_bar;
-mod radio;
-mod scroll;
-mod sized_box;
-mod slider;
-mod spinner;
-mod split;
-mod stepper;
+////mod painter;
+////mod parse;
+////mod progress_bar;
+////mod radio;
+////mod scroll;
+////mod sized_box;
+////mod slider;
+////mod spinner;
+////mod split;
+////mod stepper;
 #[cfg(feature = "svg")]
 #[cfg_attr(docsrs, doc(cfg(feature = "svg")))]
 mod svg;
-mod switch;
-mod textbox;
-mod view_switcher;
+////mod switch;
+////mod textbox;
+////mod view_switcher;
 #[allow(clippy::module_inception)]
 mod widget;
-mod widget_ext;
+////mod widget_ext;
 
-pub use self::image::{Image, ImageData};
+////pub use self::image::{Image, ImageData};
 pub use align::Align;
-pub use button::Button;
-pub use checkbox::Checkbox;
-pub use click::Click;
+////pub use button::Button;
+////pub use checkbox::Checkbox;
+////pub use click::Click;
 pub use common::FillStrat;
-pub use container::Container;
-pub use controller::{Controller, ControllerHost};
-pub use either::Either;
-pub use env_scope::EnvScope;
+////pub use container::Container;
+////pub use controller::{Controller, ControllerHost};
+////pub use either::Either;
+////pub use env_scope::EnvScope;
 pub use flex::{CrossAxisAlignment, Flex, FlexParams, MainAxisAlignment};
-pub use identity_wrapper::IdentityWrapper;
+////pub use identity_wrapper::IdentityWrapper;
 pub use label::{Label, LabelText};
-pub use list::{List, ListIter};
+////pub use list::{List, ListIter};
 pub use padding::Padding;
-pub use painter::{BackgroundBrush, Painter};
-pub use parse::Parse;
-pub use progress_bar::ProgressBar;
-pub use radio::{Radio, RadioGroup};
-pub use scroll::Scroll;
-pub use sized_box::SizedBox;
-pub use slider::Slider;
-pub use spinner::Spinner;
-pub use split::Split;
-pub use stepper::Stepper;
+////pub use painter::{BackgroundBrush, Painter};
+////pub use parse::Parse;
+////pub use progress_bar::ProgressBar;
+////pub use radio::{Radio, RadioGroup};
+////pub use scroll::Scroll;
+////pub use sized_box::SizedBox;
+////pub use slider::Slider;
+////pub use spinner::Spinner;
+////pub use split::Split;
+////pub use stepper::Stepper;
 #[cfg(feature = "svg")]
 pub use svg::{Svg, SvgData};
-pub use switch::Switch;
-pub use textbox::TextBox;
-pub use view_switcher::ViewSwitcher;
+////pub use switch::Switch;
+////pub use textbox::TextBox;
+////pub use view_switcher::ViewSwitcher;
 #[doc(hidden)]
 pub use widget::{Widget, WidgetId};
 #[doc(hidden)]
-pub use widget_ext::WidgetExt;
+////pub use widget_ext::WidgetExt;
 
 /// The types required to implement a `Widget`.
 ///
