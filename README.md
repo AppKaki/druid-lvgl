@@ -10,7 +10,7 @@ TODO
 
 1. Render druid Widgets as LVGL Widgets
 
-1. Remove piet and kurbo dependencies
+1. Remove `druid-shell`, `piet` and `kurbo` dependencies
 
 1. Change to `no_std` to compile with embedded platforms
 
