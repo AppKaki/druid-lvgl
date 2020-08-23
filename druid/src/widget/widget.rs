@@ -16,6 +16,7 @@
 ////use std::ops::{Deref, DerefMut};
 
 use super::prelude::*;
+use crate::BoxedWidget; ////
 
 /// A unique identifier for a single [`Widget`].
 ///
@@ -217,7 +218,8 @@ impl WidgetId {
     }
 }
 
-impl<T> Widget<T> for Box<dyn Widget<T>> {
+impl<T> Widget<T> for BoxedWidget<T> { ////
+////impl<T> Widget<T> for Box<dyn Widget<T>> {
     fn event(&mut self, ctx: &mut EventCtx, event: &Event, data: &mut T, env: &Env) {
         self.deref_mut().event(ctx, event, data, env)
     }

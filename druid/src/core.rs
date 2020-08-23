@@ -29,7 +29,7 @@ use crate::{
     LayoutCtx, LifeCycle, LifeCycleCtx, PaintCtx, Region, Target, TimerToken, UpdateCtx, Widget,
     WidgetId,
 };
-use crate::Vec; ////
+use crate::{BoxedWidget, Vec}; ////
 
 /// Our queue type
 pub(crate) type CommandQueue = VecDeque<(Target, Command)>;
@@ -882,8 +882,10 @@ impl<T, W: Widget<T> + 'static> WidgetPod<T, W> {
     ///
     /// Convert a `WidgetPod` containing a widget of a specific concrete type
     /// into a dynamically boxed widget.
-    pub fn boxed(self) -> WidgetPod<T, Box<dyn Widget<T>>> {
-        WidgetPod::new(Box::new(self.inner))
+    pub fn boxed(self) -> WidgetPod<T, BoxedWidget<T>> { ////
+    ////pub fn boxed(self) -> WidgetPod<T, Box<dyn Widget<T>>> {
+        WidgetPod::new(BoxedWidget::new(self.inner)) ////
+        ////WidgetPod::new(Box::new(self.inner))
     }
 }
 
@@ -958,6 +960,7 @@ impl WidgetState {
     }
 }
 
+/* ////
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1007,3 +1010,4 @@ mod tests {
         assert_eq!(ctx.widget_state.children.entry_count(), 7);
     }
 }
+*/ ////

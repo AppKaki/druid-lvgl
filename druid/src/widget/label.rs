@@ -22,7 +22,7 @@ use crate::{
     theme, BoxConstraints, Data, Env, Event, EventCtx, KeyOrValue, LayoutCtx, LifeCycle,
     LifeCycleCtx, LocalizedString, PaintCtx, Point, Size, UpdateCtx, Widget,
 };
-use crate::String; ////
+use crate::{BoxedText, String}; ////
 
 // a fudgey way to get an approximate line height from a font size
 const LINE_HEIGHT_FACTOR: f64 = 1.2;
@@ -51,7 +51,8 @@ pub enum LabelText<T> {
 /// Text that is computed dynamically.
 #[doc(hidden)]
 pub struct Dynamic<T> {
-    f: Box<dyn Fn(&T, &Env) -> String>,
+    f: BoxedText, ////
+    ////f: Box<dyn Fn(&T, &Env) -> String>,
     resolved: String,
 }
 
@@ -318,7 +319,8 @@ impl<T> From<LocalizedString<T>> for LabelText<T> {
 
 impl<T, F: Fn(&T, &Env) -> String + 'static> From<F> for LabelText<T> {
     fn from(src: F) -> LabelText<T> {
-        let f = Box::new(src);
+        let f = BoxedText::new(src); ////
+        ////let f = Box::new(src);
         LabelText::Dynamic(Dynamic {
             f,
             resolved: String::default(),

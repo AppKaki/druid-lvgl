@@ -18,9 +18,9 @@ use crate::common::FloatExt; ////
 ////use crate::kurbo::common::FloatExt;
 use crate::{Point, Rect, Size}; ////
 ////use crate::kurbo::{Point, Rect, Size};
-use crate::Vec; ////
+use crate::{BoxedWidget, Vec}; ////
 
-use crate::widget::SizedBox;
+////use crate::widget::SizedBox;
 use crate::{
     BoxConstraints, Data, Env, Event, EventCtx, KeyOrValue, LayoutCtx, LifeCycle, LifeCycleCtx,
     PaintCtx, UpdateCtx, Widget, WidgetPod,
@@ -151,7 +151,8 @@ pub struct Flex<T> {
 }
 
 struct ChildWidget<T> {
-    widget: WidgetPod<T, Box<dyn Widget<T>>>,
+    widget: WidgetPod<T, BoxedWidget<T>>, ////
+    ////widget: WidgetPod<T, Box<dyn Widget<T>>>,
     params: FlexParams,
 }
 
@@ -275,7 +276,8 @@ impl FlexParams {
 impl<T> ChildWidget<T> {
     fn new(child: impl Widget<T> + 'static, params: FlexParams) -> Self {
         ChildWidget {
-            widget: WidgetPod::new(Box::new(child)),
+            widget: WidgetPod::new(BoxedWidget::new(child)), ////
+            ////widget: WidgetPod::new(Box::new(child)),
             params,
         }
     }

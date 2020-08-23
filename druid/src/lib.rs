@@ -325,6 +325,10 @@ pub struct BoxedDruidHandler (
     //  DruidHandler,
 );
 
+pub struct BoxedText (
+    //  Fn(&T, &Env) -> String,
+);
+
 pub type PlatformError = String; ////
 mod hello; ////
 //// End
