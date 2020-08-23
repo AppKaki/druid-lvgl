@@ -27,7 +27,7 @@ use crate::{
     ////Env, LocalizedString, MenuDesc, 
     Widget, WidgetExt,
 };
-use crate::{BoxedAppDelegate, BoxedAppHandler, BoxedEnvSetupFn, BoxedWidget, PlatformError, Vec}; ////
+use crate::{BoxedAppDelegate, BoxedAppHandler, BoxedDruidHandler, BoxedEnvSetupFn, BoxedWidget, PlatformError, Vec}; ////
 
 /// A function that modifies the initial environment.
 type EnvSetupFn<T> = dyn FnOnce(&mut Env, &T);
