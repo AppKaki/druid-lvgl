@@ -193,7 +193,7 @@ impl WidgetId {
     /// You must ensure that a given `WidgetId` is only ever used for one
     /// widget at a time.
     pub fn next() -> WidgetId {
-        use crate::shell::Counter;
+        ////use crate::shell::Counter;
         static WIDGET_ID_COUNTER: Counter = Counter::new();
         WidgetId(WIDGET_ID_COUNTER.next_nonzero())
     }
