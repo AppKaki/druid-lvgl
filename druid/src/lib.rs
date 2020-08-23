@@ -319,9 +319,14 @@ pub type KeyCode = KbKey;
 pub type KeyModifiers = Modifiers;
 
 //// Begin
-pub struct BoxedEnvSetupFn<T> (
-    //  EnvSetupFn<T>,
-);
+
+pub struct Application();
+
+pub struct AppHandler();
+
+pub struct AppState();
+
+pub struct Bloom();
 
 pub struct BoxedAppDelegate<T> (
     //  AppDelegate<T>,
@@ -335,10 +340,50 @@ pub struct BoxedDruidHandler (
     //  DruidHandler,
 );
 
+pub struct BoxedEnvSetupFn<T> (
+    //  EnvSetupFn<T>,
+);
+
 pub struct BoxedText (
     //  Fn(&T, &Env) -> String,
 );
 
+pub struct Command();
+
+pub struct ContextState();
+
+pub struct Env();
+
+pub struct ExtEventHost();
+
+pub struct ExtEventSink();
+
+pub struct HashMap();
+
+pub struct LocalizedString();
+
+pub struct MenuDesc<T>();
+
+pub struct PietTextLayout();
+
+pub struct Shape();
+
+pub struct Target();
+
+pub struct TimerToken();
+
+pub struct VecDeque();
+
+pub struct WindowBuilder();
+
+pub struct WindowHandle();
+
+pub struct WindowId();
+
+pub struct theme();
+
 pub type PlatformError = String; ////
+
 mod hello; ////
+
 //// End
