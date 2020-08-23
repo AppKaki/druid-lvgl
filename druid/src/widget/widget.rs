@@ -16,7 +16,7 @@
 ////use std::ops::{Deref, DerefMut};
 
 use super::prelude::*;
-use crate::BoxedWidget; ////
+use crate::{BoxedWidget, Counter, NonZeroU64}; ////
 
 /// A unique identifier for a single [`Widget`].
 ///
@@ -179,7 +179,8 @@ pub trait Widget<T> {
     /// Get the (verbose) type name of the widget for debugging purposes.
     /// You should not override this method.
     fn type_name(&self) -> &'static str {
-        std::any::type_name::<Self>()
+        "widget" ////
+        ////std::any::type_name::<Self>()
     }
 }
 
@@ -210,7 +211,8 @@ impl WidgetId {
     pub const fn reserved(raw: u16) -> WidgetId {
         let id = u64::max_value() - raw as u64;
         // safety: by construction this can never be zero.
-        WidgetId(unsafe { std::num::NonZeroU64::new_unchecked(id) })
+        WidgetId(unsafe { NonZeroU64::new_unchecked(id) })
+        ////WidgetId(unsafe { std::num::NonZeroU64::new_unchecked(id) })
     }
 
     pub(crate) fn to_raw(self) -> u64 {

@@ -127,11 +127,13 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
 ////Begin
+use ::core::fmt;
+
 type StringLength = heapless::consts::U20; //// Max length of strings
 type String = heapless::String::<StringLength>; //// Alias for standard String
 
 type VecLength = heapless::consts::U10; //// Max length of vectors
-type Vec = heapless::Vec::<VecLength>; //// Alias for standard Vec
+type Vec<T> = heapless::Vec::<VecLength, T>; //// Alias for standard Vec
 
 /// Numeric type for screen coordinates
 pub type ScreenCoord = u8;  //  Previously f64
@@ -328,9 +330,9 @@ pub trait AppDelegate<T> {}
 
 pub struct AppHandler();
 
-pub struct AppState();
+pub struct AppState<T>();
 
-pub struct Bloom();
+pub struct Bloom<T>();
 
 pub struct BoxedAppDelegate<T> (
     //  AppDelegate<T>,
@@ -358,6 +360,8 @@ pub struct Command();
 
 pub struct ContextState();
 
+pub struct Counter();
+
 pub struct DruidHandler();
 
 pub struct Env();
@@ -368,21 +372,25 @@ pub struct ExtEventHost();
 
 pub struct ExtEventSink();
 
-pub struct KeyOrValue();
+pub struct KeyOrValue<T>();
 
-pub struct HashMap();
+pub struct HashMap<K, V>();
 
 pub struct LayoutCtx();
 
 pub struct LifeCycleCtx();
 
-pub struct LocalizedString();
+pub struct LocalizedString<T>();
 
 pub struct KeyEvent();
+
+pub struct Modifiers();
 
 pub struct MouseEvent();
 
 pub struct MenuDesc<T>();
+
+pub struct NonZeroU64();
 
 pub struct PaintCtx();
 
@@ -404,7 +412,7 @@ pub struct UnitPoint();
 
 pub struct UpdateCtx();
 
-pub struct VecDeque();
+pub struct VecDeque<T>();
 
 pub struct WindowBuilder();
 
