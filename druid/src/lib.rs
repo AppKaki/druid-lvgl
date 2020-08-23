@@ -128,6 +128,7 @@
 
 ////Begin
 use ::core::fmt;
+use ::core::marker::PhantomData;
 
 type StringLength = heapless::consts::U20; //// Max length of strings
 type String = heapless::String::<StringLength>; //// Alias for standard String
@@ -333,12 +334,13 @@ pub trait AppDelegate<T> {}
 
 pub struct AppHandler();
 
-pub struct AppState<T>();
+pub struct AppState<T>(PhantomData<T>);
 
-pub struct Bloom<T>();
+pub struct Bloom<T>(PhantomData<T>);
 
 pub struct BoxedAppDelegate<T> (
     //  AppDelegate<T>,
+    PhantomData<T>
 );
 
 pub struct BoxedAppHandler (
@@ -351,6 +353,7 @@ pub struct BoxedDruidHandler (
 
 pub struct BoxedEnvSetupFn<T> (
     //  EnvSetupFn<T>,
+    PhantomData<T>
 );
 
 pub struct BoxedText (
@@ -375,15 +378,15 @@ pub struct ExtEventHost();
 
 pub struct ExtEventSink();
 
-pub struct KeyOrValue<T>();
+pub struct KeyOrValue<T>(PhantomData<T>);
 
-pub struct HashMap<K, V>();
+pub struct HashMap<K, V>(PhantomData<K>, PhantomData<V>);
 
 pub struct LayoutCtx();
 
 pub struct LifeCycleCtx();
 
-pub struct LocalizedString<T>();
+pub struct LocalizedString<T>(PhantomData<T>);
 
 pub struct KeyEvent();
 
@@ -391,7 +394,7 @@ pub struct Modifiers();
 
 pub struct MouseEvent();
 
-pub struct MenuDesc<T>();
+pub struct MenuDesc<T>(PhantomData<T>);
 
 #[derive(Copy, Clone)]
 pub struct NonZeroU64();
@@ -416,7 +419,7 @@ pub struct UnitPoint();
 
 pub struct UpdateCtx();
 
-pub struct VecDeque<T>();
+pub struct VecDeque<T>(PhantomData<T>);
 
 pub struct WindowBuilder();
 

@@ -23,6 +23,7 @@ use crate::{
     LifeCycleCtx, LocalizedString, PaintCtx, Point, Size, UpdateCtx, Widget,
 };
 use crate::{BoxedText, Color, String, PietText, PietTextLayout, ScreenFactor, UnitPoint}; ////
+use ::core::marker::PhantomData; ////
 
 // a fudgey way to get an approximate line height from a font size
 const LINE_HEIGHT_FACTOR: ScreenFactor = 1.2; ////
@@ -57,6 +58,7 @@ pub struct Dynamic<T> {
     f: BoxedText, ////
     ////f: Box<dyn Fn(&T, &Env) -> String>,
     resolved: String,
+    _: PhantomData<T> ////
 }
 
 /// A label that displays some text.

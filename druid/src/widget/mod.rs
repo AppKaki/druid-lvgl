@@ -116,9 +116,11 @@ pub mod prelude {
 }
 
 //// Begin
+use ::core::marker::PhantomData;
 
 pub struct BoxedWidget<T> (
     //  Widget<T>,
+    PhantomData<T>
 );
 
 //// End
