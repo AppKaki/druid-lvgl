@@ -560,7 +560,8 @@ impl<T: Data> Widget<T> for Flex<T> {
             if child.params.flex == 0.0 {
                 let child_bc = self
                     .direction
-                    .constraints(&loosened_bc, 0., std::f64::INFINITY);
+                    .constraints(&loosened_bc, 0., ScreenFactor::INFINITY); ////
+                    ////.constraints(&loosened_bc, 0., std::f64::INFINITY);
                 let child_size = child.widget.layout(ctx, &child_bc, data, env);
 
                 if child_size.width.is_infinite() {

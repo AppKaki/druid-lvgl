@@ -210,7 +210,8 @@ impl<T: Data> Label<T> {
         // TODO: caching of both the format and the layout
         let font = t.new_font_by_name(font_name, font_size).build().unwrap();
         self.text.with_display_text(|text| {
-            t.new_text_layout(&font, &text, std::f64::INFINITY)
+            t.new_text_layout(&font, &text, ScreenFactor::INFINITY) ////
+            ////t.new_text_layout(&font, &text, std::f64::INFINITY)
                 .build()
                 .unwrap()
         })

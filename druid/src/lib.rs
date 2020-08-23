@@ -393,6 +393,7 @@ pub struct MouseEvent();
 
 pub struct MenuDesc<T>();
 
+#[derive(Copy, Clone)]
 pub struct NonZeroU64();
 
 pub struct PaintCtx();
