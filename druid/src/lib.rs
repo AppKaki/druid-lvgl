@@ -246,29 +246,29 @@ pub use druid_derive::Lens;
 pub use im;
 
 mod app;
-mod app_delegate;
+////mod app_delegate;
 ////mod bloom;
 mod box_constraints;
 ////mod command;
-mod contexts;
+////mod contexts;
 mod core;
 mod data;
 ////mod env;
 mod event;
 ////mod ext_event;
-pub mod lens;
+////pub mod lens;
 ////mod localization;
 ////mod menu;
 ////mod mouse;
-#[cfg(not(target_arch = "wasm32"))]
-#[cfg(test)]
+////#[cfg(not(target_arch = "wasm32"))]
+////#[cfg(test)]
 ////mod tests;
 ////pub mod text;
 ////pub mod theme;
 mod util;
 pub mod widget;
-mod win_handler;
-mod window;
+////mod win_handler;
+////mod window;
 
 // Types from kurbo & piet that are required by public API.
 ////pub use kurbo::{Affine, Insets, Point, Rect, Size, Vec2};
@@ -283,22 +283,24 @@ mod window;
 
 pub use crate::core::WidgetPod;
 pub use app::{AppLauncher, WindowDesc};
-pub use app_delegate::{AppDelegate, DelegateCtx};
+////pub use app_delegate::{AppDelegate, DelegateCtx};
 pub use box_constraints::BoxConstraints;
 ////pub use command::{sys as commands, Command, Selector, SingleUse, Target};
-pub use contexts::{EventCtx, LayoutCtx, LifeCycleCtx, PaintCtx, Region, UpdateCtx};
+////pub use contexts::{EventCtx, LayoutCtx, LifeCycleCtx, PaintCtx, Region, UpdateCtx};
 pub use data::Data;
 ////pub use env::{Env, Key, KeyOrValue, Value, ValueType};
 pub use event::{Event, InternalEvent, InternalLifeCycle, LifeCycle};
 ////pub use ext_event::{ExtEventError, ExtEventSink};
-pub use lens::{Lens, LensExt, LensWrap};
+////pub use lens::{Lens, LensExt, LensWrap};
 ////pub use localization::LocalizedString;
 ////pub use menu::{sys as platform_menus, ContextMenu, MenuDesc, MenuItem};
 ////pub use mouse::MouseEvent;
-pub use widget::{Widget, WidgetExt, WidgetId};
+pub use widget::{Widget, 
+    ////WidgetExt, 
+WidgetId};
 pub use widget::BoxedWidget; ////
-pub use win_handler::DruidHandler;
-pub use window::{Window, WindowId};
+////pub use win_handler::DruidHandler;
+////pub use window::{Window, WindowId};
 
 #[cfg(not(target_arch = "wasm32"))]
 #[cfg(test)]
@@ -348,6 +350,8 @@ pub struct BoxedText (
     //  Fn(&T, &Env) -> String,
 );
 
+pub struct Clipboard();
+
 pub struct Command();
 
 pub struct ContextState();
@@ -361,6 +365,10 @@ pub struct ExtEventSink();
 pub struct HashMap();
 
 pub struct LocalizedString();
+
+pub struct KeyEvent();
+
+pub struct MouseEvent();
 
 pub struct MenuDesc<T>();
 
