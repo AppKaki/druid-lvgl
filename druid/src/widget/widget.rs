@@ -246,11 +246,3 @@ impl<T> Widget<T> for Box<dyn Widget<T>> {
         self.deref().type_name()
     }
 }
-
-//// Begin
-
-pub struct BoxedWidget<T> (
-    //  Widget<T>,
-);
-
-//// End

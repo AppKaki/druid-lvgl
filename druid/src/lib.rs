@@ -286,6 +286,7 @@ pub use lens::{Lens, LensExt, LensWrap};
 ////pub use menu::{sys as platform_menus, ContextMenu, MenuDesc, MenuItem};
 ////pub use mouse::MouseEvent;
 pub use widget::{Widget, WidgetExt, WidgetId};
+pub use widget::BoxedWidget; ////
 pub use win_handler::DruidHandler;
 pub use window::{Window, WindowId};
 
@@ -307,11 +308,7 @@ pub type KeyCode = KbKey;
 #[deprecated(since = "0.7.0", note = "Use Modifiers instead")]
 pub type KeyModifiers = Modifiers;
 
-pub type PlatformError = String; ////
-mod hello; ////
-
 //// Begin
-
 pub struct BoxedEnvSetupFn<T> (
     //  EnvSetupFn<T>,
 );
@@ -320,4 +317,6 @@ pub struct BoxedAppDelegate<T> (
     //  AppDelegate<T>,
 );
 
+pub type PlatformError = String; ////
+mod hello; ////
 //// End

@@ -24,7 +24,7 @@ use crate::window::WindowId;
 use crate::{
     theme, AppDelegate, Data, DruidHandler, Env, LocalizedString, MenuDesc, Widget, WidgetExt,
 };
-use crate::{Vec, BoxedEnvSetupFn, BoxedAppDelegate}; ////
+use crate::{Vec, BoxedWidget, BoxedEnvSetupFn, BoxedAppDelegate, PlatformError}; ////
 
 /// A function that modifies the initial environment.
 type EnvSetupFn<T> = dyn FnOnce(&mut Env, &T);
@@ -75,7 +75,8 @@ impl<T: Data> AppLauncher<T> {
     ///
     /// This can be used to set or override theme values.
     pub fn configure_env(mut self, f: impl Fn(&mut Env, &T) + 'static) -> Self {
-        self.env_setup = Some(Box::new(f));
+        self.env_setup = Some(BoxedEnvSetupFn::new(f)); ////
+        ////self.env_setup = Some(Box::new(f));
         self
     }
 
@@ -83,7 +84,8 @@ impl<T: Data> AppLauncher<T> {
     ///
     /// [`AppDelegate`]: trait.AppDelegate.html
     pub fn delegate(mut self, delegate: impl AppDelegate<T> + 'static) -> Self {
-        self.delegate = Some(Box::new(delegate));
+        self.delegate = Some(BoxedAppDelegate::new(delegate)); ////
+        ////self.delegate = Some(Box::new(delegate));
         self
     }
 

@@ -113,3 +113,11 @@ pub mod prelude {
         RenderContext, Size, UpdateCtx, Widget, WidgetId,
     };
 }
+
+//// Begin
+
+pub struct BoxedWidget<T> (
+    //  Widget<T>,
+);
+
+//// End
