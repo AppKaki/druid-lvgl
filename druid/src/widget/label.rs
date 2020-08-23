@@ -20,7 +20,9 @@
 ////};
 use crate::{
     theme, BoxConstraints, Data, Env, Event, EventCtx, KeyOrValue, LayoutCtx, LifeCycle,
-    LifeCycleCtx, LocalizedString, PaintCtx, Point, Size, UpdateCtx, Widget,
+    LifeCycleCtx, LocalizedString, PaintCtx, 
+    ////Point, 
+    Size, UpdateCtx, Widget,
 };
 use crate::{BoxedText, Color, String, PietText, PietTextLayout, ScreenFactor, UnitPoint}; ////
 use ::core::marker::PhantomData; ////
@@ -58,7 +60,7 @@ pub struct Dynamic<T> {
     f: BoxedText, ////
     ////f: Box<dyn Fn(&T, &Env) -> String>,
     resolved: String,
-    _: PhantomData<T> ////
+    _p: PhantomData<T> ////
 }
 
 /// A label that displays some text.

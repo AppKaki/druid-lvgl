@@ -134,7 +134,7 @@ type StringLength = heapless::consts::U20; //// Max length of strings
 type String = heapless::String::<StringLength>; //// Alias for standard String
 
 type VecLength = heapless::consts::U10; //// Max length of vectors
-type Vec<T> = heapless::Vec::<VecLength, T>; //// Alias for standard Vec
+type Vec<T> = heapless::Vec::<T, VecLength>; //// Alias for standard Vec
 
 /// Numeric type for screen coordinates
 pub type ScreenCoord = u8;  //  Previously f64
