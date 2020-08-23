@@ -22,14 +22,17 @@ use crate::{
     theme, BoxConstraints, Data, Env, Event, EventCtx, KeyOrValue, LayoutCtx, LifeCycle,
     LifeCycleCtx, LocalizedString, PaintCtx, Point, Size, UpdateCtx, Widget,
 };
-use crate::{BoxedText, Color, String, PietText, PietTextLayout, UnitPoint}; ////
+use crate::{BoxedText, Color, String, PietText, PietTextLayout, ScreenFactor, UnitPoint}; ////
 
 // a fudgey way to get an approximate line height from a font size
-const LINE_HEIGHT_FACTOR: f64 = 1.2;
+const LINE_HEIGHT_FACTOR: ScreenFactor = 1.2; ////
+////const LINE_HEIGHT_FACTOR: f64 = 1.2;
 // a fudgey way of figuring out where to put the baseline, relative to line height
-const BASELINE_GUESS_FACTOR: f64 = 0.8;
+const BASELINE_GUESS_FACTOR: ScreenFactor = 0.8; ////
+////const BASELINE_GUESS_FACTOR: f64 = 0.8;
 // added padding between the edges of the widget and the text.
-const LABEL_X_PADDING: f64 = 2.0;
+const LABEL_X_PADDING: ScreenFactor = 2.0; ////
+////const LABEL_X_PADDING: f64 = 2.0;
 
 /// The text for the label.
 ///
@@ -60,7 +63,8 @@ pub struct Dynamic<T> {
 pub struct Label<T> {
     text: LabelText<T>,
     color: KeyOrValue<Color>,
-    size: KeyOrValue<f64>,
+    size: KeyOrValue<ScreenFactor>, ////
+    ////size: KeyOrValue<f64>,
     font: KeyOrValue<&'static str>,
 }
 
@@ -137,8 +141,9 @@ impl<T: Data> Label<T> {
     /// The argument can be either an `f64` or a [`Key<f64>`].
     ///
     /// [`Key<f64>`]: ../struct.Key.html
-    pub fn with_text_size(mut self, size: impl Into<KeyOrValue<f64>>) -> Self {
-        self.size = size.into();
+    pub fn with_text_size(mut self, size: impl Into<KeyOrValue<ScreenFactor>>) -> Self { ////
+    ////pub fn with_text_size(mut self, size: impl Into<KeyOrValue<f64>>) -> Self {
+            self.size = size.into();
         self
     }
 
@@ -184,7 +189,8 @@ impl<T: Data> Label<T> {
     /// The argument can be either an `f64` or a [`Key<f64>`].
     ///
     /// [`Key<f64>`]: ../struct.Key.html
-    pub fn set_text_size(&mut self, size: impl Into<KeyOrValue<f64>>) {
+    pub fn set_text_size(&mut self, size: impl Into<KeyOrValue<ScreenFactor>>) { ////
+    ////pub fn set_text_size(&mut self, size: impl Into<KeyOrValue<f64>>) {
         self.size = size.into();
     }
 

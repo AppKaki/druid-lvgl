@@ -138,6 +138,9 @@ type Vec<T> = heapless::Vec::<VecLength, T>; //// Alias for standard Vec
 /// Numeric type for screen coordinates
 pub type ScreenCoord = u8;  //  Previously f64
 
+/// Numeric type for flex factors
+pub type ScreenFactor = f32;  //  Previously f64
+
 /// A 2D point.
 #[derive(Clone, Copy, Default, PartialEq)]
 pub struct Point { ////
@@ -267,7 +270,7 @@ mod event;
 ////mod tests;
 ////pub mod text;
 ////pub mod theme;
-mod util;
+////mod util;
 pub mod widget;
 ////mod win_handler;
 ////mod window;

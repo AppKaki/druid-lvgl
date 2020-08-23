@@ -17,7 +17,7 @@
 ////use crate::kurbo::common::FloatExt;
 use crate::{Point, Rect, Size}; ////
 ////use crate::kurbo::{Point, Rect, Size};
-use crate::{BoxedWidget, SizedBox, Vec}; ////
+use crate::{BoxedWidget, ScreenFactor, SizedBox, Vec}; ////
 
 ////use crate::widget::SizedBox;
 use crate::{
@@ -158,7 +158,8 @@ struct ChildWidget<T> {
 /// A dummy widget we use to do spacing.
 struct Spacer {
     axis: Axis,
-    len: KeyOrValue<f64>,
+    len: KeyOrValue<ScreenFactor>, ////
+    ////len: KeyOrValue<f64>,
 }
 
 /// Optional parameters for an item in a [`Flex`] container (row or column).
@@ -194,7 +195,8 @@ struct Spacer {
 /// [`add_flex_child`]: struct.Flex.html#method.add_flex_child
 #[derive(Copy, Clone, Default)]
 pub struct FlexParams {
-    flex: f64,
+    flex: ScreenFactor, ////
+    ////flex: f64,
     alignment: Option<CrossAxisAlignment>,
 }
 
@@ -264,7 +266,8 @@ impl FlexParams {
     ///
     /// [`Flex`]: struct.Flex.html
     /// [`CrossAxisAlignment`]: enum.CrossAxisAlignment.html
-    pub fn new(flex: f64, alignment: impl Into<Option<CrossAxisAlignment>>) -> Self {
+    pub fn new(flex: ScreenFactor, alignment: impl Into<Option<CrossAxisAlignment>>) -> Self { ////
+    ////pub fn new(flex: f64, alignment: impl Into<Option<CrossAxisAlignment>>) -> Self {
         FlexParams {
             flex,
             alignment: alignment.into(),
@@ -283,21 +286,24 @@ impl<T> ChildWidget<T> {
 }
 
 impl Axis {
-    pub(crate) fn major(self, coords: Size) -> f64 {
+    pub(crate) fn major(self, coords: Size) -> ScreenFactor { ////
+    ////pub(crate) fn major(self, coords: Size) -> f64 {
         match self {
             Axis::Horizontal => coords.width,
             Axis::Vertical => coords.height,
         }
     }
 
-    pub(crate) fn minor(self, coords: Size) -> f64 {
+    pub(crate) fn minor(self, coords: Size) -> ScreenFactor { ////
+    ////pub(crate) fn minor(self, coords: Size) -> f64 {
         match self {
             Axis::Horizontal => coords.height,
             Axis::Vertical => coords.width,
         }
     }
 
-    pub(crate) fn pack(self, major: f64, minor: f64) -> (f64, f64) {
+    pub(crate) fn pack(self, major: ScreenFactor, minor: ScreenFactor) -> (ScreenFactor, ScreenFactor) { ////
+    ////pub(crate) fn pack(self, major: f64, minor: f64) -> (f64, f64) {
         match self {
             Axis::Horizontal => (major, minor),
             Axis::Vertical => (minor, major),
@@ -305,7 +311,8 @@ impl Axis {
     }
 
     /// Generate constraints with new values on the major axis.
-    fn constraints(self, bc: &BoxConstraints, min_major: f64, major: f64) -> BoxConstraints {
+    fn constraints(self, bc: &BoxConstraints, min_major: ScreenFactor, major: ScreenFactor) -> BoxConstraints { ////
+    ////fn constraints(self, bc: &BoxConstraints, min_major: f64, major: f64) -> BoxConstraints {
         match self {
             Axis::Horizontal => BoxConstraints::new(
                 Size::new(min_major, bc.min().height),
@@ -425,13 +432,15 @@ impl<T: Data> Flex<T> {
     }
 
     /// Builder-style method for adding a fixed-size spacer to the container.
-    pub fn with_spacer(mut self, len: impl Into<KeyOrValue<f64>>) -> Self {
+    pub fn with_spacer(mut self, len: impl Into<KeyOrValue<ScreenFactor>>) -> Self { ////
+    ////pub fn with_spacer(mut self, len: impl Into<KeyOrValue<f64>>) -> Self {
         self.add_spacer(len);
         self
     }
 
     /// Builder-style method for adding a `flex` spacer to the container.
-    pub fn with_flex_spacer(mut self, flex: f64) -> Self {
+    pub fn with_flex_spacer(mut self, flex: ScreenFactor) -> Self { ////
+    ////pub fn with_flex_spacer(mut self, flex: f64) -> Self {
         self.add_flex_spacer(flex);
         self
     }
@@ -500,7 +509,8 @@ impl<T: Data> Flex<T> {
     }
 
     /// Add an empty spacer widget with the given length.
-    pub fn add_spacer(&mut self, len: impl Into<KeyOrValue<f64>>) {
+    pub fn add_spacer(&mut self, len: impl Into<KeyOrValue<ScreenFactor>>) { ////
+    ////pub fn add_spacer(&mut self, len: impl Into<KeyOrValue<f64>>) {
         let spacer = Spacer {
             axis: self.direction,
             len: len.into(),
@@ -509,7 +519,8 @@ impl<T: Data> Flex<T> {
     }
 
     /// Add an empty spacer widget with a specific `flex` factor.
-    pub fn add_flex_spacer(&mut self, flex: f64) {
+    pub fn add_flex_spacer(&mut self, flex: ScreenFactor) { ////
+    ////pub fn add_flex_spacer(&mut self, flex: f64) {
         let child = match self.direction {
             Axis::Vertical => SizedBox::empty().expand_height(),
             Axis::Horizontal => SizedBox::empty().expand_width(),
@@ -570,9 +581,12 @@ impl<T: Data> Widget<T> for Flex<T> {
 
         let total_major = self.direction.major(bc.max());
         let remaining = (total_major - major_non_flex).max(0.0);
-        let mut remainder: f64 = 0.0;
-        let flex_sum: f64 = self.children.iter().map(|child| child.params.flex).sum();
-        let mut major_flex: f64 = 0.0;
+        let mut remainder: ScreenFactor = 0.0; ////
+        ////let mut remainder: f64 = 0.0;
+        let flex_sum: ScreenFactor = self.children.iter().map(|child| child.params.flex).sum(); ////
+        ////let flex_sum: f64 = self.children.iter().map(|child| child.params.flex).sum();
+        let mut major_flex: ScreenFactor = 0.0; ////
+        ////let mut major_flex: f64 = 0.0;
 
         // Measure flex children.
         for child in &mut self.children {
@@ -660,7 +674,8 @@ impl CrossAxisAlignment {
     /// Given the difference between the size of the container and the size
     /// of the child (on their minor axis) return the necessary offset for
     /// this alignment.
-    fn align(self, val: f64) -> f64 {
+    fn align(self, val: ScreenFactor) -> ScreenFactor { ////
+    ////fn align(self, val: f64) -> f64 {
         match self {
             CrossAxisAlignment::Start => 0.0,
             CrossAxisAlignment::Center => (val / 2.0).round(),
@@ -671,11 +686,14 @@ impl CrossAxisAlignment {
 
 struct Spacing {
     alignment: MainAxisAlignment,
-    extra: f64,
+    extra: ScreenFactor, ////
+    ////extra: f64,
     n_children: usize,
     index: usize,
-    equal_space: f64,
-    remainder: f64,
+    equal_space: ScreenFactor, ////
+    ////equal_space: f64,
+    remainder: ScreenFactor, ////
+    ////remainder: f64,
 }
 
 impl Spacing {
@@ -683,14 +701,18 @@ impl Spacing {
     /// this returns an iterator of `f64` spacing,
     /// where the first element is the spacing before any children
     /// and all subsequent elements are the spacing after children.
-    fn new(alignment: MainAxisAlignment, extra: f64, n_children: usize) -> Spacing {
+    fn new(alignment: MainAxisAlignment, extra: ScreenFactor, n_children: usize) -> Spacing { ////
+    ////fn new(alignment: MainAxisAlignment, extra: f64, n_children: usize) -> Spacing {
         let extra = if extra.is_finite() { extra } else { 0. };
         let equal_space = if n_children > 0 {
             match alignment {
                 MainAxisAlignment::Center => extra / 2.,
-                MainAxisAlignment::SpaceBetween => extra / (n_children - 1).max(1) as f64,
-                MainAxisAlignment::SpaceEvenly => extra / (n_children + 1) as f64,
-                MainAxisAlignment::SpaceAround => extra / (2 * n_children) as f64,
+                MainAxisAlignment::SpaceBetween => extra / (n_children - 1).max(1) as ScreenFactor, ////
+                ////MainAxisAlignment::SpaceBetween => extra / (n_children - 1).max(1) as f64,
+                MainAxisAlignment::SpaceEvenly => extra / (n_children + 1) as ScreenFactor, ////
+                ////MainAxisAlignment::SpaceEvenly => extra / (n_children + 1) as f64,
+                MainAxisAlignment::SpaceAround => extra / (2 * n_children) as ScreenFactor, ////
+                ////MainAxisAlignment::SpaceAround => extra / (2 * n_children) as f64,
                 _ => 0.,
             }
         } else {
@@ -706,7 +728,8 @@ impl Spacing {
         }
     }
 
-    fn next_space(&mut self) -> f64 {
+    fn next_space(&mut self) -> ScreenFactor { ////
+    ////fn next_space(&mut self) -> f64 {
         let desired_space = self.equal_space + self.remainder;
         let actual_space = desired_space.round();
         self.remainder = desired_space - actual_space;
@@ -715,9 +738,11 @@ impl Spacing {
 }
 
 impl Iterator for Spacing {
-    type Item = f64;
+    type Item = ScreenFactor; ////
+    ////type Item = f64;
 
-    fn next(&mut self) -> Option<f64> {
+    fn next(&mut self) -> Option<ScreenFactor> { ////
+    ////fn next(&mut self) -> Option<f64> {
         if self.index > self.n_children {
             return None;
         }
@@ -775,8 +800,10 @@ impl<T: Data> Widget<T> for Spacer {
     fn paint(&mut self, _: &mut PaintCtx, _: &T, _: &Env) {}
 }
 
-impl From<f64> for FlexParams {
-    fn from(flex: f64) -> FlexParams {
+impl From<ScreenFactor> for FlexParams { ////
+////impl From<f64> for FlexParams {
+    fn from(flex: ScreenFactor) -> FlexParams { ////
+    ////fn from(flex: f64) -> FlexParams {
         FlexParams {
             flex,
             alignment: None,

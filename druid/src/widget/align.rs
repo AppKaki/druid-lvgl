@@ -22,15 +22,17 @@ use crate::{
 };
 
 ////use crate::piet::UnitPoint;
-use crate::{BoxedWidget, UnitPoint}; ////
+use crate::{BoxedWidget, ScreenFactor, UnitPoint}; ////
 
 /// A widget that aligns its child.
 pub struct Align<T> {
     align: UnitPoint,
     child: WidgetPod<T, BoxedWidget<T>>, ////
     ////child: WidgetPod<T, Box<dyn Widget<T>>>,
-    width_factor: Option<f64>,
-    height_factor: Option<f64>,
+    width_factor: Option<ScreenFactor>, ////
+    ////width_factor: Option<f64>,
+    height_factor: Option<ScreenFactor>, ////
+    ////height_factor: Option<f64>,
 }
 
 impl<T> Align<T> {

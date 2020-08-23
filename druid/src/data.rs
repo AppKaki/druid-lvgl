@@ -148,6 +148,7 @@ impl_data_simple!(char);
 impl_data_simple!(bool);
 impl_data_simple!(String);
 
+/* ////
 impl Data for f32 {
     fn same(&self, other: &Self) -> bool {
         self.to_bits() == other.to_bits()
@@ -160,7 +161,6 @@ impl Data for f64 {
     }
 }
 
-/* ////
 impl<T: ?Sized + 'static> Data for Arc<T> {
     fn same(&self, other: &Self) -> bool {
         Arc::ptr_eq(self, other)
