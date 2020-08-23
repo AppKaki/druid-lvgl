@@ -160,6 +160,7 @@ impl Data for f64 {
     }
 }
 
+/* ////
 impl<T: ?Sized + 'static> Data for Arc<T> {
     fn same(&self, other: &Self) -> bool {
         Arc::ptr_eq(self, other)
@@ -408,6 +409,7 @@ impl Data for crate::Color { ////
         self.as_rgba_u32().same(&other.as_rgba_u32())
     }
 }
+*/ ////
 
 #[cfg(feature = "im")]
 impl<T: Data> Data for im::Vector<T> {
