@@ -278,6 +278,13 @@ impl<T: Data> Widget<T> for Label<T> {
     }
 
     fn paint(&mut self, ctx: &mut PaintCtx, _data: &T, env: &Env) {
+        //// TODO: Render with LVGL
+        let label = lv_label_create(lv_scr_act(), NULL);        //  Add a label to the current screen
+        lv_obj_set_pos(label, 10, 10);                          //  Set its position
+        lv_obj_set_size(label, 120, 50);                        //  Set its size
+        lv_label_set_text(label, "Label");                      //  Set the label's text
+
+        /* ////        
         let font_size = self.size.resolve(env);
         let text_layout = self.get_layout(&mut ctx.text(), env);
         let line_height = font_size * LINE_HEIGHT_FACTOR;
@@ -287,6 +294,7 @@ impl<T: Data> Widget<T> for Label<T> {
         let color = self.color.resolve(env);
 
         ctx.draw_text(&text_layout, origin, &color);
+        */ ////
     }
 }
 

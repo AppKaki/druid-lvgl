@@ -137,6 +137,15 @@ impl<T: Data> Widget<T> for Button<T> {
     }
 
     fn paint(&mut self, ctx: &mut PaintCtx, data: &T, env: &Env) {
+        //// TODO: Render with LVGL
+        let btn = lv_btn_create(lv_scr_act(), NULL);     //  Add a button to the current screen
+        lv_obj_set_pos(btn, 10, 10);                     //  Set its position
+        lv_obj_set_size(btn, 120, 50);                   //  Set its size
+
+        let label = lv_label_create(btn, NULL);          //  Add a label to the button
+        lv_label_set_text(label, "Button");              //  Set the label's text
+
+        /* ////
         let is_active = ctx.is_active();
         let is_hot = ctx.is_hot();
         let size = ctx.size();
@@ -176,5 +185,6 @@ impl<T: Data> Widget<T> for Button<T> {
             ctx.transform(Affine::translate(label_offset));
             self.label.paint(ctx, data, env);
         });
+        */ ////
     }
 }
