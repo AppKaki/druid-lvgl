@@ -394,6 +394,8 @@ pub struct Region();
 
 pub struct Shape();
 
+pub struct SizedBox();
+
 pub struct Target();
 
 pub struct TimerToken();
