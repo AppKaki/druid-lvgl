@@ -220,6 +220,16 @@ impl fmt::Debug for Point {
         write!(f, "({:?}, {:?})", self.x, self.y)
     }
 }
+
+/// A datatype representing color.
+///
+/// Currently this is only a 32 bit RGBA value, but it will likely
+/// extend to some form of wide-gamut colorspace, and in the meantime
+/// is useful for giving programs proper type.
+#[derive(Clone)]
+pub enum Color {
+    Rgba32(u32),
+}
 ////End
 
 // Allows to use macros from druid_derive in this crate
