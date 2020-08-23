@@ -22,7 +22,7 @@ use crate::{
 };
 
 ////use crate::piet::UnitPoint;
-use crate::BoxedWidget;
+use crate::{BoxedWidget, UnitPoint}; ////
 
 /// A widget that aligns its child.
 pub struct Align<T> {

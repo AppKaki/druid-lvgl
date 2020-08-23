@@ -324,6 +324,8 @@ pub type KeyModifiers = Modifiers;
 
 pub struct Application();
 
+pub trait AppDelegate<T> {}
+
 pub struct AppHandler();
 
 pub struct AppState();
@@ -356,6 +358,8 @@ pub struct Command();
 
 pub struct ContextState();
 
+pub struct DruidHandler();
+
 pub struct Env();
 
 pub struct EventCtx();
@@ -385,6 +389,8 @@ pub struct PaintCtx();
 pub struct PietText();
 
 pub struct PietTextLayout();
+
+pub struct Region();
 
 pub struct Shape();
 
