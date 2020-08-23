@@ -352,9 +352,11 @@ pub struct BoxedDruidHandler (
 );
 
 pub struct BoxedEnvSetupFn<T> (
-    //  EnvSetupFn<T>,
-    PhantomData<T>
+    T
 );
+impl<T> BoxedEnvSetupFn<T> {
+    fn new(t: T) -> Self { Self(t) }
+}
 
 pub struct BoxedText (
     //  Fn(&T, &Env) -> String,
@@ -375,6 +377,9 @@ pub struct Env();
 pub struct EventCtx();
 
 pub struct ExtEventHost();
+impl ExtEventHost {
+    fn new() -> Self { Self{} }
+}
 
 pub struct ExtEventSink();
 

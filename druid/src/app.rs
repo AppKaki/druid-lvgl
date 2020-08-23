@@ -68,7 +68,7 @@ impl<T: Data> AppLauncher<T> {
     /// Create a new `AppLauncher` with the provided window.
     pub fn with_window(window: WindowDesc<T>) -> Self {
         AppLauncher {
-            windows: Vec{}, ////
+            windows: Vec::new(), ////
             ////windows: vec![window],
             env_setup: None,
             delegate: None,
