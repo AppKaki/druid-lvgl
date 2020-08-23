@@ -358,11 +358,19 @@ pub struct ContextState();
 
 pub struct Env();
 
+pub struct EventCtx();
+
 pub struct ExtEventHost();
 
 pub struct ExtEventSink();
 
+pub struct KeyOrValue();
+
 pub struct HashMap();
+
+pub struct LayoutCtx();
+
+pub struct LifeCycleCtx();
 
 pub struct LocalizedString();
 
@@ -372,6 +380,10 @@ pub struct MouseEvent();
 
 pub struct MenuDesc<T>();
 
+pub struct PaintCtx();
+
+pub struct PietText();
+
 pub struct PietTextLayout();
 
 pub struct Shape();
@@ -379,6 +391,10 @@ pub struct Shape();
 pub struct Target();
 
 pub struct TimerToken();
+
+pub struct UnitPoint();
+
+pub struct UpdateCtx();
 
 pub struct VecDeque();
 
