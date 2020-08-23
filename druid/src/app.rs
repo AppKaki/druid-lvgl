@@ -24,7 +24,7 @@ use crate::window::WindowId;
 use crate::{
     theme, AppDelegate, Data, DruidHandler, Env, LocalizedString, MenuDesc, Widget, WidgetExt,
 };
-use crate::Vec; ////
+use crate::{Vec, BoxedEnvSetupFn, BoxedAppDelegate}; ////
 
 /// A function that modifies the initial environment.
 type EnvSetupFn<T> = dyn FnOnce(&mut Env, &T);
@@ -32,8 +32,10 @@ type EnvSetupFn<T> = dyn FnOnce(&mut Env, &T);
 /// Handles initial setup of an application, and starts the runloop.
 pub struct AppLauncher<T> {
     windows: Vec<WindowDesc<T>>,
-    env_setup: Option<Box<EnvSetupFn<T>>>,
-    delegate: Option<Box<dyn AppDelegate<T>>>,
+    env_setup: Option<BoxedEnvSetupFn<T>>, ////
+    ////env_setup: Option<Box<EnvSetupFn<T>>>,
+    delegate: Option<BoxedAppDelegate<T>>, ////
+    ////delegate: Option<Box<dyn AppDelegate<T>>>,
     ext_event_host: ExtEventHost,
 }
 
@@ -42,7 +44,8 @@ pub struct AppLauncher<T> {
 /// This includes a function that can build the root widget, as well as other
 /// window properties such as the title.
 pub struct WindowDesc<T> {
-    pub(crate) root: Box<dyn Widget<T>>,
+    pub(crate) root: BoxedWidget<T>, ////
+    ////pub(crate) root: Box<dyn Widget<T>>,
     pub(crate) title: LabelText<T>,
     pub(crate) size: Option<Size>,
     pub(crate) min_size: Option<Size>,

@@ -309,3 +309,15 @@ pub type KeyModifiers = Modifiers;
 
 pub type PlatformError = String; ////
 mod hello; ////
+
+//// Begin
+
+pub struct BoxedEnvSetupFn<T> (
+    //  EnvSetupFn<T>,
+);
+
+pub struct BoxedAppDelegate<T> (
+    //  AppDelegate<T>,
+);
+
+//// End
