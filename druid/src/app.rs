@@ -27,7 +27,7 @@ use crate::{
     ////Env, LocalizedString, MenuDesc, 
     Widget, WidgetExt,
 };
-use crate::{Vec, BoxedWidget, BoxedEnvSetupFn, BoxedAppDelegate, PlatformError}; ////
+use crate::{BoxedAppDelegate, BoxedAppHandler, BoxedEnvSetupFn, BoxedWidget, PlatformError, Vec}; ////
 
 /// A function that modifies the initial environment.
 type EnvSetupFn<T> = dyn FnOnce(&mut Env, &T);
@@ -149,7 +149,8 @@ impl<T: Data> AppLauncher<T> {
         }
 
         let handler = AppHandler::new(state);
-        app.run(Some(Box::new(handler)));
+        app.run(Some(BoxedAppHandler::new(handler))); ////
+        ////app.run(Some(Box::new(handler)));
         Ok(())
     }
 }
@@ -262,7 +263,8 @@ impl<T: Data> WindowDesc<T> {
         builder.resizable(self.resizable);
         builder.show_titlebar(self.show_titlebar);
 
-        builder.set_handler(Box::new(handler));
+        builder.set_handler(BoxedDruidHandler::new(handler)); ////
+        ////builder.set_handler(Box::new(handler));
         if let Some(size) = self.size {
             builder.set_size(size);
         }

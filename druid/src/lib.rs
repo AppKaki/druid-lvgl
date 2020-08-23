@@ -292,7 +292,7 @@ pub use window::{Window, WindowId};
 
 #[cfg(not(target_arch = "wasm32"))]
 #[cfg(test)]
-pub(crate) use event::{StateCell, StateCheckFn};
+////pub(crate) use event::{StateCell, StateCheckFn};
 
 /// The meaning (mapped value) of a keypress.
 ///
@@ -315,6 +315,14 @@ pub struct BoxedEnvSetupFn<T> (
 
 pub struct BoxedAppDelegate<T> (
     //  AppDelegate<T>,
+);
+
+pub struct BoxedAppHandler (
+    //  AppHandler,
+);
+
+pub struct BoxedDruidHandler (
+    //  DruidHandler,
 );
 
 pub type PlatformError = String; ////
