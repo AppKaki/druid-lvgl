@@ -116,8 +116,6 @@ pub mod prelude {
 }
 
 //// Begin
-use ::core::marker::PhantomData;
-
 #[derive(Copy, Clone)]
 pub struct BoxedWidget<T> (
     Option<T> ////TODO
@@ -127,5 +125,4 @@ impl<T> BoxedWidget<T> {
     fn deref(self) -> Self { self }
     fn deref_mut(self) -> Self { self }
 }
-
 //// End

@@ -412,6 +412,9 @@ pub struct ContextState();
 
 #[derive(Copy, Clone)]
 pub struct Counter();
+impl Counter {
+    pub fn new() -> Self { Counter{}}
+}
 
 #[derive(Copy, Clone)]
 pub struct DruidHandler<T> {
