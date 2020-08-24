@@ -332,19 +332,27 @@ pub type KeyModifiers = Modifiers;
 pub struct Application<T>(Option<T>);
 impl<T> Application<T> {
     pub fn new() -> Result<Self, PlatformError> { Ok(Self(None)) }
-    pub fn run(self: Self, _: Option<BoxedAppHandler<T>>) {} ////TODO
+    pub fn run(self, _: Option<BoxedAppHandler<T>>) {} ////TODO
 }
 
 pub trait AppDelegate<T> {}
 
 #[derive(Copy, Clone)]
-pub struct AppHandler<T>(Option<T>);
+pub struct AppHandler<T> {
+    app_state: AppState<T>    
+}
 impl<T> AppHandler<T> {
-    pub fn new(_: AppState<T>) -> Self { Self(None) }
+    pub fn new(app_state: AppState<T>) -> Self { Self{ app_state } }
 }
 
 #[derive(Copy, Clone)]
-pub struct AppState<T>(Option<T>);
+pub struct AppState<T> {
+    app: Application<T>,
+    data: T,
+    env: Env,
+    delegate: Option<BoxedAppDelegate<T>>,
+    ext_event_host: ExtEventHost,    
+}
 impl<T> AppState<T> {
     pub fn new(
         app: Application<T>,
@@ -352,7 +360,11 @@ impl<T> AppState<T> {
         env: Env,
         delegate: Option<BoxedAppDelegate<T>>,
         ext_event_host: ExtEventHost,    
-    ) -> Self { Self(None) }
+    ) -> Self { 
+        Self{ app, data, env, delegate, ext_event_host }
+    }
+    pub fn data(self) -> T { self.data }
+    pub fn env(self) -> Env { self.env }
 }
 
 #[derive(Copy, Clone)]
@@ -411,7 +423,7 @@ pub struct EventCtx();
 pub struct ExtEventHost();
 impl ExtEventHost {
     pub fn new() -> Self { Self{} }
-    pub fn make_sink(self: ExtEventHost) -> ExtEventSink { ExtEventSink{} }
+    pub fn make_sink(self) -> ExtEventSink { ExtEventSink{} }
 }
 
 #[derive(Copy, Clone)]
@@ -498,7 +510,7 @@ pub struct WindowBuilder();
 #[derive(Copy, Clone)]
 pub struct WindowHandle();
 impl WindowHandle {
-    pub fn show(self: Self) { }  ////TODO
+    pub fn show(self) { }  ////TODO
 }
 
 #[derive(Copy, Clone)]
