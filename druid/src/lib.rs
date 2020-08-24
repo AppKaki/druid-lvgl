@@ -330,6 +330,9 @@ pub type KeyModifiers = Modifiers;
 
 #[derive(Copy, Clone)]
 pub struct Application();
+impl Application {
+    pub fn new() -> Result<Self, PlatformError> { Ok(Self{}) }
+}
 
 pub trait AppDelegate<T> {}
 
@@ -337,16 +340,16 @@ pub trait AppDelegate<T> {}
 pub struct AppHandler();
 
 #[derive(Copy, Clone)]
-pub struct AppState<T>(PhantomData<T>);
+pub struct AppState<T>(Option<T>);
 
 #[derive(Copy, Clone)]
-pub struct Bloom<T>(PhantomData<T>);
+pub struct Bloom<T>(Option<T>);
 
 #[derive(Copy, Clone)]
-pub struct BoxedAppDelegate<T> (
-    //  AppDelegate<T>,
-    PhantomData<T>
-);
+pub struct BoxedAppDelegate<T> (Option<T>);
+impl<T> BoxedAppDelegate<T> {
+    pub fn new(delegate: impl AppDelegate<T> + 'static) -> Self { Self(None) }
+}
 
 #[derive(Copy, Clone)]
 pub struct BoxedAppHandler (
@@ -359,11 +362,9 @@ pub struct BoxedDruidHandler (
 );
 
 #[derive(Copy, Clone)]
-pub struct BoxedEnvSetupFn<T> (
-    T
-);
+pub struct BoxedEnvSetupFn<T> (Option<T>);
 impl<T> BoxedEnvSetupFn<T> {
-    fn new(t: T) -> Self { Self(t) }
+    pub fn new(f: impl Fn(&mut Env, &T) + 'static) -> Self { Self(None) }
 }
 
 #[derive(Copy, Clone)]
@@ -395,17 +396,21 @@ pub struct EventCtx();
 #[derive(Copy, Clone)]
 pub struct ExtEventHost();
 impl ExtEventHost {
-    fn new() -> Self { Self{} }
+    pub fn new() -> Self { Self{} }
+    pub fn make_sink(self: ExtEventHost) -> ExtEventSink { ExtEventSink{} }
 }
 
 #[derive(Copy, Clone)]
 pub struct ExtEventSink();
+impl ExtEventSink {
+    pub fn new() -> Self { Self{} }
+}
 
 #[derive(Copy, Clone)]
-pub struct KeyOrValue<T>(PhantomData<T>);
+pub struct KeyOrValue<T>(Option<T>);
 
 #[derive(Copy, Clone)]
-pub struct HashMap<K, V>(PhantomData<K>, PhantomData<V>);
+pub struct HashMap<K, V>(Option<K>, Option<V>);
 
 #[derive(Copy, Clone)]
 pub struct LayoutCtx();
@@ -414,7 +419,7 @@ pub struct LayoutCtx();
 pub struct LifeCycleCtx();
 
 #[derive(Copy, Clone)]
-pub struct LocalizedString<T>(PhantomData<T>);
+pub struct LocalizedString<T>(Option<T>);
 
 #[derive(Copy, Clone)]
 pub struct KbKey();
@@ -429,7 +434,7 @@ pub struct Modifiers();
 pub struct MouseEvent();
 
 #[derive(Copy, Clone)]
-pub struct MenuDesc<T>(PhantomData<T>);
+pub struct MenuDesc<T>(Option<T>);
 
 #[derive(Copy, Clone)]
 pub struct NonZeroU64();
@@ -465,7 +470,7 @@ pub struct UnitPoint();
 pub struct UpdateCtx();
 
 #[derive(Copy, Clone)]
-pub struct VecDeque<T>(PhantomData<T>);
+pub struct VecDeque<T>(Option<T>);
 
 #[derive(Copy, Clone)]
 pub struct WindowBuilder();
