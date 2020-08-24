@@ -366,6 +366,7 @@ impl<T> AppState<T> {
     pub fn app(self) -> Application<T> { self.app }
     pub fn data(self) -> T { self.data }
     pub fn env(self) -> Env { self.env }
+    pub fn add_window(self, id: WindowId, window: WindowDesc<T>) {}
 }
 
 #[derive(Copy, Clone)]
@@ -474,6 +475,7 @@ pub struct MouseEvent();
 pub struct MenuDesc<T>(Option<T>);
 impl<T> MenuDesc<T> {
     pub fn platform_default() -> Option<Self> { Some(Self(None)) }
+    pub fn build_window_menu(self, data: &T, env: &Env) -> MenuDesc<T> { MenuDesc(None) }
 }
 
 #[derive(Copy, Clone)]
