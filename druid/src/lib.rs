@@ -347,7 +347,7 @@ impl<T> AppHandler<T> {
 pub struct AppState<T>(Option<T>);
 impl<T> AppState<T> {
     pub fn new(
-        app: Application,
+        app: Application<T>,
         data: T,
         env: Env,
         delegate: Option<BoxedAppDelegate<T>>,
@@ -434,6 +434,9 @@ pub struct LifeCycleCtx();
 
 #[derive(Copy, Clone)]
 pub struct LocalizedString<T>(Option<T>);
+impl<T> LocalizedString<T> {
+    pub fn new(_app_name: &str) -> Self { Self(None) }
+}
 
 #[derive(Copy, Clone)]
 pub struct KbKey();
@@ -449,6 +452,9 @@ pub struct MouseEvent();
 
 #[derive(Copy, Clone)]
 pub struct MenuDesc<T>(Option<T>);
+impl<T> MenuDesc<T> {
+    pub fn platform_default() -> Option<Self> { Some(Self(None)) }
+}
 
 #[derive(Copy, Clone)]
 pub struct NonZeroU64();
@@ -497,6 +503,9 @@ impl WindowHandle {
 
 #[derive(Copy, Clone)]
 pub struct WindowId();
+impl WindowId {
+    pub fn next() -> Self { Self{} }  ////TODO
+}
 
 #[derive(Copy, Clone)]
 pub struct theme();

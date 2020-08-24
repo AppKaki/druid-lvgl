@@ -182,6 +182,10 @@ pub trait Widget<T> {
         "widget" ////
         ////std::any::type_name::<Self>()
     }
+
+    fn boxed(&self) -> BoxedWidget<T> { ////TODO
+        BoxedWidget::<T>{ 0: None }
+    }
 }
 
 impl WidgetId {

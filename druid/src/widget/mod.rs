@@ -120,8 +120,7 @@ use ::core::marker::PhantomData;
 
 #[derive(Copy, Clone)]
 pub struct BoxedWidget<T> (
-    //  Widget<T>,
-    PhantomData<T>
+    Option<T>
 );
 
 //// End
