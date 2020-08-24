@@ -519,6 +519,13 @@ pub struct WindowBuilder<T> {
 impl<T> WindowBuilder<T> {
     pub fn new(app: Application<T>) -> Self { Self{ app } }
     pub fn build(self) -> Result<WindowHandle, PlatformError> { Ok(WindowHandle{}) }  ////TODO
+    pub fn resizable(self, resizable: bool) {}
+    pub fn show_titlebar(self, show_titlebar: bool) {}
+    pub fn set_handler(self, handler: BoxedDruidHandler<T>) {}
+    pub fn set_size(self, size: Size) {}
+    pub fn set_min_size(self, min_size: Size) {}
+    pub fn set_title(self, title: &str) {}
+    pub fn set_menu(self, menu: MenuDesc<T>) {}
 }
 
 #[derive(Copy, Clone)]
