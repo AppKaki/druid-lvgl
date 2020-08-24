@@ -339,10 +339,10 @@ pub trait AppDelegate<T> {}
 
 #[derive(Copy, Clone)]
 pub struct AppHandler<T> {
-    app_state: AppState<T>    
+    state: AppState<T>    
 }
 impl<T> AppHandler<T> {
-    pub fn new(app_state: AppState<T>) -> Self { Self{ app_state } }
+    pub fn new(state: AppState<T>) -> Self { Self{ state } }
 }
 
 #[derive(Copy, Clone)]
@@ -363,6 +363,7 @@ impl<T> AppState<T> {
     ) -> Self { 
         Self{ app, data, env, delegate, ext_event_host }
     }
+    pub fn app(self) -> Application<T> { self.app }
     pub fn data(self) -> T { self.data }
     pub fn env(self) -> Env { self.env }
 }
@@ -379,18 +380,19 @@ impl<T> BoxedAppDelegate<T> {
 #[derive(Copy, Clone)]
 pub struct BoxedAppHandler<T> (Option<T>);
 impl<T> BoxedAppHandler<T> {
-    pub fn new(_: AppHandler<T>) -> Self { Self(None) }
+    pub fn new(_handler: AppHandler<T>) -> Self { Self(None) }
 }
 
 #[derive(Copy, Clone)]
-pub struct BoxedDruidHandler (
-    //  DruidHandler,
-);
+pub struct BoxedDruidHandler<T> (Option<T>);
+impl<T> BoxedDruidHandler<T> {
+    pub fn new(_handler: DruidHandler<T>) -> Self { Self(None) }
+}
 
 #[derive(Copy, Clone)]
 pub struct BoxedEnvSetupFn<T> (Option<T>);
 impl<T> BoxedEnvSetupFn<T> {
-    pub fn new(f: impl Fn(&mut Env, &T) + 'static) -> Self { Self(None) }
+    pub fn new(_f: impl Fn(&mut Env, &T) + 'static) -> Self { Self(None) }
 }
 
 #[derive(Copy, Clone)]
@@ -411,7 +413,13 @@ pub struct ContextState();
 pub struct Counter();
 
 #[derive(Copy, Clone)]
-pub struct DruidHandler();
+pub struct DruidHandler<T> {
+    state: AppState<T>,
+    id: WindowId,
+}
+impl<T> DruidHandler<T> {
+    pub fn new_shared(state: AppState<T>, id: WindowId) -> Self { Self{ state, id } }
+}
 
 #[derive(Copy, Clone)]
 pub struct Env();
@@ -505,7 +513,13 @@ pub struct UpdateCtx();
 pub struct VecDeque<T>(Option<T>);
 
 #[derive(Copy, Clone)]
-pub struct WindowBuilder();
+pub struct WindowBuilder<T> {
+    app: Application<T>,
+}
+impl<T> WindowBuilder<T> {
+    pub fn new(app: Application<T>) -> Self { Self{ app } }
+    pub fn build(self) -> Result<WindowHandle, PlatformError> { Ok(WindowHandle{}) }  ////TODO
+}
 
 #[derive(Copy, Clone)]
 pub struct WindowHandle();
