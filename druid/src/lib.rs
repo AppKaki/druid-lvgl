@@ -328,29 +328,37 @@ pub type KeyModifiers = Modifiers;
 
 //// Begin
 
+#[derive(Copy, Clone)]
 pub struct Application();
 
 pub trait AppDelegate<T> {}
 
+#[derive(Copy, Clone)]
 pub struct AppHandler();
 
+#[derive(Copy, Clone)]
 pub struct AppState<T>(PhantomData<T>);
 
+#[derive(Copy, Clone)]
 pub struct Bloom<T>(PhantomData<T>);
 
+#[derive(Copy, Clone)]
 pub struct BoxedAppDelegate<T> (
     //  AppDelegate<T>,
     PhantomData<T>
 );
 
+#[derive(Copy, Clone)]
 pub struct BoxedAppHandler (
     //  AppHandler,
 );
 
+#[derive(Copy, Clone)]
 pub struct BoxedDruidHandler (
     //  DruidHandler,
 );
 
+#[derive(Copy, Clone)]
 pub struct BoxedEnvSetupFn<T> (
     T
 );
@@ -358,80 +366,117 @@ impl<T> BoxedEnvSetupFn<T> {
     fn new(t: T) -> Self { Self(t) }
 }
 
+#[derive(Copy, Clone)]
 pub struct BoxedText (
     //  Fn(&T, &Env) -> String,
 );
 
+#[derive(Copy, Clone)]
 pub struct Clipboard();
 
+#[derive(Copy, Clone)]
 pub struct Command();
 
+#[derive(Copy, Clone)]
 pub struct ContextState();
 
+#[derive(Copy, Clone)]
 pub struct Counter();
 
+#[derive(Copy, Clone)]
 pub struct DruidHandler();
 
+#[derive(Copy, Clone)]
 pub struct Env();
 
+#[derive(Copy, Clone)]
 pub struct EventCtx();
 
+#[derive(Copy, Clone)]
 pub struct ExtEventHost();
 impl ExtEventHost {
     fn new() -> Self { Self{} }
 }
 
+#[derive(Copy, Clone)]
 pub struct ExtEventSink();
 
+#[derive(Copy, Clone)]
 pub struct KeyOrValue<T>(PhantomData<T>);
 
+#[derive(Copy, Clone)]
 pub struct HashMap<K, V>(PhantomData<K>, PhantomData<V>);
 
+#[derive(Copy, Clone)]
 pub struct LayoutCtx();
 
+#[derive(Copy, Clone)]
 pub struct LifeCycleCtx();
 
+#[derive(Copy, Clone)]
 pub struct LocalizedString<T>(PhantomData<T>);
 
+#[derive(Copy, Clone)]
+pub struct KbKey();
+
+#[derive(Copy, Clone)]
 pub struct KeyEvent();
 
+#[derive(Copy, Clone)]
 pub struct Modifiers();
 
+#[derive(Copy, Clone)]
 pub struct MouseEvent();
 
+#[derive(Copy, Clone)]
 pub struct MenuDesc<T>(PhantomData<T>);
 
 #[derive(Copy, Clone)]
 pub struct NonZeroU64();
 
+#[derive(Copy, Clone)]
 pub struct PaintCtx();
 
+#[derive(Copy, Clone)]
 pub struct PietText();
 
+#[derive(Copy, Clone)]
 pub struct PietTextLayout();
 
+#[derive(Copy, Clone)]
 pub struct Region();
 
+#[derive(Copy, Clone)]
 pub struct Shape();
 
+#[derive(Copy, Clone)]
 pub struct SizedBox();
 
+#[derive(Copy, Clone)]
 pub struct Target();
 
+#[derive(Copy, Clone)]
 pub struct TimerToken();
 
+#[derive(Copy, Clone)]
 pub struct UnitPoint();
 
+#[derive(Copy, Clone)]
 pub struct UpdateCtx();
 
+#[derive(Copy, Clone)]
 pub struct VecDeque<T>(PhantomData<T>);
 
+#[derive(Copy, Clone)]
 pub struct WindowBuilder();
 
+#[derive(Copy, Clone)]
 pub struct WindowHandle();
 
+#[derive(Copy, Clone)]
 pub struct WindowId();
 
+#[derive(Copy, Clone)]
 pub struct theme();
 
 pub type PlatformError = String; ////

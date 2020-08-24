@@ -118,6 +118,7 @@ pub mod prelude {
 //// Begin
 use ::core::marker::PhantomData;
 
+#[derive(Copy, Clone)]
 pub struct BoxedWidget<T> (
     //  Widget<T>,
     PhantomData<T>
