@@ -173,7 +173,8 @@ impl<T: Data> WindowDesc<T> {
         // wrap this closure in another closure that boxes the created widget.
         // this just makes our API slightly cleaner; callers don't need to explicitly box.
         WindowDesc {
-            root: root().boxed(),
+            root: root(), ////
+            ////root: root().boxed(),
             title: LocalizedString::new("app-name").into(),
             size: None,
             min_size: None,
