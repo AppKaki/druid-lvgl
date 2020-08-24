@@ -329,18 +329,31 @@ pub type KeyModifiers = Modifiers;
 //// Begin
 
 #[derive(Copy, Clone)]
-pub struct Application();
-impl Application {
-    pub fn new() -> Result<Self, PlatformError> { Ok(Self{}) }
+pub struct Application<T>(Option<T>);
+impl<T> Application<T> {
+    pub fn new() -> Result<Self, PlatformError> { Ok(Self(None)) }
+    pub fn run(self: Self, _: Option<BoxedAppHandler<T>>) {} ////TODO
 }
 
 pub trait AppDelegate<T> {}
 
 #[derive(Copy, Clone)]
-pub struct AppHandler();
+pub struct AppHandler<T>(Option<T>);
+impl<T> AppHandler<T> {
+    pub fn new(_: AppState<T>) -> Self { Self(None) }
+}
 
 #[derive(Copy, Clone)]
 pub struct AppState<T>(Option<T>);
+impl<T> AppState<T> {
+    pub fn new(
+        app: Application,
+        data: T,
+        env: Env,
+        delegate: Option<BoxedAppDelegate<T>>,
+        ext_event_host: ExtEventHost,    
+    ) -> Self { Self(None) }
+}
 
 #[derive(Copy, Clone)]
 pub struct Bloom<T>(Option<T>);
@@ -352,9 +365,10 @@ impl<T> BoxedAppDelegate<T> {
 }
 
 #[derive(Copy, Clone)]
-pub struct BoxedAppHandler (
-    //  AppHandler,
-);
+pub struct BoxedAppHandler<T> (Option<T>);
+impl<T> BoxedAppHandler<T> {
+    pub fn new(_: AppHandler<T>) -> Self { Self(None) }
+}
 
 #[derive(Copy, Clone)]
 pub struct BoxedDruidHandler (
@@ -477,12 +491,18 @@ pub struct WindowBuilder();
 
 #[derive(Copy, Clone)]
 pub struct WindowHandle();
+impl WindowHandle {
+    pub fn show(self: Self) { }  ////TODO
+}
 
 #[derive(Copy, Clone)]
 pub struct WindowId();
 
 #[derive(Copy, Clone)]
 pub struct theme();
+impl theme {
+    pub fn init() -> Env { Env{} }
+}
 
 pub type PlatformError = String; ////
 

@@ -135,7 +135,7 @@ impl<T: Data> AppLauncher<T> {
 
         let mut env = theme::init();
         if let Some(f) = self.env_setup.take() {
-            f(&mut env, &data);
+            ////TODO: f(&mut env, &data);
         }
 
         let mut state = AppState::new(
