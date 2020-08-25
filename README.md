@@ -1,12 +1,12 @@
 # Experimental Port of Druid to LVGL
 
-So that we can have a Declarative Rust UI for PineTime Watch Faces...
+So that we can have a Declarative Rust UI for PineTime Watch Faces based on LVGL...
 
-https://github.com/AppKaki/lvgl-wasm/tree/rust
+[`lvgl-wasm`: PineTime Watch Face Simulator with LVGL ported to WebAssembly (Rust Branch)](https://github.com/AppKaki/lvgl-wasm/blob/rust/README.md)
 
-https://lupyuen.github.io/pinetime-rust-riot/articles/watch_face
+[Porting PineTime Watch Face from C to Rust On RIOT with LVGL](https://lupyuen.github.io/pinetime-rust-riot/articles/watch_face)
 
-TODO
+TODO:
 
 1. Render druid Widgets as LVGL Widgets
 
@@ -14,7 +14,15 @@ TODO
 
 1. Change to `no_std` to compile with embedded platforms
 
-1. Change Screen Coordinates from `f64` to `u8` (alias `ScreenCoord`) to conserve memory on embedded platforms. See `Point`, `Size`, `Vec2`, `Rect`, `Insets`, `Affine` in [`druid/src/lib.rs`](druid/src/lib.rs#L129-L217)
+1. Change Screen Coordinates from `f64` to `u8` (alias `ScreenCoord`) to conserve memory on embedded platforms. See `Point`, `Size`, `Vec2`, `Rect`, `Insets`, `Affine` in [`druid/src/lib.rs`](druid/src/lib.rs#L129-L242)
+
+1. Change Flex Layout Factors from `f64` to `f32` (alias `ScreenFactor`). See [`druid/src/lib.rs`](druid/src/lib.rs#L129-L242)
+
+1. Change Widget ID from `u64` to `u8` (alias `CounterType`). See [`druid/src/lib.rs`](druid/src/lib.rs#L129-L242)
+
+1. Limit Strings to 20 characters.  See [`druid/src/lib.rs`](druid/src/lib.rs#L129-L242)
+
+1. Limit Vectors to 10 entries.  See [`druid/src/lib.rs`](druid/src/lib.rs#L129-L242)
 
 # Druid
 
