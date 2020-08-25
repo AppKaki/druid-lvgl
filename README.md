@@ -8,9 +8,9 @@ So that we can have a Declarative Rust UI for PineTime Watch Faces based on LVGL
 
 TODO:
 
-1. Render druid Widgets as LVGL Widgets
+1. Render druid Widgets as LVGL Widgets. See [`druid/src/widget/label.rs`](druid/src/widget/label.rs#L295-L316)
 
-1. Remove `druid-shell`, `piet` and `kurbo` dependencies
+1. Remove `druid-shell`, `piet` and `kurbo` dependencies, to simplify druid on embedded platforms
 
 1. Change to `no_std` to compile with embedded platforms, without dynamic memory allocation
 
