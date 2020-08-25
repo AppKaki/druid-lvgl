@@ -555,10 +555,12 @@ impl WindowId {
     pub fn next() -> Self { Self{} }  ////TODO
 }
 
-#[derive(Copy, Clone)]
-pub struct theme();
-impl theme {
+pub mod theme {
+    use crate::{ Color, Env, KeyOrValue, ScreenFactor };
     pub fn init() -> Env { Env{} }
+    pub static LABEL_COLOR: KeyOrValue<Color> = KeyOrValue(None);
+    pub static TEXT_SIZE_NORMAL: KeyOrValue<ScreenFactor> = KeyOrValue(None);
+    pub static FONT_NAME: KeyOrValue<&'static str> = KeyOrValue(None);
 }
 
 pub type PlatformError = String; ////
