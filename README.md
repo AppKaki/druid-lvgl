@@ -12,9 +12,9 @@ TODO:
 
 1. Remove `druid-shell`, `piet` and `kurbo` dependencies, to simplify druid on embedded platforms. Replace them by stubs: [`druid/src/lib.rs`](druid/src/lib.rs#L335-L602)
 
-1. Change to `no_std` to compile with embedded platforms, without dynamic memory allocation
+1. Change druid to `no_std` to compile on embedded platforms, without dynamic memory allocation
 
-1. Change Dynamic, Heap-Based objects (`AppDelegate`, `AppHandler`, `DruidHandler`, `Widget`) to Static Heapless objects (`BoxedAppDelegate`, `BoxedAppHandler`, `BoxedDruidHandler`, `BoxedWidget`). See [`druid/src/lib.rs`](druid/src/lib.rs#L335-L602) and [`druid/src/widget/mod.rs`](druid/src/widget/mod.rs#L118-L129)
+1. Change Dynamic Heap-Based objects (`AppDelegate`, `AppHandler`, `DruidHandler`, `Widget`) to Static Heapless objects (`BoxedAppDelegate`, `BoxedAppHandler`, `BoxedDruidHandler`, `BoxedWidget`). See [`druid/src/lib.rs`](druid/src/lib.rs#L335-L602) and [`druid/src/widget/mod.rs`](druid/src/widget/mod.rs#L118-L129)
 
 1. Change Screen Coordinates from `f64` to `u8` (alias `ScreenCoord`) to conserve memory on embedded platforms. See `Point`, `Size`, `Vec2`, `Rect`, `Insets`, `Affine` in [`druid/src/lib.rs`](druid/src/lib.rs#L129-L242)
 
