@@ -455,7 +455,10 @@ impl ExtEventSink {
 }
 
 #[derive(Copy, Clone)]
-pub struct KeyOrValue<T>(Option<T>);
+pub struct KeyOrValue<T>(T);
+impl<T> KeyOrValue<T> {
+    pub fn resolve(self, env: &Env) -> T { self.0 } 
+}
 
 #[derive(Copy, Clone)]
 pub struct HashMap<K, V>(Option<K>, Option<V>);
@@ -558,9 +561,9 @@ impl WindowId {
 pub mod theme {
     use crate::{ Color, Env, KeyOrValue, ScreenFactor };
     pub fn init() -> Env { Env{} }
-    pub static LABEL_COLOR: KeyOrValue<Color> = KeyOrValue(None);
-    pub static TEXT_SIZE_NORMAL: KeyOrValue<ScreenFactor> = KeyOrValue(None);
-    pub static FONT_NAME: KeyOrValue<&'static str> = KeyOrValue(None);
+    pub static LABEL_COLOR: KeyOrValue<Color> = KeyOrValue(Color::Rgba32(0xffffff));
+    pub static TEXT_SIZE_NORMAL: KeyOrValue<ScreenFactor> = KeyOrValue(1.0);
+    pub static FONT_NAME: KeyOrValue<&'static str> = KeyOrValue("standard_font");
 }
 
 pub type PlatformError = String; ////
