@@ -10,21 +10,21 @@ TODO:
 
 1. Render druid Widgets as LVGL Widgets. See [`druid/src/widget/label.rs`](druid/src/widget/label.rs#L295-L316)
 
-1. Remove `druid-shell`, `piet` and `kurbo` dependencies, to simplify druid on embedded platforms
+1. Remove `druid-shell`, `piet` and `kurbo` dependencies, to simplify druid on embedded platforms. Replace them by stubs: [`druid/src/lib.rs`](druid/src/lib.rs#L335-L602)
 
 1. Change to `no_std` to compile with embedded platforms, without dynamic memory allocation
 
-1. Change Dynamic, Heap-Based objects (`AppDelegate`, `AppHandler`, `DruidHandler`, `Widget`) to Static Heapless objects (`BoxedAppDelegate`, `BoxedAppHandler`, `BoxedDruidHandler`, `BoxedWidget`). See [`druid/src/lib.rs`](druid/src/lib.rs) and [`druid/src/widget/mod.rs`](druid/src/widget/mod.rs)
+1. Change Dynamic, Heap-Based objects (`AppDelegate`, `AppHandler`, `DruidHandler`, `Widget`) to Static Heapless objects (`BoxedAppDelegate`, `BoxedAppHandler`, `BoxedDruidHandler`, `BoxedWidget`). See [`druid/src/lib.rs`](druid/src/lib.rs#L335-L602) and [`druid/src/widget/mod.rs`](druid/src/widget/mod.rs#L118-L129)
 
 1. Change Screen Coordinates from `f64` to `u8` (alias `ScreenCoord`) to conserve memory on embedded platforms. See `Point`, `Size`, `Vec2`, `Rect`, `Insets`, `Affine` in [`druid/src/lib.rs`](druid/src/lib.rs#L129-L242)
 
-1. Change Flex Layout Factors from `f64` to `f32` (alias `ScreenFactor`). See [`druid/src/lib.rs`](druid/src/lib.rs#L129-L242)
+1. Change Flex Layout Factor from `f64` to `f32` (alias `ScreenFactor`). See [`druid/src/lib.rs`](druid/src/lib.rs#L129-L242)
 
 1. Change Widget ID from `u64` to `u8` (alias `CounterType`). See [`druid/src/lib.rs`](druid/src/lib.rs#L129-L242)
 
-1. Strings changed to `heapless`, limited to 20 characters.  See [`druid/src/lib.rs`](druid/src/lib.rs#L129-L242)
+1. Change Strings to [`heapless`](https://docs.rs/heapless/0.5.5/heapless/index.html), limit to 20 characters.  See [`druid/src/lib.rs`](druid/src/lib.rs#L129-L242)
 
-1. Vectors changed to `heapless`, limited to 10 entries.  See [`druid/src/lib.rs`](druid/src/lib.rs#L129-L242)
+1. Change Vectors to [`heapless`](https://docs.rs/heapless/0.5.5/heapless/index.html), limit to 10 elements.  See [`druid/src/lib.rs`](druid/src/lib.rs#L129-L242)
 
 # Druid
 
