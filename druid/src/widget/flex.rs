@@ -17,7 +17,7 @@
 ////use crate::kurbo::common::FloatExt;
 use crate::{Point, Rect, Size}; ////
 ////use crate::kurbo::{Point, Rect, Size};
-use crate::{BoxedWidget, ScreenFactor, SizedBox, Vec}; ////
+use crate::{BoxedWidget, ScreenCoord, ScreenFactor, SizedBox, Vec}; ////
 
 ////use crate::widget::SizedBox;
 use crate::{
@@ -289,16 +289,20 @@ impl Axis {
     pub(crate) fn major(self, coords: Size) -> ScreenFactor { ////
     ////pub(crate) fn major(self, coords: Size) -> f64 {
         match self {
-            Axis::Horizontal => coords.width,
-            Axis::Vertical => coords.height,
+            Axis::Horizontal => coords.width.into(), ////
+            ////Axis::Horizontal => coords.width,
+            Axis::Vertical => coords.height.into(), ////
+            ////Axis::Vertical => coords.height,
         }
     }
 
     pub(crate) fn minor(self, coords: Size) -> ScreenFactor { ////
     ////pub(crate) fn minor(self, coords: Size) -> f64 {
         match self {
-            Axis::Horizontal => coords.height,
-            Axis::Vertical => coords.width,
+            Axis::Horizontal => coords.height.into(), ////
+            ////Axis::Horizontal => coords.height,
+            Axis::Vertical => coords.width.into(), ////
+            ////Axis::Vertical => coords.width,
         }
     }
 
@@ -315,12 +319,16 @@ impl Axis {
     ////fn constraints(self, bc: &BoxConstraints, min_major: f64, major: f64) -> BoxConstraints {
         match self {
             Axis::Horizontal => BoxConstraints::new(
-                Size::new(min_major, bc.min().height),
-                Size::new(major, bc.max().height),
+                Size::new(min_major as ScreenCoord, bc.min().height), ////
+                ////Size::new(min_major, bc.min().height),
+                Size::new(major as ScreenCoord, bc.max().height), ////
+                ////Size::new(major, bc.max().height),
             ),
             Axis::Vertical => BoxConstraints::new(
-                Size::new(bc.min().width, min_major),
-                Size::new(bc.max().width, major),
+                Size::new(bc.min().width, min_major as ScreenCoord), ////
+                ////Size::new(bc.min().width, min_major),
+                Size::new(bc.max().width, major as ScreenCoord), ////
+                ////Size::new(bc.max().width, major),
             ),
         }
     }
