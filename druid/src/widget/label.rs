@@ -323,7 +323,7 @@ impl<T> From<String> for LabelText<T> {
 
 impl<T> From<&str> for LabelText<T> {
     fn from(src: &str) -> LabelText<T> {
-        LabelText::Specific(src) ////
+        LabelText::Specific(String::from(src)) ////
         ////LabelText::Specific(src.to_string())
     }
 }
