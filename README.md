@@ -20,9 +20,9 @@ TODO:
 
 1. Change Widget ID from `u64` to `u8` (alias `CounterType`). See [`druid/src/lib.rs`](druid/src/lib.rs#L129-L242)
 
-1. Limit Strings to 20 characters.  See [`druid/src/lib.rs`](druid/src/lib.rs#L129-L242)
+1. Strings changed to `heapless`, limited to 20 characters.  See [`druid/src/lib.rs`](druid/src/lib.rs#L129-L242)
 
-1. Limit Vectors to 10 entries.  See [`druid/src/lib.rs`](druid/src/lib.rs#L129-L242)
+1. Vectors changed to `heapless`, limited to 10 entries.  See [`druid/src/lib.rs`](druid/src/lib.rs#L129-L242)
 
 # Druid
 
