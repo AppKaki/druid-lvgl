@@ -531,7 +531,15 @@ pub struct Region();
 pub struct Shape();
 
 #[derive(Copy, Clone)]
-pub struct SizedBox();
+pub struct SizedBox {
+    width:  ScreenCoord,
+    height: ScreenCoord,
+}
+impl SizedBox {
+    pub fn empty() -> Self { Self{ width: 0, height: 0 } }
+    pub fn expand_width(self) -> Self { self }  ////TODO
+    pub fn expand_height(self) -> Self { self }  ////TODO
+}
 
 #[derive(Copy, Clone)]
 pub struct Target();
