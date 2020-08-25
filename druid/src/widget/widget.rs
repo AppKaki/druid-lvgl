@@ -16,7 +16,7 @@
 ////use std::ops::{Deref, DerefMut};
 
 use super::prelude::*;
-use crate::{BoxedWidget, Counter, NonZeroU64}; ////
+use crate::{BoxedWidget, Counter, CounterType, NonZeroU64}; ////
 
 /// A unique identifier for a single [`Widget`].
 ///
@@ -49,7 +49,8 @@ use crate::{BoxedWidget, Counter, NonZeroU64}; ////
 /// [`IdentityWrapper`]: widget/struct.IdentityWrapper.html
 // this is NonZeroU64 because we regularly store Option<WidgetId>
 #[derive(Clone, Copy, Debug, Hash, PartialEq, Eq)]
-pub struct WidgetId(NonZeroU64);
+pub struct WidgetId(CounterType); ////
+////pub struct WidgetId(NonZeroU64);
 
 /// The trait implemented by all widgets.
 ///
@@ -212,10 +213,12 @@ impl WidgetId {
     /// be the same as the raw value that is passed in; it will be
     /// `u64::max_value() - raw`.
     #[allow(unsafe_code)]
-    pub const fn reserved(raw: u16) -> WidgetId {
-        let id = u64::max_value() - raw as u64;
+    pub const fn reserved(raw: CounterType) -> WidgetId { ////
+    ////pub const fn reserved(raw: u16) -> WidgetId {
+        let id = CounterType::max_value() - raw as CounterType; ////
+        ////let id = u64::max_value() - raw as u64;
         // safety: by construction this can never be zero.
-        WidgetId(unsafe { NonZeroU64::new_unchecked(id) })
+        WidgetId(id) ////
         ////WidgetId(unsafe { std::num::NonZeroU64::new_unchecked(id) })
     }
 

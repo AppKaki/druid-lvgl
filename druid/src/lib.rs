@@ -121,7 +121,7 @@
 //! [`image` crate]: https://crates.io/crates/image
 
 #![no_std] //  Don't link with standard Rust library, which is not compatible with embedded systems ////
-#![deny(intra_doc_link_resolution_failure, unsafe_code)]
+#![deny(intra_doc_link_resolution_failure, /* unsafe_code */)] ////
 #![allow(clippy::new_ret_no_self, clippy::needless_doctest_main)]
 #![deny(clippy::trivially_copy_pass_by_ref)]
 #![cfg_attr(docsrs, feature(doc_cfg))]
@@ -141,6 +141,9 @@ pub type ScreenCoord = u8;  //  Previously f64
 
 /// Numeric type for flex factors
 pub type ScreenFactor = f32;  //  Previously f64
+
+/// Numeric type for Widget Id
+pub type CounterType = u8;  //  Previously u64
 
 /// A 2D point.
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -414,7 +417,14 @@ pub struct ContextState();
 pub struct Counter();
 impl Counter {
     pub fn new() -> Self { Counter{}}
+    pub fn next_nonzero(self) -> CounterType {
+        let count = COUNTER;
+        unsafe { COUNTER += 1 };
+        count
+    }
 }
+
+static mut COUNTER: u8 = 1;
 
 #[derive(Copy, Clone)]
 pub struct DruidHandler<T> {
