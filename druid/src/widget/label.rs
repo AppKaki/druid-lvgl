@@ -24,7 +24,7 @@ use crate::{
     ////Point, 
     Size, UpdateCtx, Widget,
 };
-use crate::{BoxedText, Color, String, PietText, PietTextLayout, ScreenFactor, UnitPoint}; ////
+use crate::{BoxedText, Color, String, PietText, PietTextLayout, ScreenCoord, ScreenFactor, UnitPoint}; ////
 use ::core::marker::PhantomData; ////
 
 // a fudgey way to get an approximate line height from a font size
@@ -60,7 +60,7 @@ pub struct Dynamic<T> {
     f: BoxedText, ////
     ////f: Box<dyn Fn(&T, &Env) -> String>,
     resolved: String,
-    _p: PhantomData<T> ////
+    _p: Option<T> ////
 }
 
 /// A label that displays some text.
@@ -224,7 +224,7 @@ impl<T: Data> Label<T> {
 
 impl<T> Dynamic<T> {
     fn resolve(&mut self, data: &T, env: &Env) -> bool {
-        let new = self.f.apply(data, env); ////
+        let new = self.f.resolve(data, env); ////
         ////let new = (self.f)(data, env);
         let changed = new != self.resolved;
         self.resolved = new;
@@ -285,8 +285,10 @@ impl<T: Data> Widget<T> for Label<T> {
         let font_size = self.size.resolve(env);
         let text_layout = self.get_layout(&mut ctx.text(), env);
         bc.constrain(Size::new(
-            text_layout.width() + 2. * LABEL_X_PADDING,
-            font_size * LINE_HEIGHT_FACTOR,
+            text_layout.width() + (2. * LABEL_X_PADDING) as ScreenCoord, ////
+            ////text_layout.width() + 2. * LABEL_X_PADDING,
+            (font_size * LINE_HEIGHT_FACTOR) as ScreenCoord, ////
+            ////font_size * LINE_HEIGHT_FACTOR,
         ))
     }
 
@@ -321,7 +323,8 @@ impl<T> From<String> for LabelText<T> {
 
 impl<T> From<&str> for LabelText<T> {
     fn from(src: &str) -> LabelText<T> {
-        LabelText::Specific(src.to_string())
+        LabelText::Specific(src) ////
+        ////LabelText::Specific(src.to_string())
     }
 }
 
@@ -333,11 +336,12 @@ impl<T> From<LocalizedString<T>> for LabelText<T> {
 
 impl<T, F: Fn(&T, &Env) -> String + 'static> From<F> for LabelText<T> {
     fn from(src: F) -> LabelText<T> {
-        let f = BoxedText::new(src); ////
+        let f = BoxedText::new(); ////TODO
         ////let f = Box::new(src);
         LabelText::Dynamic(Dynamic {
             f,
             resolved: String::default(),
+            _p: None, ////
         })
     }
 }

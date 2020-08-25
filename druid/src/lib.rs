@@ -162,6 +162,9 @@ pub struct Size { ////
     /// The height.
     pub height: ScreenCoord,
 }
+impl Size {
+    pub fn new(width: ScreenCoord, height: ScreenCoord) -> Self { Size{ width, height } }
+}
 
 /// A 2D vector.
 ///
@@ -404,7 +407,8 @@ pub struct BoxedText (
     //  Fn(&T, &Env) -> String,
 );
 impl BoxedText {
-    pub fn apply<T>(self, data: T, env: &Env) -> String { String::new() }
+    pub fn new() -> BoxedText { BoxedText{} }
+    pub fn resolve<T>(self, data: T, env: &Env) -> String { String::new() }
 }
 
 #[derive(Copy, Clone)]
@@ -468,6 +472,9 @@ pub struct HashMap<K, V>(Option<K>, Option<V>);
 
 #[derive(Copy, Clone)]
 pub struct LayoutCtx();
+impl LayoutCtx {
+    pub fn text(self) -> PietText { PietText{} }
+}
 
 #[derive(Copy, Clone)]
 pub struct LifeCycleCtx();
@@ -477,6 +484,7 @@ pub struct LocalizedString<T>(Option<T>);
 impl<T> LocalizedString<T> {
     pub fn new(_app_name: &str) -> Self { Self(None) }
     pub fn localized_str(self) -> &'static str { "localized_str" }
+    pub fn resolve(self, data: &T, env: &Env) -> bool { true }
 }
 
 #[derive(Copy, Clone)]
@@ -512,6 +520,9 @@ impl PietText {
 
 #[derive(Copy, Clone)]
 pub struct PietTextLayout();
+impl PietTextLayout {
+    pub fn width(self) -> ScreenCoord { 10 }  ////TODO
+}
 
 #[derive(Copy, Clone)]
 pub struct Region();
@@ -533,6 +544,9 @@ pub struct UnitPoint();
 
 #[derive(Copy, Clone)]
 pub struct UpdateCtx();
+impl UpdateCtx {
+    pub fn request_layout(self) {}  ////TODO
+}
 
 #[derive(Copy, Clone)]
 pub struct VecDeque<T>(Option<T>);
