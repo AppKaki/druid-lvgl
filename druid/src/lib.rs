@@ -403,6 +403,9 @@ impl<T> BoxedEnvSetupFn<T> {
 pub struct BoxedText (
     //  Fn(&T, &Env) -> String,
 );
+impl BoxedText {
+    pub fn apply<T>(self, data: T, env: &Env) -> String { String::new() }
+}
 
 #[derive(Copy, Clone)]
 pub struct Clipboard();
@@ -473,6 +476,7 @@ pub struct LifeCycleCtx();
 pub struct LocalizedString<T>(Option<T>);
 impl<T> LocalizedString<T> {
     pub fn new(_app_name: &str) -> Self { Self(None) }
+    pub fn localized_str(self) -> &'static str { "localized_str" }
 }
 
 #[derive(Copy, Clone)]
@@ -502,6 +506,9 @@ pub struct PaintCtx();
 
 #[derive(Copy, Clone)]
 pub struct PietText();
+impl PietText {
+
+}
 
 #[derive(Copy, Clone)]
 pub struct PietTextLayout();

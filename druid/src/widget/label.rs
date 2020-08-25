@@ -224,7 +224,8 @@ impl<T: Data> Label<T> {
 
 impl<T> Dynamic<T> {
     fn resolve(&mut self, data: &T, env: &Env) -> bool {
-        let new = (self.f)(data, env);
+        let new = self.f.apply(data, env); ////
+        ////let new = (self.f)(data, env);
         let changed = new != self.resolved;
         self.resolved = new;
         changed
