@@ -580,8 +580,10 @@ impl<T: Data> Widget<T> for Flex<T> {
                     ////log::warn!("A non-Flex child has an infinite height.");
                 ////}
 
-                major_non_flex += self.direction.major(child_size).expand();
-                minor = minor.max(self.direction.minor(child_size).expand());
+                major_non_flex += self.direction.major(child_size); ////TODO .expand();
+                ////major_non_flex += self.direction.major(child_size).expand();
+                minor = minor.max(self.direction.minor(child_size)); ////TODO .expand());
+                ////minor = minor.max(self.direction.minor(child_size).expand());
                 // Stash size.
                 let rect = Rect::from_origin_size(Point::ORIGIN, child_size);
                 child.widget.set_layout_rect(ctx, data, env, rect);

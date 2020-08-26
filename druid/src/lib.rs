@@ -195,12 +195,19 @@ pub struct Rect { ////
     pub y1: ScreenCoord,
 }
 impl Rect {
+    pub const ZERO: Rect = Rect{ x0: 0, y0: 0, x1: 0, y1: 0 };
     pub fn from_origin_size(point: Point, size: Size) -> Rect { 
         Rect { 
             x0: point.x, 
             y0: point.y,
             x1: point.x + size.width - 1,
             y1: point.y + size.height - 1,
+        }
+    }
+    pub fn size(self) -> Size {
+        Size {
+            width:  self.x1 - self.x0 + 1,
+            height: self.y1 - self.y0 + 1,
         }
     }
 }
