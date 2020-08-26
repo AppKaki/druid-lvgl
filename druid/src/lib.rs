@@ -210,6 +210,9 @@ impl Rect {
             height: self.y1 - self.y0 + 1,
         }
     }
+    // rect.with_origin(pos));
+    // child_paint_rect.union(child.widget.paint_rect());
+    // Rect::ZERO.with_size(my_size);
 }
 
 /// Insets from the edges of a rectangle.
