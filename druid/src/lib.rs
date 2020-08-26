@@ -166,7 +166,7 @@ impl From<(ScreenFactor, ScreenFactor)> for Point {
     }
 }
 
-/// A 2D size.
+/// A 2D size. Based on https://docs.rs/kurbo/0.6.2/src/kurbo/size.rs.html
 #[derive(Clone, Copy, Default, PartialEq)]
 pub struct Size { ////
     /// The width.
@@ -175,7 +175,41 @@ pub struct Size { ////
     pub height: ScreenCoord,
 }
 impl Size {
+    pub const ZERO: Size = Size{ width: 0, height: 0 };
     pub fn new(width: ScreenCoord, height: ScreenCoord) -> Self { Size{ width, height } }
+    /// Returns a new `Size`,
+    /// with `width` and `height` rounded away from zero to the nearest integer,
+    /// unless they are already an integer.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use kurbo::Size;
+    /// let size_pos = Size::new(3.3, 3.6).expand();
+    /// assert_eq!(size_pos.width, 4.0);
+    /// assert_eq!(size_pos.height, 4.0);
+    /// let size_neg = Size::new(-3.3, -3.6).expand();
+    /// assert_eq!(size_neg.width, -4.0);
+    /// assert_eq!(size_neg.height, -4.0);
+    /// ```
+    pub fn expand(self) -> Size { self }
+    /// Returns a new size bounded by `min` and `max.`
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use kurbo::Size;
+    ///
+    /// let this = Size::new(0., 100.);
+    /// let min = Size::new(10., 10.,);
+    /// let max = Size::new(50., 50.);
+    /// assert_eq!(this.clamp(min, max), Size::new(10., 50.))
+    /// ```
+    pub fn clamp(self, min: Size, max: Size) -> Self {
+        let width = self.width.max(min.width).min(max.width);
+        let height = self.height.max(min.height).min(max.height);
+        Size { width, height }
+    }
 }
 impl From<(ScreenFactor, ScreenFactor)> for Size {
     fn from((x, y): (ScreenFactor, ScreenFactor)) -> Self {
@@ -183,6 +217,11 @@ impl From<(ScreenFactor, ScreenFactor)> for Size {
             width: x as ScreenCoord, 
             height: y as ScreenCoord,
         }
+    }
+}
+impl fmt::Debug for Size {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}W×{:?}H", self.width, self.height)
     }
 }
 

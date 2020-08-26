@@ -16,6 +16,7 @@
 
 use crate::Size; ////
 ////use crate::kurbo::Size;
+use crate::{ScreenCoord}; ////
 
 /// Constraints for layout.
 ///
@@ -47,7 +48,8 @@ impl BoxConstraints {
     /// Can be satisfied by any nonnegative size.
     pub const UNBOUNDED: BoxConstraints = BoxConstraints {
         min: Size::ZERO,
-        max: Size::new(f64::INFINITY, f64::INFINITY),
+        max: Size::new(ScreenCoord::MAX, ScreenCoord::MAX), ////
+        ////max: Size::new(f64::INFINITY, f64::INFINITY),
     };
 
     /// Create a new box constraints object.
@@ -60,8 +62,10 @@ impl BoxConstraints {
     /// [rounded away from zero]: struct.Size.html#method.expand
     pub fn new(min: Size, max: Size) -> BoxConstraints {
         BoxConstraints {
-            min: min.expand(),
-            max: max.expand(),
+            min: min, ////
+            ////min: min.expand(),
+            max: max, ////
+            ////max: max.expand(),
         }
     }
 
@@ -113,21 +117,25 @@ impl BoxConstraints {
 
     /// Whether there is an upper bound on the width.
     pub fn is_width_bounded(&self) -> bool {
-        self.max.width.is_finite()
+        self.max.width < ScreenCoord::MAX ////
+        ////self.max.width.is_finite()
     }
 
     /// Whether there is an upper bound on the height.
     pub fn is_height_bounded(&self) -> bool {
-        self.max.height.is_finite()
+        self.max.height < ScreenCoord::MAX ////
+        ////self.max.height.is_finite()
     }
 
     /// Check to see if these constraints are legit.
     ///
     /// Logs a warning if BoxConstraints are invalid.
     pub fn debug_check(&self, name: &str) {
-        if !(0.0 <= self.min.width
+        if !(0 <= self.min.width ////
+        ////if !(0.0 <= self.min.width
             && self.min.width <= self.max.width
-            && 0.0 <= self.min.height
+            && 0 <= self.min.height ////
+            ////&& 0.0 <= self.min.height
             && self.min.height <= self.max.height
             && self.min.expand() == self.min
             && self.max.expand() == self.max)
@@ -136,11 +144,13 @@ impl BoxConstraints {
             log::warn!("{:?}", self);
         }
 
-        if self.min.width.is_infinite() {
+        if self.min.width == ScreenCoord::MAX { ////
+        ////if self.min.width.is_infinite() {
             log::warn!("Infinite minimum width constraint passed to {}:", name);
         }
 
-        if self.min.height.is_infinite() {
+        if self.min.height == ScreenCoord::MAX { ////
+        ////if self.min.height.is_infinite() {
             log::warn!("Infinite minimum height constraint passed to {}:", name);
         }
     }
@@ -154,12 +164,16 @@ impl BoxConstraints {
     pub fn shrink(&self, diff: impl Into<Size>) -> BoxConstraints {
         let diff = diff.into().expand();
         let min = Size::new(
-            (self.min().width - diff.width).max(0.),
-            (self.min().height - diff.height).max(0.),
+            (self.min().width - diff.width).max(0), ////
+            ////(self.min().width - diff.width).max(0.),
+            (self.min().height - diff.height).max(0), ////
+            ////(self.min().height - diff.height).max(0.),
         );
         let max = Size::new(
-            (self.max().width - diff.width).max(0.),
-            (self.max().height - diff.height).max(0.),
+            (self.max().width - diff.width).max(0), ////
+            ////(self.max().width - diff.width).max(0.),
+            (self.max().height - diff.height).max(0), ////
+            ////(self.max().height - diff.height).max(0.),
         );
 
         BoxConstraints::new(min, max)

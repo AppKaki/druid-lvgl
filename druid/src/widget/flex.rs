@@ -572,13 +572,15 @@ impl<T: Data> Widget<T> for Flex<T> {
                     ////.constraints(&loosened_bc, 0., std::f64::INFINITY);
                 let child_size = child.widget.layout(ctx, &child_bc, data, env);
 
+                if child_size.width == ScreenCoord::MAX { ////
                 ////if child_size.width.is_infinite() {
-                    ////log::warn!("A non-Flex child has an infinite width.");
-                ////}
+                    log::warn!("A non-Flex child has an infinite width.");
+                }
 
+                if child_size.height == ScreenCoord::MAX { ////
                 ////if child_size.height.is_infinite() {
-                    ////log::warn!("A non-Flex child has an infinite height.");
-                ////}
+                    log::warn!("A non-Flex child has an infinite height.");
+                }
 
                 major_non_flex += self.direction.major(child_size).ceil(); ////
                 ////major_non_flex += self.direction.major(child_size).expand();
