@@ -182,7 +182,7 @@ pub struct Vec2 { ////
     pub y: ScreenCoord,
 }
 
-/// A rectangle.
+/// A rectangle. Based on https://docs.rs/kurbo/0.6.2/src/kurbo/rect.rs.html
 #[derive(Clone, Copy, Default, PartialEq)]
 pub struct Rect { ////
     /// The minimum x coordinate (left edge).
@@ -196,42 +196,53 @@ pub struct Rect { ////
 }
 impl Rect {
     pub const ZERO: Rect = Rect{ x0: 0, y0: 0, x1: 0, y1: 0 };
+    /// A new rectangle from origin and size.
     pub fn from_origin_size(point: Point, size: Size) -> Rect { 
         Rect { 
             x0: point.x, 
             y0: point.y,
-            x1: point.x + size.width - 1,
-            y1: point.y + size.height - 1,
+            x1: point.x + size.width,
+            y1: point.y + size.height,
         }
     }
+    /// Create a new `Rect` with the same size as `self` and a new origin.
+    pub fn with_origin(self, origin: Point) -> Rect {
+        Rect::from_origin_size(origin, self.size())
+    }    
+    /// Create a new `Rect` with the same origin as `self` and a new size.
+    pub fn with_size(self, size: Size) -> Rect {
+        Rect::from_origin_size( Point{ x: self.x0, y: self.y0 } , size)
+    }
+    /// Width and height of rectangle.
     pub fn size(self) -> Size {
         Size {
-            width:  self.x1 - self.x0 + 1,
-            height: self.y1 - self.y0 + 1,
+            width:  self.x1 - self.x0,
+            height: self.y1 - self.y0,
         }
     }
-    // rect.with_origin(pos));
-    // child_paint_rect.union(child.widget.paint_rect());
-    // Rect::ZERO.with_size(my_size);
-}
-// let insets = child_paint_rect - my_bounds;
-/*
-impl Sub for Rect {
-    type Output = Self;
-
-    fn sub(self, other: Self) -> Self {
-        Self {
-            x0: point.x, 
-            y0: point.y,
-            x1: point.x + size.width - 1,
-            y1: point.y + size.height - 1,
-
-            x: self.x - other.x,
-            y: self.y - other.y,
+    /// The smallest rectangle enclosing two rectangles.
+    ///
+    /// Results are valid only if width and height are non-negative.
+    #[inline]
+    pub fn union(&self, other: Rect) -> Rect {
+        Rect {
+            x0: self.x0.min(other.x0),
+            y0: self.y0.min(other.y0),
+            x1: self.x1.max(other.x1),
+            y1: self.y1.max(other.y1),
         }
-    }    
+    }
 }
-*/
+impl Sub for Rect {
+    type Output = Insets;
+    fn sub(self, other: Rect) -> Insets {
+        let x0 = other.x0 - self.x0;
+        let y0 = other.y0 - self.y0;
+        let x1 = self.x1 - other.x1;
+        let y1 = self.y1 - other.y1;
+        Insets { x0, y0, x1, y1 }
+    }
+}
 
 /// Insets from the edges of a rectangle.
 ///
@@ -514,6 +525,7 @@ pub struct HashMap<K, V>(Option<K>, Option<V>);
 pub struct LayoutCtx();
 impl LayoutCtx {
     pub fn text(self) -> PietText { PietText{} }
+    pub fn set_paint_insets(self, insets: Insets) {}
 }
 
 #[derive(Copy, Clone)]
