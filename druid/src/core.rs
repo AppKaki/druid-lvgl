@@ -531,6 +531,7 @@ impl<T: Data, W: Widget<T>> WidgetPod<T, W> {
     ///
     /// [`event`]: trait.Widget.html#tymethod.event
     pub fn event(&mut self, ctx: &mut EventCtx, event: &Event, data: &mut T, env: &Env) {
+        /*  ////TODO
         if self.old_data.is_none() {
             log::error!(
                 "widget {:?} is receiving an event without having first \
@@ -722,6 +723,8 @@ impl<T: Data, W: Widget<T>> WidgetPod<T, W> {
         // Always merge even if not needed, because merging is idempotent and gives us simpler code.
         // Doing this conditionally only makes sense when there's a measurable performance boost.
         ctx.widget_state.merge_up(&mut self.state);
+
+        */ ////TODO
     }
 
     pub fn lifecycle(&mut self, ctx: &mut LifeCycleCtx, event: &LifeCycle, data: &T, env: &Env) {
