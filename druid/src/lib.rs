@@ -440,8 +440,9 @@ pub type KeyCode = KbKey;
 pub type KeyModifiers = Modifiers;
 
 //// Begin
+use crate::core::WidgetState;
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct Application<T>(Option<T>);
 impl<T> Application<T> {
     pub fn new() -> Result<Self, PlatformError> { Ok(Self(None)) }
@@ -450,7 +451,7 @@ impl<T> Application<T> {
 
 pub trait AppDelegate<T> {}
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct AppHandler<T> {
     state: AppState<T>    
 }
@@ -458,7 +459,7 @@ impl<T> AppHandler<T> {
     pub fn new(state: AppState<T>) -> Self { Self{ state } }
 }
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct AppState<T> {
     app: Application<T>,
     data: T,
@@ -482,34 +483,34 @@ impl<T> AppState<T> {
     pub fn add_window(self, id: WindowId, window: WindowDesc<T>) {}
 }
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct Bloom<T>(Option<T>);
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct BoxedAppDelegate<T> (Option<T>);
 impl<T> BoxedAppDelegate<T> {
     pub fn new(delegate: impl AppDelegate<T> + 'static) -> Self { Self(None) }
 }
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct BoxedAppHandler<T> (Option<T>);
 impl<T> BoxedAppHandler<T> {
     pub fn new(_handler: AppHandler<T>) -> Self { Self(None) }
 }
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct BoxedDruidHandler<T> (Option<T>);
 impl<T> BoxedDruidHandler<T> {
     pub fn new(_handler: DruidHandler<T>) -> Self { Self(None) }
 }
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct BoxedEnvSetupFn<T> (Option<T>);
 impl<T> BoxedEnvSetupFn<T> {
     pub fn new(_f: impl Fn(&mut Env, &T) + 'static) -> Self { Self(None) }
 }
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct BoxedText (
     //  Fn(&T, &Env) -> String,
 );
@@ -518,16 +519,16 @@ impl BoxedText {
     pub fn resolve<T>(self, data: T, env: &Env) -> String { String::new() }
 }
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct Clipboard();
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct Command();
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct ContextState();
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct Counter();
 impl Counter {
     pub fn new() -> Self { Counter{}}
@@ -540,7 +541,7 @@ impl Counter {
 
 static mut COUNTER: u8 = 1;
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct DruidHandler<T> {
     state: AppState<T>,
     id: WindowId,
@@ -549,45 +550,52 @@ impl<T> DruidHandler<T> {
     pub fn new_shared(state: AppState<T>, id: WindowId) -> Self { Self{ state, id } }
 }
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct Env();
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct EventCtx();
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct ExtEventHost();
 impl ExtEventHost {
     pub fn new() -> Self { Self{} }
     pub fn make_sink(self) -> ExtEventSink { ExtEventSink{} }
 }
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct ExtEventSink();
 impl ExtEventSink {
     pub fn new() -> Self { Self{} }
 }
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct KeyOrValue<T>(T);
 impl<T> KeyOrValue<T> {
     pub fn resolve(self, env: &Env) -> T { self.0 } 
 }
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct HashMap<K, V>(Option<K>, Option<V>);
 
-#[derive(Copy, Clone)]
-pub struct LayoutCtx();
+#[derive(Clone)]
+pub struct LayoutCtx {
+    pub state: ContextState,
+    pub widget_state: WidgetState,
+    pub mouse_pos: Option<Point>,
+}
 impl LayoutCtx {
     pub fn text(self) -> PietText { PietText{} }
     pub fn set_paint_insets(self, insets: Insets) {}
 }
 
-#[derive(Copy, Clone)]
-pub struct LifeCycleCtx();
+#[derive(Clone)]
+pub struct LifeCycleCtx {
+    pub widget_state: WidgetState,
+    pub state: ContextState,
+}
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct LocalizedString<T>(Option<T>);
 impl<T> LocalizedString<T> {
     pub fn new(_app_name: &str) -> Self { Self(None) }
@@ -595,50 +603,50 @@ impl<T> LocalizedString<T> {
     pub fn resolve(self, data: &T, env: &Env) -> bool { true }
 }
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct KbKey();
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct KeyEvent();
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct Modifiers();
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct MouseEvent();
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct MenuDesc<T>(Option<T>);
 impl<T> MenuDesc<T> {
     pub fn platform_default() -> Option<Self> { Some(Self(None)) }
     pub fn build_window_menu(self, data: &T, env: &Env) -> MenuDesc<T> { MenuDesc(None) }
 }
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct NonZeroU64();
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct PaintCtx();
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct PietText();
 impl PietText {
 
 }
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct PietTextLayout();
 impl PietTextLayout {
     pub fn width(self) -> ScreenCoord { 10 }  ////TODO
 }
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct Region();
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct Shape();
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct SizedBox {
     width:  ScreenCoord,
     height: ScreenCoord,
@@ -649,25 +657,25 @@ impl SizedBox {
     pub fn expand_height(self) -> Self { self }  ////TODO
 }
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct Target();
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct TimerToken();
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct UnitPoint();
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct UpdateCtx();
 impl UpdateCtx {
     pub fn request_layout(self) {}  ////TODO
 }
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct VecDeque<T>(Option<T>);
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct WindowBuilder<T> {
     app: Application<T>,
 }
@@ -683,13 +691,13 @@ impl<T> WindowBuilder<T> {
     pub fn set_menu(self, menu: MenuDesc<T>) {}
 }
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct WindowHandle();
 impl WindowHandle {
     pub fn show(self) { }  ////TODO
 }
 
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct WindowId();
 impl WindowId {
     pub fn next() -> Self { Self{} }  ////TODO

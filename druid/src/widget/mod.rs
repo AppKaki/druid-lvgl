@@ -116,7 +116,7 @@ pub mod prelude {
 }
 
 //// Begin
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct BoxedWidget<T> (
     Option<T> ////TODO
 );

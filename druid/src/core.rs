@@ -214,7 +214,8 @@ impl<T, W: Widget<T>> WidgetPod<T, W> {
 
         if old_size.is_none() || old_size.unwrap() != new_size {
             let mut child_ctx = LifeCycleCtx {
-                widget_state: &mut self.state,
+                widget_state: self.state, ////
+                ////widget_state: &mut self.state,
                 state: ctx.state,
             };
             let size_event = LifeCycle::Size(new_size);
