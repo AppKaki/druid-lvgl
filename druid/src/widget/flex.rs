@@ -610,8 +610,10 @@ impl<T: Data> Widget<T> for Flex<T> {
                     .constraints(&loosened_bc, min_major, actual_major);
                 let child_size = child.widget.layout(ctx, &child_bc, data, env);
 
-                major_flex += self.direction.major(child_size).expand();
-                minor = minor.max(self.direction.minor(child_size).expand());
+                major_flex += self.direction.major(child_size); ////TODO .expand()
+                ////major_flex += self.direction.major(child_size).expand();
+                minor = minor.max(self.direction.minor(child_size)); ////TODO .expand()
+                ////minor = minor.max(self.direction.minor(child_size).expand());
                 // Stash size.
                 let rect = Rect::from_origin_size(Point::ORIGIN, child_size);
                 child.widget.set_layout_rect(ctx, data, env, rect);

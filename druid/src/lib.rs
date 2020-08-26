@@ -153,6 +153,9 @@ pub struct Point { ////
     /// The y coordinate.
     pub y: ScreenCoord,
 }
+impl Point {
+    pub const ORIGIN: Point = Point { x: 0, y: 0 };
+}
 
 /// A 2D size.
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -191,6 +194,16 @@ pub struct Rect { ////
     /// The maximum y coordinate (bottom edge in y-down spaces).
     pub y1: ScreenCoord,
 }
+impl Rect {
+    pub fn from_origin_size(point: Point, size: Size) -> Rect { 
+        Rect { 
+            x0: point.x, 
+            y0: point.y,
+            x1: point.x + size.width - 1,
+            y1: point.y + size.height - 1,
+        }
+    }
+}
 
 /// Insets from the edges of a rectangle.
 ///
@@ -226,7 +239,6 @@ pub struct Line { ////
     /// The line's end point.
     pub p1: Point,
 }
-
 impl fmt::Debug for Point {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "({:?}, {:?})", self.x, self.y)
