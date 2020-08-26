@@ -129,6 +129,7 @@
 ////Begin
 use ::core::fmt;
 use ::core::ops::Sub;
+use ::core::convert::From;
 
 type StringLength = heapless::consts::U20; //// Max length of strings
 type String = heapless::String::<StringLength>; //// Alias for standard String
@@ -156,6 +157,14 @@ pub struct Point { ////
 impl Point {
     pub const ORIGIN: Point = Point { x: 0, y: 0 };
 }
+impl From<(ScreenFactor, ScreenFactor)> for Point {
+    fn from((x, y): (ScreenFactor, ScreenFactor)) -> Self {
+        Self { 
+            x: x as ScreenCoord, 
+            y: y as ScreenCoord,
+        }
+    }
+}
 
 /// A 2D size.
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -167,6 +176,14 @@ pub struct Size { ////
 }
 impl Size {
     pub fn new(width: ScreenCoord, height: ScreenCoord) -> Self { Size{ width, height } }
+}
+impl From<(ScreenFactor, ScreenFactor)> for Size {
+    fn from((x, y): (ScreenFactor, ScreenFactor)) -> Self {
+        Self { 
+            width: x as ScreenCoord, 
+            height: y as ScreenCoord,
+        }
+    }
 }
 
 /// A 2D vector.

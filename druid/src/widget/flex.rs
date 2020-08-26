@@ -580,9 +580,9 @@ impl<T: Data> Widget<T> for Flex<T> {
                     ////log::warn!("A non-Flex child has an infinite height.");
                 ////}
 
-                major_non_flex += self.direction.major(child_size); ////TODO .expand();
+                major_non_flex += self.direction.major(child_size).ceil(); ////
                 ////major_non_flex += self.direction.major(child_size).expand();
-                minor = minor.max(self.direction.minor(child_size)); ////TODO .expand());
+                minor = minor.max(self.direction.minor(child_size).ceil()); ////
                 ////minor = minor.max(self.direction.minor(child_size).expand());
                 // Stash size.
                 let rect = Rect::from_origin_size(Point::ORIGIN, child_size);
@@ -612,9 +612,9 @@ impl<T: Data> Widget<T> for Flex<T> {
                     .constraints(&loosened_bc, min_major, actual_major);
                 let child_size = child.widget.layout(ctx, &child_bc, data, env);
 
-                major_flex += self.direction.major(child_size); ////TODO .expand()
+                major_flex += self.direction.major(child_size).ceil(); ////
                 ////major_flex += self.direction.major(child_size).expand();
-                minor = minor.max(self.direction.minor(child_size)); ////TODO .expand()
+                minor = minor.max(self.direction.minor(child_size).ceil()); ////
                 ////minor = minor.max(self.direction.minor(child_size).expand());
                 // Stash size.
                 let rect = Rect::from_origin_size(Point::ORIGIN, child_size);
@@ -646,7 +646,8 @@ impl<T: Data> Widget<T> for Flex<T> {
                 .widget
                 .set_layout_rect(ctx, data, env, rect.with_origin(pos));
             child_paint_rect = child_paint_rect.union(child.widget.paint_rect());
-            major += self.direction.major(rect.size()).expand();
+            major += self.direction.major(rect.size()).ceil(); ////
+            ////major += self.direction.major(rect.size()).expand();
             major += spacing.next().unwrap_or(0.);
         }
 
