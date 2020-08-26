@@ -128,7 +128,7 @@
 
 ////Begin
 use ::core::fmt;
-use ::core::marker::PhantomData;
+use ::core::ops::Sub;
 
 type StringLength = heapless::consts::U20; //// Max length of strings
 type String = heapless::String::<StringLength>; //// Alias for standard String
@@ -214,6 +214,24 @@ impl Rect {
     // child_paint_rect.union(child.widget.paint_rect());
     // Rect::ZERO.with_size(my_size);
 }
+// let insets = child_paint_rect - my_bounds;
+/*
+impl Sub for Rect {
+    type Output = Self;
+
+    fn sub(self, other: Self) -> Self {
+        Self {
+            x0: point.x, 
+            y0: point.y,
+            x1: point.x + size.width - 1,
+            y1: point.y + size.height - 1,
+
+            x: self.x - other.x,
+            y: self.y - other.y,
+        }
+    }    
+}
+*/
 
 /// Insets from the edges of a rectangle.
 ///
