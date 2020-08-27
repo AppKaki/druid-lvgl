@@ -282,7 +282,6 @@ impl Rect {
     /// The smallest rectangle enclosing two rectangles.
     ///
     /// Results are valid only if width and height are non-negative.
-    #[inline]
     pub fn union(&self, other: Rect) -> Rect {
         Rect {
             x0: self.x0.min(other.x0),
@@ -290,6 +289,40 @@ impl Rect {
             x1: self.x1.max(other.x1),
             y1: self.y1.max(other.y1),
         }
+    }
+    /// Note: this function is carefully designed so that if the plane is
+    /// tiled with rectangles, the winding number will be nonzero for exactly
+    /// one of them.
+    fn winding(&self, pt: Point) -> i32 {
+        let xmin = self.x0.min(self.x1);
+        let xmax = self.x0.max(self.x1);
+        let ymin = self.y0.min(self.y1);
+        let ymax = self.y0.max(self.y1);
+        if pt.x >= xmin && pt.x < xmax && pt.y >= ymin && pt.y < ymax {
+            if (self.x1 > self.x0) ^ (self.y1 > self.y0) {
+                -1
+            } else {
+                1
+            }
+        } else {
+            0
+        }
+    }
+    /// The intersection of two rectangles.
+    ///
+    /// The result is zero-area if either input has negative width or
+    /// height. The result always has non-negative width and height.
+    pub fn intersect(&self, other: Rect) -> Rect {
+        let x0 = self.x0.max(other.x0);
+        let y0 = self.y0.max(other.y0);
+        let x1 = self.x1.min(other.x1);
+        let y1 = self.y1.min(other.y1);
+        Rect { x0, y0, x1: x1.max(x0), y1: y1.max(y0) }
+    }
+    // It's a bit of duplication having both this and the impl method, but
+    // removing that would require using the trait. We'll leave it for now.
+    fn area(&self) -> f64 {
+        Rect::area(self)
     }
 }
 impl Sub for Rect {
@@ -534,9 +567,15 @@ impl BoxedText {
 
 #[derive(Clone)]
 pub struct Clipboard();
+impl fmt::Debug for Clipboard {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result { write!(f, "Clipboard") }
+}
 
 #[derive(Clone)]
 pub struct Command();
+impl fmt::Debug for Command {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result { write!(f, "Command") }
+}
 
 #[derive(Clone)]
 pub struct ContextState();
@@ -583,15 +622,24 @@ impl ExtEventSink {
 }
 
 #[derive(Clone)]
-pub struct KeyOrValue<T>(T);
-impl<T> KeyOrValue<T> {
-    pub fn resolve(self, env: &Env) -> T { self.0 } 
-}
-
-#[derive(Clone)]
 pub struct HashMap<K, V>(Option<K>, Option<V>);
 impl<K, V> HashMap<K, V> {
     pub fn new() -> Self { HashMap(None, None) }
+}
+
+#[derive(Clone)]
+pub struct KbKey();
+
+#[derive(Clone)]
+pub struct KeyEvent();
+impl fmt::Debug for KeyEvent {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result { write!(f, "KeyEvent") }
+}
+
+#[derive(Clone)]
+pub struct KeyOrValue<T>(T);
+impl<T> KeyOrValue<T> {
+    pub fn resolve(self, env: &Env) -> T { self.0 } 
 }
 
 #[derive(Clone)]
@@ -620,16 +668,13 @@ impl<T> LocalizedString<T> {
 }
 
 #[derive(Clone)]
-pub struct KbKey();
-
-#[derive(Clone)]
-pub struct KeyEvent();
-
-#[derive(Clone)]
 pub struct Modifiers();
 
 #[derive(Clone)]
 pub struct MouseEvent();
+impl fmt::Debug for MouseEvent {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result { write!(f, "MouseEvent") }
+}
 
 #[derive(Clone)]
 pub struct MenuDesc<T>(Option<T>);
@@ -655,10 +700,12 @@ impl PaintCtx {
 }
 
 #[derive(Clone)]
-pub struct PietText();
-impl PietText {
+pub struct Piet();
+impl Piet {}
 
-}
+#[derive(Clone)]
+pub struct PietText();
+impl PietText {}
 
 #[derive(Clone)]
 pub struct PietTextLayout();
@@ -697,9 +744,15 @@ impl SizedBox {
 
 #[derive(Clone)]
 pub struct Target();
+impl fmt::Debug for Target {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result { write!(f, "Target") }
+}
 
 #[derive(Clone)]
 pub struct TimerToken();
+impl fmt::Debug for TimerToken {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result { write!(f, "TimerToken") }
+}
 
 #[derive(Clone)]
 pub struct UnitPoint();
