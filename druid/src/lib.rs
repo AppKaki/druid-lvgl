@@ -324,6 +324,13 @@ impl Rect {
     fn area(&self) -> f64 {
         Rect::area(self)
     }
+    /// The origin of the rectangle.
+    ///
+    /// This is the top left corner in a y-down space and with
+    /// non-negative width and height.
+    pub fn origin(&self) -> Point {
+        Point { x: self.x0, y: self.y0 }
+    }
 }
 impl Sub for Rect {
     type Output = Insets;
@@ -717,6 +724,8 @@ impl PietTextLayout {
 #[derive(Clone)]
 pub struct Region(Rect);
 impl Region {
+    /// An empty region.
+    pub const EMPTY: Region = Region(Rect::ZERO);
     /// Returns the smallest `Rect` that encloses the entire region.
     pub fn to_rect(&self) -> Rect { self.0 }
     /// Returns `true` if `self` intersects with `other`.
