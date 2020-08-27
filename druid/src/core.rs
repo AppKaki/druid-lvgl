@@ -29,7 +29,7 @@ use crate::{
     LayoutCtx, LifeCycle, LifeCycleCtx, PaintCtx, Region, Target, TimerToken, UpdateCtx, Widget,
     WidgetId,
 };
-use crate::{Bloom, BoxedWidget, ContextState, HashMap, PietTextLayout, Vec, VecDeque}; ////
+use crate::{Bloom, BoxedWidget, ContextState, HashMap, PietTextLayout, ScreenCoord, Vec, VecDeque}; ////
 
 /// Our queue type
 pub(crate) type CommandQueue = VecDeque<(Target, Command)>;
@@ -225,7 +225,8 @@ impl<T, W: Widget<T>> WidgetPod<T, W> {
 
         if WidgetPod::set_hot_state(
             &mut self.inner,
-            &mut self.state,
+            self.state, ////
+            ////&mut self.state,
             ctx.state,
             layout_rect,
             ctx.mouse_pos,
@@ -333,8 +334,10 @@ impl<T, W: Widget<T>> WidgetPod<T, W> {
     /// The provided `child_state` should be merged up if this returns `true`.
     fn set_hot_state(
         child: &mut W,
-        child_state: &mut WidgetState,
-        state: &mut ContextState,
+        child_state: WidgetState, ////
+        ////child_state: &mut WidgetState,
+        state: ContextState, ////
+        ////state: &mut ContextState,
         rect: Rect,
         mouse_pos: Option<Point>,
         data: &T,
@@ -352,10 +355,12 @@ impl<T, W: Widget<T>> WidgetPod<T, W> {
                 widget_state: child_state,
             };
             child.lifecycle(&mut child_ctx, &hot_changed_event, data, env);
+            /* ////
             // if hot changes and we're showing widget ids, always repaint
             if env.get(Env::DEBUG_WIDGET_ID) {
                 child_ctx.request_paint();
             }
+            */ ////
             return true;
         }
         false
@@ -375,21 +380,25 @@ impl<T: Data, W: Widget<T>> WidgetPod<T, W> {
     /// [`Widget::paint`]: trait.Widget.html#tymethod.paint
     /// [`paint`]: #method.paint
     pub fn paint_raw(&mut self, ctx: &mut PaintCtx, data: &T, env: &Env) {
+        /* ////
         // we need to do this before we borrow from self
         if env.get(Env::DEBUG_WIDGET_ID) {
             self.make_widget_id_layout_if_needed(self.state.id, ctx, env);
         }
+        */ ////
 
         let mut inner_ctx = PaintCtx {
             render_ctx: ctx.render_ctx,
             state: ctx.state,
             z_ops: Vec::new(),
             region: ctx.region.clone(),
-            widget_state: &self.state,
+            widget_state: self.state, ////
+            ////widget_state: &self.state,
             depth: ctx.depth,
         };
         self.inner.paint(&mut inner_ctx, data, env);
 
+        /* ////
         let debug_ids = inner_ctx.is_hot() && env.get(Env::DEBUG_WIDGET_ID);
         if debug_ids {
             // this also draws layout bounds
@@ -399,8 +408,9 @@ impl<T: Data, W: Widget<T>> WidgetPod<T, W> {
         if !debug_ids && env.get(Env::DEBUG_PAINT) {
             self.debug_paint_layout_bounds(&mut inner_ctx, env);
         }
+        */ ////
 
-        ctx.z_ops.append(&mut inner_ctx.z_ops);
+        ////ctx.z_ops.append(&mut inner_ctx.z_ops);
         self.state.invalid = Region::EMPTY;
     }
 
@@ -433,6 +443,7 @@ impl<T: Data, W: Widget<T>> WidgetPod<T, W> {
     }
 
     fn make_widget_id_layout_if_needed(&mut self, id: WidgetId, ctx: &mut PaintCtx, env: &Env) {
+        /* ////
         if self.debug_widget_text.is_none() {
             let font = ctx
                 .text()
@@ -446,9 +457,11 @@ impl<T: Data, W: Widget<T>> WidgetPod<T, W> {
                 .build()
                 .ok();
         }
+        */ ////
     }
 
     fn debug_paint_widget_ids(&self, ctx: &mut PaintCtx, env: &Env) {
+        /* ////
         // we clone because we need to move it for paint_with_z_index
         let text = self.debug_widget_text.clone();
         if let Some(text) = text {
@@ -474,14 +487,17 @@ impl<T: Data, W: Widget<T>> WidgetPod<T, W> {
                 ctx.draw_text(&text, text_pos, &text_color);
             })
         }
+        */ ////
     }
 
     fn debug_paint_layout_bounds(&self, ctx: &mut PaintCtx, env: &Env) {
+        /* ////
         const BORDER_WIDTH: f64 = 1.0;
         let rect = ctx.size().to_rect().inset(BORDER_WIDTH / -2.0);
         let id = self.id().to_raw();
         let color = env.get_debug_color(id);
         ctx.stroke(rect, &color, BORDER_WIDTH);
+        */ ////
     }
 
     /// Compute layout of a widget.
@@ -504,7 +520,8 @@ impl<T: Data, W: Widget<T>> WidgetPod<T, W> {
             None => None,
         };
         let mut child_ctx = LayoutCtx {
-            widget_state: &mut self.state,
+            widget_state: self.state, ////
+            ////widget_state: &mut self.state,
             state: ctx.state,
             mouse_pos: child_mouse_pos,
         };
@@ -512,11 +529,13 @@ impl<T: Data, W: Widget<T>> WidgetPod<T, W> {
 
         ctx.widget_state.merge_up(&mut child_ctx.widget_state);
 
-        if size.width.is_infinite() {
+        if size.width == ScreenCoord::MAX { ////
+        ////if size.width.is_infinite() {
             let name = self.widget().type_name();
             log::warn!("Widget `{}` has an infinite width.", name);
         }
-        if size.height.is_infinite() {
+        if size.height == ScreenCoord::MAX { ////
+        ////if size.height.is_infinite() {
             let name = self.widget().type_name();
             log::warn!("Widget `{}` has an infinite height.", name);
         }
@@ -775,6 +794,7 @@ impl<T: Data, W: Widget<T>> WidgetPod<T, W> {
                         _ => false,
                     }
                 }
+                /* ////
                 #[cfg(test)]
                 InternalLifeCycle::DebugRequestState { widget, state_cell } => {
                     if *widget == self.id() {
@@ -791,6 +811,7 @@ impl<T: Data, W: Widget<T>> WidgetPod<T, W> {
                     f.call(&self.state);
                     true
                 }
+                */ ////
             },
             LifeCycle::AnimFrame(_) => {
                 let r = self.state.request_anim;
@@ -821,7 +842,8 @@ impl<T: Data, W: Widget<T>> WidgetPod<T, W> {
 
         let mut child_ctx = LifeCycleCtx {
             state: ctx.state,
-            widget_state: &mut self.state,
+            widget_state: self.state, ////
+            ////widget_state: &mut self.state,
         };
 
         if recurse {
@@ -868,7 +890,8 @@ impl<T: Data, W: Widget<T>> WidgetPod<T, W> {
 
         let mut child_ctx = UpdateCtx {
             state: ctx.state,
-            widget_state: &mut self.state,
+            widget_state: self.state, ////
+            ////widget_state: &mut self.state,
         };
 
         self.inner

@@ -237,6 +237,9 @@ pub struct Vec2 { ////
     /// The y-coordinate.
     pub y: ScreenCoord,
 }
+impl Vec2 {
+    pub const ZERO: Vec2 = Vec2{ x: 0, y: 0 };
+}
 
 /// A rectangle. Based on https://docs.rs/kurbo/0.6.2/src/kurbo/rect.rs.html
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -321,6 +324,9 @@ pub struct Insets { ////
     /// The maximum y coordinate (bottom edge in y-down spaces).
     pub y1: ScreenCoord,
 }
+impl Insets {
+    pub const ZERO: Insets = Insets { x0: 0, y0: 0, x1: 0, y1: 0 };
+}
 
 /// A 2D affine transform.
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -348,6 +354,10 @@ impl fmt::Debug for Point {
 #[derive(Clone)]
 pub enum Color {
     Rgba32(u32),
+}
+impl Color {
+    pub const BLACK: Color = Color::Rgba32(0x000000);
+    pub const WHITE: Color = Color::Rgba32(0xffffff);
 }
 ////End
 
@@ -485,6 +495,9 @@ impl<T> AppState<T> {
 
 #[derive(Clone)]
 pub struct Bloom<T>(Option<T>);
+impl<T> Bloom<T> {
+    pub fn new() -> Self { Self(None) }
+}
 
 #[derive(Clone)]
 pub struct BoxedAppDelegate<T> (Option<T>);
@@ -577,6 +590,9 @@ impl<T> KeyOrValue<T> {
 
 #[derive(Clone)]
 pub struct HashMap<K, V>(Option<K>, Option<V>);
+impl<K, V> HashMap<K, V> {
+    pub fn new() -> Self { HashMap(None, None) }
+}
 
 #[derive(Clone)]
 pub struct LayoutCtx {
@@ -626,7 +642,17 @@ impl<T> MenuDesc<T> {
 pub struct NonZeroU64();
 
 #[derive(Clone)]
-pub struct PaintCtx();
+pub struct PaintCtx {
+    pub state: ContextState,
+    pub widget_state: WidgetState,
+    pub render_ctx: Piet,
+    pub z_ops: Vec<ZOrderPaintOp>,
+    pub region: Region,
+    pub depth: u32,
+}
+impl PaintCtx {
+    pub fn region(self) -> Region { self.region }
+}
 
 #[derive(Clone)]
 pub struct PietText();
@@ -640,8 +666,20 @@ impl PietTextLayout {
     pub fn width(self) -> ScreenCoord { 10 }  ////TODO
 }
 
+/// A region of a widget, generally used to describe what needs to be drawn.
 #[derive(Clone)]
-pub struct Region();
+pub struct Region(Rect);
+impl Region {
+    /// Returns the smallest `Rect` that encloses the entire region.
+    pub fn to_rect(&self) -> Rect { self.0 }
+    /// Returns `true` if `self` intersects with `other`.
+    pub fn intersects(&self, other: Rect) -> bool {
+        self.0.intersect(other).area() > 0.
+    }
+}
+impl From<Rect> for Region {
+    fn from(src: Rect) -> Region { Region(src) }
+}
 
 #[derive(Clone)]
 pub struct Shape();
@@ -667,13 +705,19 @@ pub struct TimerToken();
 pub struct UnitPoint();
 
 #[derive(Clone)]
-pub struct UpdateCtx();
+pub struct UpdateCtx {
+    pub widget_state: WidgetState,
+    pub state: ContextState,
+}
 impl UpdateCtx {
     pub fn request_layout(self) {}  ////TODO
 }
 
 #[derive(Clone)]
 pub struct VecDeque<T>(Option<T>);
+
+#[derive(Clone)]
+pub struct ZOrderPaintOp();
 
 #[derive(Clone)]
 pub struct WindowBuilder<T> {
