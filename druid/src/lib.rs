@@ -128,7 +128,7 @@
 
 ////Begin
 use ::core::fmt;
-use ::core::ops::Sub;
+use ::core::ops::{Add, AddAssign, Sub};
 use ::core::convert::From;
 
 type StringLength = heapless::consts::U20; //// Max length of strings
@@ -146,7 +146,7 @@ pub type ScreenFactor = f32;  //  Previously f64
 /// Numeric type for Widget Id
 pub type CounterType = u8;  //  Previously u64
 
-/// A 2D point.
+/// A 2D point. Based on https://docs.rs/kurbo/0.6.0/src/kurbo/point.rs.html
 #[derive(Clone, Copy, Default, PartialEq)]
 pub struct Point { ////
     /// The x coordinate.
@@ -156,6 +156,10 @@ pub struct Point { ////
 }
 impl Point {
     pub const ORIGIN: Point = Point { x: 0, y: 0 };
+    /// Convert this point into a `Vec2`.
+    pub const fn to_vec2(self) -> Vec2 {
+        Vec2 { x: self.x, y: self.y }
+    }
 }
 impl From<(ScreenFactor, ScreenFactor)> for Point {
     fn from((x, y): (ScreenFactor, ScreenFactor)) -> Self {
@@ -225,7 +229,7 @@ impl fmt::Debug for Size {
     }
 }
 
-/// A 2D vector.
+/// A 2D vector. Based on https://docs.rs/kurbo/0.6.0/src/kurbo/vec2.rs.html
 ///
 /// This is intended primarily for a vector in the mathematical sense,
 /// but it can be interpreted as a translation, and converted to and
@@ -239,6 +243,16 @@ pub struct Vec2 { ////
 }
 impl Vec2 {
     pub const ZERO: Vec2 = Vec2{ x: 0, y: 0 };
+}
+impl Sub for Vec2 {
+    type Output = Vec2;
+
+    fn sub(self, other: Vec2) -> Vec2 {
+        Vec2 {
+            x: self.x - other.x,
+            y: self.y - other.y,
+        }
+    }
 }
 
 /// A rectangle. Based on https://docs.rs/kurbo/0.6.2/src/kurbo/rect.rs.html
@@ -331,6 +345,24 @@ impl Rect {
     pub fn origin(&self) -> Point {
         Point { x: self.x0, y: self.y0 }
     }
+    /// Create a new `Rect` by applying the [`Insets`].
+    ///
+    /// This will not preserve negative width and height.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use kurbo::Rect;
+    /// let inset_rect = Rect::new(0., 0., 10., 10.,).inset(2.);
+    /// assert_eq!(inset_rect.width(), 14.0);
+    /// assert_eq!(inset_rect.x0, -2.0);
+    /// assert_eq!(inset_rect.x1, 12.0);
+    /// ```
+    ///
+    /// [`Insets`]: struct.Insets.html
+    pub fn inset(self, insets: impl Into<Insets>) -> Rect {
+        self + insets.into()
+    }
 }
 impl Sub for Rect {
     type Output = Insets;
@@ -340,6 +372,14 @@ impl Sub for Rect {
         let x1 = self.x1 - other.x1;
         let y1 = self.y1 - other.y1;
         Insets { x0, y0, x1, y1 }
+    }
+}
+impl Add<Vec2> for Rect {
+    type Output = Rect;
+
+    #[inline]
+    fn add(self, v: Vec2) -> Rect {
+        Rect { x0: self.x0 + v.x, y0: self.y0 + v.y, x1: self.x1 + v.x, y1: self.y1 + v.y }
     }
 }
 
@@ -366,6 +406,25 @@ pub struct Insets { ////
 }
 impl Insets {
     pub const ZERO: Insets = Insets { x0: 0, y0: 0, x1: 0, y1: 0 };
+}
+impl Add<Rect> for Insets {
+    type Output = Rect;
+
+    fn add(self, other: Rect) -> Rect {
+        Rect {
+            x0: other.x0 - self.x0,
+            y0: other.y0 - self.y0,
+            x1: other.x1 + self.x1,
+            y1: other.y1 + self.y1,
+        }
+    }
+}
+impl Add<Insets> for Rect {
+    type Output = Rect;
+
+    fn add(self, other: Insets) -> Rect {
+        other + self
+    }
 }
 
 /// A 2D affine transform.
@@ -735,6 +794,11 @@ impl Region {
 }
 impl From<Rect> for Region {
     fn from(src: Rect) -> Region { Region(src) }
+}
+impl AddAssign<Vec2> for Region {
+    fn add_assign(&mut self, offset: Vec2) {
+        self.0 = self.0 + offset;
+    }
 }
 
 #[derive(Clone)]
