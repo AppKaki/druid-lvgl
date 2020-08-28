@@ -192,6 +192,7 @@ impl<T: Data, U: Data> Data for Result<T, U> {
         }
     }
 }
+*/ ////
 
 impl Data for () {
     fn same(&self, _other: &Self) -> bool {
@@ -199,6 +200,7 @@ impl Data for () {
     }
 }
 
+/* ////
 impl<T0: Data> Data for (T0,) {
     fn same(&self, other: &Self) -> bool {
         self.0.same(&other.0)

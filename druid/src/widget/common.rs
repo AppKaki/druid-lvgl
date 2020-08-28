@@ -13,6 +13,7 @@
 // limitations under the License.
 
 use crate::{Affine, Size};
+use crate::{ScreenFactor}; ////
 
 // These are based on https://api.flutter.dev/flutter/painting/BoxFit-class.html
 #[derive(Clone, Copy, PartialEq)]
@@ -61,15 +62,20 @@ impl FillStrat {
             FillStrat::FitHeight => (raw_scaley, raw_scaley),
             FillStrat::FitWidth => (raw_scalex, raw_scalex),
             FillStrat::ScaleDown => {
-                let scale = raw_scalex.min(raw_scaley).min(1.0);
+                let scale = raw_scalex.min(raw_scaley).min(1); ////
+                ////let scale = raw_scalex.min(raw_scaley).min(1.0);
                 (scale, scale)
             }
-            FillStrat::None => (1.0, 1.0),
+            FillStrat::None => (1, 1), ////
+            ////FillStrat::None => (1.0, 1.0),
         };
 
-        let origin_x = (parent.width - (fit_box.width * scalex)) / 2.0;
-        let origin_y = (parent.height - (fit_box.height * scaley)) / 2.0;
+        let origin_x = (parent.width - (fit_box.width * scalex)) / 2; ////
+        ////let origin_x = (parent.width - (fit_box.width * scalex)) / 2.0;
+        let origin_y = (parent.height - (fit_box.height * scaley)) / 2; ////
+        ////let origin_y = (parent.height - (fit_box.height * scaley)) / 2.0;
 
-        Affine::new([scalex, 0., 0., scaley, origin_x, origin_y])
+        Affine::new([scalex as ScreenFactor, 0., 0., scaley as ScreenFactor, origin_x as ScreenFactor, origin_y as ScreenFactor]) ////
+        ////Affine::new([scalex, 0., 0., scaley, origin_x, origin_y])
     }
 }
