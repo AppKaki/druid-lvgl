@@ -259,6 +259,7 @@ impl Event {
     /// if the cursor is out of the viewport, such as if the contents are active
     /// or hot.
     pub fn transform_scroll(&self, offset: Vec2, viewport: Rect, force: bool) -> Option<Event> {
+        /* ////
         match self {
             Event::MouseDown(mouse_event) => {
                 if force || viewport.winding(mouse_event.pos) != 0 {
@@ -298,6 +299,8 @@ impl Event {
             }
             _ => Some(self.clone()),
         }
+        */ ////
+        None ////
     }
 }
 
