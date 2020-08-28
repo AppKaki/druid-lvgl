@@ -940,7 +940,7 @@ impl WidgetState {
     }
 
     pub(crate) fn add_timer(&mut self, timer_token: TimerToken) {
-        self.timers.insert(timer_token, self.id);
+        ////self.timers.insert(timer_token, self.id); ////TODO
     }
 
     /// Update to incorporate state changes from a child.
@@ -965,7 +965,7 @@ impl WidgetState {
         self.children_changed |= child_state.children_changed;
         self.request_update |= child_state.request_update;
         self.request_focus = child_state.request_focus.take().or(self.request_focus);
-        self.timers.extend_drain(&mut child_state.timers);
+        ////self.timers.extend_drain(&mut child_state.timers); ////TODO
     }
 
     #[inline]
