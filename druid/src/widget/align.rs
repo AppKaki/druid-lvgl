@@ -22,7 +22,7 @@ use crate::{
 };
 
 ////use crate::piet::UnitPoint;
-use crate::{BoxedWidget, ScreenFactor, UnitPoint}; ////
+use crate::{BoxedWidget, ScreenCoord, ScreenFactor, UnitPoint}; ////
 
 /// A widget that aligns its child.
 pub struct Align<T> {
@@ -115,18 +115,23 @@ impl<T: Data> Widget<T> for Align<T> {
         }
 
         if let Some(width) = self.width_factor {
-            my_size.width = size.width * width;
+            my_size.width = (size.width as ScreenFactor * width) as ScreenCoord; ////
+            ////my_size.width = size.width * width;
         }
         if let Some(height) = self.height_factor {
-            my_size.height = size.height * height;
+            my_size.height = (size.height as ScreenFactor * height) as ScreenCoord; ////
+            ////my_size.height = size.height * height;
         }
 
         my_size = bc.constrain(my_size);
-        let extra_width = (my_size.width - size.width).max(0.);
-        let extra_height = (my_size.height - size.height).max(0.);
+        let extra_width = (my_size.width - size.width).max(0); ////
+        ////let extra_width = (my_size.width - size.width).max(0.);
+        let extra_height = (my_size.height - size.height).max(0); ////
+        ////let extra_height = (my_size.height - size.height).max(0.);
         let origin = self
             .align
-            .resolve(Rect::new(0., 0., extra_width, extra_height));
+            .resolve(Rect::new(0, 0, extra_width, extra_height)); ////
+            ////.resolve(Rect::new(0., 0., extra_width, extra_height));
         self.child
             .set_layout_rect(ctx, data, env, Rect::from_origin_size(origin, size));
 
@@ -141,11 +146,13 @@ impl<T: Data> Widget<T> for Align<T> {
 }
 
 fn log_size_warnings(size: Size) {
-    if size.width.is_infinite() {
+    if size.width == ScreenCoord::MAX { ////
+    ////if size.width.is_infinite() {
         log::warn!("Align widget's child has an infinite width.");
     }
 
-    if size.height.is_infinite() {
-        log::warn!("Align widget's child has an infinite height.");
+    if size.height == ScreenCoord::MAX { ////
+    ////if size.height.is_infinite() {
+            log::warn!("Align widget's child has an infinite height.");
     }
 }

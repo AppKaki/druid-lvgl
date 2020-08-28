@@ -269,6 +269,7 @@ pub struct Rect { ////
 }
 impl Rect {
     pub const ZERO: Rect = Rect{ x0: 0, y0: 0, x1: 0, y1: 0 };
+    pub fn new(x0: ScreenCoord, y0: ScreenCoord, x1: ScreenCoord, y1: ScreenCoord) -> Self { Self { x0, y0, x1, y1 } }
     /// A new rectangle from origin and size.
     pub fn from_origin_size(point: Point, size: Size) -> Rect { 
         Rect { 
