@@ -232,6 +232,14 @@ impl From<(ScreenFactor, ScreenFactor)> for Size {
         }
     }
 }
+impl From<(ScreenCoord, ScreenCoord)> for Size {
+    fn from((x, y): (ScreenCoord, ScreenCoord)) -> Self {
+        Self { 
+            width: x, 
+            height: y,
+        }
+    }
+}
 impl fmt::Debug for Size {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{:?}W×{:?}H", self.width, self.height)

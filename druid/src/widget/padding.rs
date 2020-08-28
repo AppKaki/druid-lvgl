@@ -20,14 +20,18 @@ use crate::{
     BoxConstraints, Data, Env, Event, EventCtx, LayoutCtx, LifeCycle, LifeCycleCtx, PaintCtx,
     UpdateCtx, Widget, WidgetPod,
 };
-use crate::BoxedWidget; ////
+use crate::{BoxedWidget, ScreenCoord}; ////
 
 /// A widget that just adds padding around its child.
 pub struct Padding<T> {
-    left: f64,
-    right: f64,
-    top: f64,
-    bottom: f64,
+    left: ScreenCoord, ////
+    ////left: f64,
+    right: ScreenCoord, ////
+    ////right: f64,
+    top: ScreenCoord, ////
+    ////top: f64,
+    bottom: ScreenCoord, ////
+    ////bottom: f64,
 
     child: WidgetPod<T, BoxedWidget<T>>, ////
     ////child: WidgetPod<T, Box<dyn Widget<T>>>,
