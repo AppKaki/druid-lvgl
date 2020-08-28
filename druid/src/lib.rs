@@ -128,7 +128,7 @@
 
 ////Begin
 use ::core::fmt;
-use ::core::ops::{Add, AddAssign, Sub};
+use ::core::ops::{Add, AddAssign, Mul, Sub};
 use ::core::convert::From;
 
 type StringLength = heapless::consts::U20; //// Max length of strings
@@ -156,6 +156,7 @@ pub struct Point { ////
 }
 impl Point {
     pub const ORIGIN: Point = Point { x: 0, y: 0 };
+    pub fn new(x: ScreenCoord, y: ScreenCoord) -> Self { Self{ x, y } }
     /// Convert this point into a `Vec2`.
     pub const fn to_vec2(self) -> Vec2 {
         Vec2 { x: self.x, y: self.y }
@@ -167,6 +168,14 @@ impl From<(ScreenFactor, ScreenFactor)> for Point {
             x: x as ScreenCoord, 
             y: y as ScreenCoord,
         }
+    }
+}
+impl Sub<Vec2> for Point {
+    type Output = Point;
+
+    #[inline]
+    fn sub(self, other: Vec2) -> Self {
+        Point::new(self.x - other.x, self.y - other.y)
     }
 }
 
@@ -278,6 +287,14 @@ impl Rect {
             x1: point.x + size.width,
             y1: point.y + size.height,
         }
+    }
+    /// A new rectangle from two points.
+    ///
+    /// The result will have non-negative width and height.
+    pub fn from_points(p0: impl Into<Point>, p1: impl Into<Point>) -> Rect {
+        let p0 = p0.into();
+        let p1 = p1.into();
+        Rect::new(p0.x, p0.y, p1.x, p1.y)
     }
     /// Create a new `Rect` with the same size as `self` and a new origin.
     pub fn with_origin(self, origin: Point) -> Rect {
@@ -440,9 +457,125 @@ impl Add<Insets> for Rect {
     }
 }
 
-/// A 2D affine transform.
+/// A 2D affine transform.  Based on https://docs.rs/kurbo/0.6.0/src/kurbo/affine.rs.html
 #[derive(Clone, Copy, Debug, PartialEq)]
-pub struct Affine([ScreenCoord; 6]); ////
+pub struct Affine([ScreenFactor; 6]); ////
+impl Affine {
+    /// A transform that is flipped on the y-axis. Useful for converting between
+    /// y-up and y-down spaces.
+    pub const FLIP_Y: Affine = Affine::new([1.0, 0., 0., -1.0, 0., 0.]);
+
+    /// A transform that is flipped on the x-axis.
+    pub const FLIP_X: Affine = Affine::new([-1.0, 0., 0., 1.0, 0., 0.]);
+
+    /// Construct an affine transform from coefficients.
+    ///
+    /// If the coefficients are `(a, b, c, d, e, f)`, then the resulting
+    /// transformation represents this augmented matrix:
+    ///
+    /// ```text
+    /// | a c e |
+    /// | b d f |
+    /// | 0 0 1 |
+    /// ```
+    ///
+    /// Note that this convention is transposed from PostScript and
+    /// Direct2D, but is consistent with the
+    /// [Wikipedia](https://en.wikipedia.org/wiki/Affine_transformation)
+    /// formulation of affine transformation as augmented matrix. The
+    /// idea is that `(A * B) * v == A * (B * v)`, where `*` is the
+    /// [`Mul`](https://doc.rust-lang.org/std/ops/trait.Mul.html) trait.
+    #[inline]
+    pub const fn new(c: [ScreenFactor; 6]) -> Affine {
+        Affine(c)
+    }
+
+    /// An affine transform representing uniform scaling.
+    #[inline]
+    pub const fn scale(s: ScreenFactor) -> Affine {
+        Affine([s, 0.0, 0.0, s, 0.0, 0.0])
+    }
+
+    /// An affine transform representing non-uniform scaling
+    /// with different scale values for x and y
+    #[inline]
+    pub const fn scale_non_uniform(s_x: ScreenFactor, s_y: ScreenFactor) -> Affine {
+        Affine([s_x, 0.0, 0.0, s_y, 0.0, 0.0])
+    }
+
+    /// An affine transform representing rotation.
+    ///
+    /// The convention for rotation is that a positive angle rotates a
+    /// positive X direction into positive Y. Thus, in a Y-down coordinate
+    /// system (as is common for graphics), it is a clockwise rotation, and
+    /// in Y-up (traditional for math), it is anti-clockwise.
+    ///
+    /// The angle, `th`, is expressed in radians.
+    #[inline]
+    pub fn rotate(th: ScreenFactor) -> Affine {
+        let s = th.sin();
+        let c = th.cos();
+        Affine([c, s, -s, c, 0.0, 0.0])
+    }
+
+    /// An affine transform representing translation.
+    #[inline]
+    pub fn translate<V: Into<Vec2>>(p: V) -> Affine {
+        let p = p.into();
+        Affine([1.0, 0.0, 0.0, 1.0, p.x as ScreenFactor, p.y as ScreenFactor])
+    }
+
+    /// Get the coefficients of the transform.
+    #[inline]
+    pub fn as_coeffs(self) -> [ScreenFactor; 6] {
+        self.0
+    }
+
+    /// Compute the determinant of this transform.
+    pub fn determinant(self) -> ScreenFactor {
+        self.0[0] * self.0[3] - self.0[1] * self.0[2]
+    }
+
+    /// Compute the inverse transform.
+    ///
+    /// Produces NaN values when the determinant is zero.
+    pub fn inverse(self) -> Affine {
+        let inv_det = self.determinant().recip();
+        Affine([
+            inv_det * self.0[3],
+            -inv_det * self.0[1],
+            -inv_det * self.0[2],
+            inv_det * self.0[0],
+            inv_det * (self.0[2] * self.0[5] - self.0[3] * self.0[4]),
+            inv_det * (self.0[1] * self.0[4] - self.0[0] * self.0[5]),
+        ])
+    }
+
+    /// Compute the bounding box of a transformed rectangle.
+    ///
+    /// Returns the minimal `Rect` that encloses the given `Rect` after affine transformation.
+    /// If the transform is axis-aligned, then this bounding box is "tight", in other words the
+    /// returned `Rect` is the transformed rectangle.
+    ///
+    /// The returned rectangle always has non-negative width and height.
+    pub fn transform_rect_bbox(self, rect: Rect) -> Rect {
+        let p00 = self * Point::new(rect.x0 as ScreenCoord, rect.y0 as ScreenCoord);
+        let p01 = self * Point::new(rect.x0 as ScreenCoord, rect.y1 as ScreenCoord);
+        let p10 = self * Point::new(rect.x1 as ScreenCoord, rect.y0 as ScreenCoord);
+        let p11 = self * Point::new(rect.x1 as ScreenCoord, rect.y1 as ScreenCoord);
+        Rect::from_points(p00, p01).union(Rect::from_points(p10, p11))
+    }
+}
+impl Mul<Point> for Affine {
+    type Output = Point;
+
+    fn mul(self, other: Point) -> Point {
+        Point::new(
+            (self.0[0] * other.x as ScreenFactor + self.0[2] * other.y as ScreenFactor + self.0[4]) as ScreenCoord,
+            (self.0[1] * other.x as ScreenFactor + self.0[3] * other.y as ScreenFactor + self.0[5]) as ScreenCoord,
+        )
+    }
+}
 
 /// A single line.
 #[derive(Clone, Copy, Debug, PartialEq)]
