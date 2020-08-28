@@ -863,8 +863,39 @@ impl fmt::Debug for TimerToken {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result { write!(f, "TimerToken") }
 }
 
+/// A representation of a point relative to a unit rectangle. Based on https://docs.rs/piet/0.0.6/src/piet/gradient.rs.html
 #[derive(Clone)]
-pub struct UnitPoint();
+pub struct UnitPoint {
+    u: ScreenFactor,
+    v: ScreenFactor,
+}
+impl UnitPoint {
+    pub const TOP_LEFT: UnitPoint = UnitPoint::new(0.0, 0.0);
+    pub const TOP: UnitPoint = UnitPoint::new(0.5, 0.0);
+    pub const TOP_RIGHT: UnitPoint = UnitPoint::new(1.0, 0.0);
+    pub const LEFT: UnitPoint = UnitPoint::new(0.0, 0.5);
+    pub const CENTER: UnitPoint = UnitPoint::new(0.5, 0.5);
+    pub const RIGHT: UnitPoint = UnitPoint::new(1.0, 0.5);
+    pub const BOTTOM_LEFT: UnitPoint = UnitPoint::new(0.0, 1.0);
+    pub const BOTTOM: UnitPoint = UnitPoint::new(0.5, 1.0);
+    pub const BOTTOM_RIGHT: UnitPoint = UnitPoint::new(1.0, 1.0);
+
+    /// Create a new UnitPoint.
+    ///
+    /// The `u` and `v` coordinates describe the point, with (0.0, 0.0) being
+    /// the top-left, and (1.0, 1.0) being the bottom-right.
+    pub const fn new(u: ScreenFactor, v: ScreenFactor) -> UnitPoint {
+        UnitPoint { u, v }
+    }
+
+    /// Given a rectangle, resolve the point within the rectangle.
+    pub fn resolve(&self, rect: Rect) -> Point {
+        Point {
+            x: rect.x0 + (self.u * (rect.x1 - rect.x0) as ScreenFactor) as ScreenCoord,
+            y: rect.y0 + (self.v * (rect.y1 - rect.y0) as ScreenFactor) as ScreenCoord,
+        }
+    }
+}
 
 #[derive(Clone)]
 pub struct UpdateCtx {
