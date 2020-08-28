@@ -925,12 +925,27 @@ impl Piet {}
 
 #[derive(Clone)]
 pub struct PietText();
-impl PietText {}
+impl PietText {
+    pub fn new_font_by_name(self, font_name: &str, font_size: ScreenFactor) -> Self { Self() }
+    pub fn build(self) -> Result<Self, ()> { Ok(self) }
+    pub fn new_text_layout(self, font: &Self, text: &str, factor: ScreenFactor) -> PietTextLayout {
+        PietTextLayout {
+            width: 10, ////TODO
+            font: String::new(), ////TODO
+            text: String::from(text)
+        }
+    }
+}
 
 #[derive(Clone)]
-pub struct PietTextLayout();
+pub struct PietTextLayout {
+    pub width: ScreenCoord,
+    pub font: String,
+    pub text: String,
+}
 impl PietTextLayout {
-    pub fn width(self) -> ScreenCoord { 10 }  ////TODO
+    pub fn width(self) -> ScreenCoord { self.width }
+    pub fn build(self) -> Result<Self, ()> { Ok(self) }
 }
 
 /// A region of a widget, generally used to describe what needs to be drawn.
