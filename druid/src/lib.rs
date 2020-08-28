@@ -746,10 +746,27 @@ impl<T> AppState<T> {
     pub fn add_window(self, id: WindowId, window: WindowDesc<T>) {}
 }
 
+/// Bloom Filter
 #[derive(Clone)]
-pub struct Bloom<T>(Option<T>);
-impl<T> Bloom<T> {
-    pub fn new() -> Self { Self(None) }
+pub struct Bloom<T>(Vec<T>);
+impl<T: Eq + Clone> Bloom<T> {
+    pub fn new() -> Self { Self(Vec::new()) }
+    pub fn clear(self) { self.0.clear(); }
+    pub fn may_contain(self, id: &T) -> bool {
+        for item in self.0 {
+            if item == *id { return true; }
+        }
+        false
+    }
+    pub fn union(self, bloom: Bloom<T>) -> Bloom<T> {
+        let result = Bloom(self.0.clone());
+        for item in bloom.0 {
+            if !result.may_contain(&item) {
+                result.0.push(item);
+            }
+        }
+        result
+    }
 }
 
 #[derive(Clone)]
