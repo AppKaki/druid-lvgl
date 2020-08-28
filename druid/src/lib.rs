@@ -286,6 +286,18 @@ impl Rect {
     pub fn with_size(self, size: Size) -> Rect {
         Rect::from_origin_size( Point{ x: self.x0, y: self.y0 } , size)
     }
+    /// The width of the rectangle.
+    ///
+    /// Note: nothing forbids negative width.
+    pub fn width(&self) -> ScreenCoord {
+        self.x1 - self.x0
+    }
+    /// The height of the rectangle.
+    ///
+    /// Note: nothing forbids negative height.
+    pub fn height(&self) -> ScreenCoord {
+        self.y1 - self.y0
+    }
     /// Width and height of rectangle.
     pub fn size(self) -> Size {
         Size {
@@ -790,6 +802,29 @@ impl Region {
     /// Returns `true` if `self` intersects with `other`.
     pub fn intersects(&self, other: Rect) -> bool {
         self.0.intersect(other).area() > 0.
+    }
+    /// Returns `true` if this region is empty.
+    pub fn is_empty(&self) -> bool {
+        self.0.width() <= 0 || self.0.height() <= 0
+    }
+    /// Adds a new `Rect` to this region.
+    ///
+    /// This differs from `Rect::union` in its treatment of empty rectangles: an empty rectangle has
+    /// no effect on the union.
+    pub fn add_rect(&mut self, rect: Rect) {
+        if self.is_empty() {
+            self.0 = rect;
+        } else if rect.width() > 0 && rect.height() > 0 {
+            self.0 = self.0.union(rect);
+        }
+    }
+    /// Modifies this region by including everything in the other region.
+    pub fn merge_with(&mut self, other: Region) {
+        self.add_rect(other.0);
+    }
+    /// Modifies this region by intersecting it with the given rectangle.
+    pub fn intersect_with(&mut self, rect: Rect) {
+        self.0 = self.0.intersect(rect);
     }
 }
 impl From<Rect> for Region {
