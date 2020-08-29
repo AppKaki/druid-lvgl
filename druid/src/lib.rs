@@ -841,6 +841,9 @@ impl<T> DruidHandler<T> {
 
 #[derive(Clone)]
 pub struct Env();
+impl Env {
+    pub fn same(self, env: &Env) -> bool { true } ////TODO
+}
 
 #[derive(Clone)]
 pub struct EventCtx();
