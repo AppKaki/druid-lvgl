@@ -412,6 +412,12 @@ impl Sub for Rect {
         Insets { x0, y0, x1, y1 }
     }
 }
+impl Sub<Vec2> for Rect {
+    type Output = Rect;
+    fn sub(self, v: Vec2) -> Rect {
+        Rect::new(self.x0 - v.x, self.y0 - v.y, self.x1 - v.x, self.y1 - v.y)
+    }
+}
 impl Add<Vec2> for Rect {
     type Output = Rect;
 
@@ -751,12 +757,15 @@ impl<T> AppState<T> {
 pub struct Bloom<T>(Vec<T>);
 impl<T: Eq + Clone> Bloom<T> {
     pub fn new() -> Self { Self(Vec::new()) }
-    pub fn clear(self) { self.0.clear(); }
+    pub fn clear(self) { self.0.clear(); }    
     pub fn may_contain(self, id: &T) -> bool {
         for item in self.0 {
             if item == *id { return true; }
         }
         false
+    }
+    pub fn add(mut self, id: &T) {
+        self.0.push(*id);
     }
     pub fn union(self, bloom: Bloom<T>) -> Bloom<T> {
         let result = Bloom(self.0.clone());
@@ -897,6 +906,11 @@ impl LayoutCtx {
 pub struct LifeCycleCtx {
     pub widget_state: WidgetState,
     pub state: ContextState,
+}
+impl LifeCycleCtx {
+    pub fn register_child(&mut self, child_id: WidgetId) {
+        self.widget_state.children.add(&child_id);
+    }
 }
 
 #[derive(Clone)]

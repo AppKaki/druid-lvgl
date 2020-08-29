@@ -436,7 +436,7 @@ impl<T: Data, W: Widget<T>> WidgetPod<T, W> {
 
         ctx.with_save(|ctx| {
             let layout_origin = self.layout_rect().origin().to_vec2();
-            ctx.transform(Affine::translate(layout_origin));
+            ////ctx.transform(Affine::translate(layout_origin)); ////TODO
             let visible = ctx.region().to_rect().intersect(self.state.paint_rect()) - layout_origin;
             ctx.with_child_ctx(visible, |ctx| self.paint_raw(ctx, data, env));
         });
