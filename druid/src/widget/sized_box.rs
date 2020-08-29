@@ -46,7 +46,8 @@ impl<T> SizedBox<T> {
     /// Construct container with child, and both width and height not set.
     pub fn new(inner: impl Widget<T> + 'static) -> Self {
         Self {
-            inner: Some(Box::new(inner)),
+            inner: Some(BoxedWidget::new(inner)), ////
+            ////inner: Some(Box::new(inner)),
             width: None,
             height: None,
         }
