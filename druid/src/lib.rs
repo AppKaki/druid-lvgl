@@ -861,7 +861,7 @@ pub struct EventCtx();
 pub struct ExtEventHost();
 impl ExtEventHost {
     pub fn new() -> Self { Self{} }
-    pub fn make_sink(self) -> ExtEventSink { ExtEventSink{} }
+    pub fn make_sink(&self) -> ExtEventSink { ExtEventSink{} }
 }
 
 #[derive(Clone)]
@@ -1142,13 +1142,13 @@ pub struct WindowBuilder<T> {
 }
 impl<T> WindowBuilder<T> {
     pub fn new(app: Application<T>) -> Self { Self{ app } }
-    pub fn build(self) -> Result<WindowHandle, PlatformError> { Ok(WindowHandle{}) }  ////TODO
-    pub fn resizable(self, resizable: bool) {}
-    pub fn show_titlebar(self, show_titlebar: bool) {}
-    pub fn set_handler(self, handler: BoxedDruidHandler<T>) {}
-    pub fn set_size(self, size: Size) {}
-    pub fn set_min_size(self, min_size: Size) {}
-    pub fn set_title(self, title: &str) {}
+    pub fn build(&mut self) -> Result<WindowHandle, PlatformError> { Ok(WindowHandle{}) }  ////TODO
+    pub fn resizable(&mut self, resizable: bool) {}
+    pub fn show_titlebar(&mut self, show_titlebar: bool) {}
+    pub fn set_handler(&mut self, handler: BoxedDruidHandler<T>) {}
+    pub fn set_size(&mut self, size: Size) {}
+    pub fn set_min_size(&mut self, min_size: Size) {}
+    pub fn set_title(&mut self, title: &str) {}
     pub fn set_menu(self, menu: MenuDesc<T>) {}
 }
 
