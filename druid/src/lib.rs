@@ -937,11 +937,43 @@ pub struct PaintCtx {
 }
 impl PaintCtx {
     pub fn region(self) -> Region { self.region }
+    pub fn with_save(&mut self, f: impl FnOnce(&mut PaintCtx)) {
+        if let Err(e) = self.render_ctx.save() {
+            log::error!("Failed to save RenderContext: '{}'", e);
+            return;
+        }
+
+        f(self);
+
+        if let Err(e) = self.render_ctx.restore() {
+            log::error!("Failed to restore RenderContext: '{}'", e);
+        }
+    }
+    /// Creates a temporary `PaintCtx` with a new visible region, and calls
+    /// the provided function with that `PaintCtx`.
+    ///
+    /// This is used by containers to ensure that their children have the correct
+    /// visible region given their layout.
+    pub fn with_child_ctx(&mut self, region: impl Into<Region>, f: impl FnOnce(&mut PaintCtx)) {
+        let mut child_ctx = PaintCtx {
+            render_ctx: self.render_ctx,
+            state: self.state,
+            widget_state: self.widget_state,
+            z_ops: Vec::new(),
+            region: region.into(),
+            depth: self.depth + 1,
+        };
+        f(&mut child_ctx);
+        ////self.z_ops.append(&mut child_ctx.z_ops); ////TODO
+    }
 }
 
 #[derive(Clone)]
 pub struct Piet();
-impl Piet {}
+impl Piet {
+    pub fn save(self) -> Result<(), String> { Ok(()) } ////TODO
+    pub fn restore(self) -> Result<(), String> { Ok(()) } ////TODO
+}
 
 #[derive(Clone)]
 pub struct PietText();
