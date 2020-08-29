@@ -736,7 +736,7 @@ pub struct AppState<T> {
     delegate: Option<BoxedAppDelegate<T>>,
     ext_event_host: ExtEventHost,    
 }
-impl<T> AppState<T> {
+impl<T: Clone> AppState<T> {
     pub fn new(
         app: Application<T>,
         data: T,
@@ -746,10 +746,10 @@ impl<T> AppState<T> {
     ) -> Self { 
         Self{ app, data, env, delegate, ext_event_host }
     }
-    pub fn app(self) -> Application<T> { self.app }
-    pub fn data(self) -> T { self.data }
-    pub fn env(self) -> Env { self.env }
-    pub fn add_window(self, id: WindowId, window: WindowDesc<T>) {}
+    pub fn app(&self) -> Application<T> { self.app.clone() }
+    pub fn data(&self) -> T { self.data.clone() }
+    pub fn env(&self) -> Env { self.env.clone() }
+    pub fn add_window(&self, id: WindowId, window: WindowDesc<T>) {}
 }
 
 /// Bloom Filter
@@ -757,18 +757,18 @@ impl<T> AppState<T> {
 pub struct Bloom<T>(Vec<T>);
 impl<T: Eq + Clone> Bloom<T> {
     pub fn new() -> Self { Self(Vec::new()) }
-    pub fn clear(self) { self.0.clear(); }    
-    pub fn may_contain(self, id: &T) -> bool {
-        for item in self.0 {
-            if item == *id { return true; }
+    pub fn clear(&mut self) { self.0.clear(); }    
+    pub fn may_contain(&self, id: &T) -> bool {
+        for item in &self.0 {
+            if *item == *id { return true; }
         }
         false
     }
     pub fn add(mut self, id: &T) {
-        self.0.push(*id);
+        self.0.push(id.clone());
     }
     pub fn union(self, bloom: Bloom<T>) -> Bloom<T> {
-        let result = Bloom(self.0.clone());
+        let mut result = Bloom(self.0.clone());
         for item in bloom.0 {
             if !result.may_contain(&item) {
                 result.0.push(item);
@@ -826,12 +826,12 @@ impl fmt::Debug for Command {
 #[derive(Clone)]
 pub struct ContextState();
 
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 pub struct Counter();
 impl Counter {
     pub fn new() -> Self { Counter{}}
     pub fn next_nonzero(self) -> CounterType {
-        let count = COUNTER;
+        let count = unsafe { COUNTER };
         unsafe { COUNTER += 1 };
         count
     }
@@ -937,7 +937,7 @@ impl<T> MenuDesc<T> {
     pub fn build_window_menu(self, data: &T, env: &Env) -> MenuDesc<T> { MenuDesc(None) }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 pub struct NonZeroU64();
 
 #[derive(Clone)]
@@ -1015,7 +1015,7 @@ impl PietTextLayout {
 }
 
 /// A region of a widget, generally used to describe what needs to be drawn.
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 pub struct Region(Rect);
 impl Region {
     /// An empty region.
@@ -1081,14 +1081,14 @@ impl fmt::Debug for Target {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result { write!(f, "Target") }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 pub struct TimerToken();
 impl fmt::Debug for TimerToken {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result { write!(f, "TimerToken") }
 }
 
 /// A representation of a point relative to a unit rectangle. Based on https://docs.rs/piet/0.0.6/src/piet/gradient.rs.html
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 pub struct UnitPoint {
     u: ScreenFactor,
     v: ScreenFactor,
@@ -1152,13 +1152,13 @@ impl<T> WindowBuilder<T> {
     pub fn set_menu(self, menu: MenuDesc<T>) {}
 }
 
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 pub struct WindowHandle();
 impl WindowHandle {
     pub fn show(self) { }  ////TODO
 }
 
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 pub struct WindowId();
 impl WindowId {
     pub fn next() -> Self { Self{} }  ////TODO
