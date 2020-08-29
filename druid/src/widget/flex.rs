@@ -17,9 +17,9 @@
 ////use crate::kurbo::common::FloatExt;
 use crate::{Point, Rect, Size}; ////
 ////use crate::kurbo::{Point, Rect, Size};
-use crate::{BoxedWidget, ScreenCoord, ScreenFactor, SizedBox, Vec}; ////
+use crate::{BoxedWidget, ScreenCoord, ScreenFactor, Vec}; ////
 
-////use crate::widget::SizedBox;
+use crate::widget::SizedBox;
 use crate::{
     BoxConstraints, Data, Env, Event, EventCtx, KeyOrValue, LayoutCtx, LifeCycle, LifeCycleCtx,
     PaintCtx, UpdateCtx, Widget, WidgetPod,

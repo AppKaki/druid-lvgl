@@ -1062,6 +1062,7 @@ impl AddAssign<Vec2> for Region {
 #[derive(Clone)]
 pub struct Shape();
 
+/*
 #[derive(Clone)]
 pub struct SizedBox {
     width:  ScreenCoord,
@@ -1072,6 +1073,7 @@ impl SizedBox {
     pub fn expand_width(self) -> Self { self }  ////TODO
     pub fn expand_height(self) -> Self { self }  ////TODO
 }
+*/
 
 #[derive(Clone)]
 pub struct Target();

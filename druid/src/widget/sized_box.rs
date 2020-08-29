@@ -16,11 +16,13 @@
 
 ////use std::f64::INFINITY;
 
-use crate::shell::kurbo::Size;
+////use crate::shell::kurbo::Size;
+use crate::{BoxedWidget, Size, ScreenCoord}; ////
 use crate::{
     BoxConstraints, Data, Env, Event, EventCtx, LayoutCtx, LifeCycle, LifeCycleCtx, PaintCtx,
     UpdateCtx, Widget, WidgetId,
 };
+const INFINITY: ScreenCoord = ScreenCoord::MAX; ////
 
 /// A widget with predefined size.
 ///
@@ -32,9 +34,12 @@ use crate::{
 /// and width as possible given the parent's constraints. If height or width is not set,
 /// it will be treated as zero.
 pub struct SizedBox<T> {
-    inner: Option<Box<dyn Widget<T>>>,
-    width: Option<f64>,
-    height: Option<f64>,
+    inner: Option<BoxedWidget<T>>, ////
+    ////inner: Option<Box<dyn Widget<T>>>,
+    width: Option<ScreenCoord>, ////
+    ////width: Option<f64>,
+    height: Option<ScreenCoord>, ////
+    ////height: Option<f64>,
 }
 
 impl<T> SizedBox<T> {
@@ -57,13 +62,15 @@ impl<T> SizedBox<T> {
     }
 
     /// Set container's width.
-    pub fn width(mut self, width: f64) -> Self {
+    pub fn width(mut self, width: ScreenCoord) -> Self { ////
+    ////pub fn width(mut self, width: f64) -> Self {
         self.width = Some(width);
         self
     }
 
     /// Set container's height.
-    pub fn height(mut self, height: f64) -> Self {
+    pub fn height(mut self, height: ScreenCoord) -> Self { ////
+    ////pub fn height(mut self, height: f64) -> Self {
         self.height = Some(height);
         self
     }
@@ -124,8 +131,9 @@ impl<T> SizedBox<T> {
     }
 
     #[cfg(test)]
-    pub(crate) fn width_and_height(&self) -> (Option<f64>, Option<f64>) {
-        (self.width, self.height)
+    pub(crate) fn width_and_height(&self) -> (Option<ScreenCoord>, Option<ScreenCoord>) { ////
+    ////pub(crate) fn width_and_height(&self) -> (Option<f64>, Option<f64>) {
+            (self.width, self.height)
     }
 }
 
@@ -154,14 +162,17 @@ impl<T: Data> Widget<T> for SizedBox<T> {
         let child_bc = self.child_constraints(bc);
         let size = match self.inner.as_mut() {
             Some(inner) => inner.layout(ctx, &child_bc, data, env),
-            None => bc.constrain((self.width.unwrap_or(0.0), self.height.unwrap_or(0.0))),
+            None => bc.constrain((self.width.unwrap_or(0), self.height.unwrap_or(0))), ////
+            ////None => bc.constrain((self.width.unwrap_or(0.0), self.height.unwrap_or(0.0))),
         };
 
-        if size.width.is_infinite() {
+        if size.width == INFINITY { ////
+        ////if size.width.is_infinite() {
             log::warn!("SizedBox is returning an infinite width.");
         }
 
-        if size.height.is_infinite() {
+        if size.height == INFINITY { ////
+        ////if size.height.is_infinite() {
             log::warn!("SizedBox is returning an infinite height.");
         }
 
@@ -179,6 +190,7 @@ impl<T: Data> Widget<T> for SizedBox<T> {
     }
 }
 
+/* ////
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -201,3 +213,4 @@ mod tests {
         assert_eq!(child_bc.max(), Size::new(400., 200.,));
     }
 }
+*/ ////
