@@ -116,7 +116,9 @@ pub mod prelude {
 }
 
 //// Begin
-#[derive(Clone, Copy)]
+use crate::{ BoxConstraints, Env, Event, EventCtx, LayoutCtx, LifeCycle, LifeCycleCtx, PaintCtx, Size, UpdateCtx };
+
+#[derive(Clone)]
 pub struct BoxedWidget<T> (
     Option<T> ////TODO
 );
@@ -125,5 +127,36 @@ impl<T> BoxedWidget<T> {
     pub fn new(child: impl Widget<T> + 'static) -> Self { BoxedWidget(None) }  ////TODO
     pub fn deref(&self) -> &Self { &self.clone() }
     pub fn deref_mut(&self) -> &Self { &self.clone() }
+}
+
+impl<T> Widget<T> for BoxedWidget<T> { ////
+////impl<T> Widget<T> for Box<dyn Widget<T>> {
+    fn event(&mut self, ctx: &mut EventCtx, event: &Event, data: &mut T, env: &Env) {
+        ////TODO
+    }
+
+    fn lifecycle(&mut self, ctx: &mut LifeCycleCtx, event: &LifeCycle, data: &T, env: &Env) {
+        ////TODO
+    }
+
+    fn update(&mut self, ctx: &mut UpdateCtx, old_data: &T, data: &T, env: &Env) {
+        ////TODO
+    }
+
+    fn layout(&mut self, ctx: &mut LayoutCtx, bc: &BoxConstraints, data: &T, env: &Env) -> Size {
+        Size::ZERO ////TODO
+    }
+
+    fn paint(&mut self, ctx: &mut PaintCtx, data: &T, env: &Env) {
+        ////TODO
+    }
+
+    fn id(&self) -> Option<WidgetId> {
+        None ////TODO
+    }
+
+    fn type_name(&self) -> &'static str {
+        "Unknown" ////TODO
+    }
 }
 //// End

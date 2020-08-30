@@ -228,6 +228,7 @@ impl WidgetId {
     }
 }
 
+/* //// Moved to BoxWidget in druid/src/widget/mod.rs
 impl<T> Widget<T> for BoxedWidget<T> { ////
 ////impl<T> Widget<T> for Box<dyn Widget<T>> {
     fn event(&mut self, ctx: &mut EventCtx, event: &Event, data: &mut T, env: &Env) {
@@ -258,3 +259,4 @@ impl<T> Widget<T> for BoxedWidget<T> { ////
         self.deref().type_name()
     }
 }
+*/ ////
