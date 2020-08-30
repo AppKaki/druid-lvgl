@@ -6,9 +6,11 @@ So that we can have a Declarative Rust UI for PineTime Watch Faces based on LVGL
 
 [Porting PineTime Watch Face from C to Rust On RIOT with LVGL](https://lupyuen.github.io/pinetime-rust-riot/articles/watch_face)
 
-TODO:
+TODO Tasks:
 
 1. Render druid Widgets as LVGL Widgets. See [`druid/src/widget/label.rs`](druid/src/widget/label.rs#L295-L316)
+
+Completed Tasks:
 
 1. Remove `druid-shell`, `piet` and `kurbo` dependencies, to simplify druid on embedded platforms. Replace them by stubs: [`druid/src/lib.rs`](druid/src/lib.rs#L335-L602)
 
