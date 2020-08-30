@@ -851,7 +851,7 @@ impl<T> DruidHandler<T> {
 #[derive(Clone)]
 pub struct Env();
 impl Env {
-    pub fn same(self, env: &Env) -> bool { true } ////TODO
+    pub fn same(&self, env: &Env) -> bool { true } ////TODO
 }
 
 #[derive(Clone)]
@@ -950,7 +950,7 @@ pub struct PaintCtx {
     pub depth: u32,
 }
 impl PaintCtx {
-    pub fn region(self) -> Region { self.region }
+    pub fn region(&self) -> Region { self.region }
     pub fn with_save(&mut self, f: impl FnOnce(&mut PaintCtx)) {
         if let Err(e) = self.render_ctx.save() {
             log::error!("Failed to save RenderContext: '{}'", e);

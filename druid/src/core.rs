@@ -522,7 +522,7 @@ impl<T: Data, W: Widget<T>> WidgetPod<T, W> {
             None => None,
         };
         let mut child_ctx = LayoutCtx {
-            widget_state: self.state, ////
+            widget_state: self.state.clone(), ////TODO
             ////widget_state: &mut self.state,
             state: ctx.state,
             mouse_pos: child_mouse_pos,
@@ -844,7 +844,7 @@ impl<T: Data, W: Widget<T>> WidgetPod<T, W> {
 
         let mut child_ctx = LifeCycleCtx {
             state: ctx.state,
-            widget_state: self.state, ////
+            widget_state: self.state.clone(), ////TODO
             ////widget_state: &mut self.state,
         };
 
@@ -892,7 +892,7 @@ impl<T: Data, W: Widget<T>> WidgetPod<T, W> {
 
         let mut child_ctx = UpdateCtx {
             state: ctx.state,
-            widget_state: self.state, ////
+            widget_state: self.state.clone(), ////TODO
             ////widget_state: &mut self.state,
         };
 
