@@ -749,7 +749,9 @@ impl<T: Clone> AppState<T> {
     pub fn app(&self) -> Application<T> { self.app.clone() } ////TODO
     pub fn data(&self) -> T { self.data.clone() } ////TODO
     pub fn env(&self) -> Env { self.env.clone() } ////TODO
-    pub fn add_window(&self, id: WindowId, window: WindowDesc<T>) {}
+    pub fn add_window(&self, id: WindowId, window: WindowDesc<T>) {
+        ////TODO
+    }
 }
 
 /// Bloom Filter
