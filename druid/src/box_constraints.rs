@@ -48,7 +48,7 @@ impl BoxConstraints {
     /// Can be satisfied by any nonnegative size.
     pub const UNBOUNDED: BoxConstraints = BoxConstraints {
         min: Size::ZERO,
-        max: Size::new(ScreenCoord::MAX, ScreenCoord::MAX), ////
+        max: Size{ width: ScreenCoord::MAX, height: ScreenCoord::MAX }, ////
         ////max: Size::new(f64::INFINITY, f64::INFINITY),
     };
 

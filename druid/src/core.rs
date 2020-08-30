@@ -862,7 +862,8 @@ impl<T: Data, W: Widget<T>> WidgetPod<T, W> {
         match event {
             LifeCycle::WidgetAdded | LifeCycle::Internal(InternalLifeCycle::RouteWidgetAdded) => {
                 self.state.children_changed = false;
-                ctx.widget_state.children = ctx.widget_state.children.union(self.state.children);
+                ctx.widget_state.children = ctx.widget_state.children.union(self.state.children.clone()); ////TODO
+                ////ctx.widget_state.children = ctx.widget_state.children.union(self.state.children);
                 ctx.widget_state.focus_chain.extend(&self.state.focus_chain);
                 ctx.register_child(self.id());
             }

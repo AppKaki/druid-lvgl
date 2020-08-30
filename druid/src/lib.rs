@@ -767,7 +767,7 @@ impl<T: Eq + Clone> Bloom<T> {
     pub fn add(&mut self, id: &T) {
         self.0.push(id.clone());
     }
-    pub fn union(self, bloom: Bloom<T>) -> Bloom<T> {
+    pub fn union(&self, bloom: Bloom<T>) -> Bloom<T> {
         let mut result = Bloom(self.0.clone());
         for item in bloom.0 {
             if !result.may_contain(&item) {
