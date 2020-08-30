@@ -122,8 +122,8 @@
 
 #![no_std] //  Don't link with standard Rust library, which is not compatible with embedded systems ////
 #![deny(intra_doc_link_resolution_failure, /* unsafe_code */)] ////
-#![allow(clippy::new_ret_no_self, clippy::needless_doctest_main)]
-#![deny(clippy::trivially_copy_pass_by_ref)]
+////#![allow(clippy::new_ret_no_self, clippy::needless_doctest_main)]
+////#![deny(clippy::trivially_copy_pass_by_ref)]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
 ////Begin
@@ -894,7 +894,7 @@ impl<T> KeyOrValue<T> {
 #[derive(Clone)]
 pub struct LayoutCtx {
     pub state: ContextState,
-    pub widget_state: WidgetState,
+    pub(crate) widget_state: WidgetState,
     pub mouse_pos: Option<Point>,
 }
 impl LayoutCtx {
@@ -904,7 +904,7 @@ impl LayoutCtx {
 
 #[derive(Clone)]
 pub struct LifeCycleCtx {
-    pub widget_state: WidgetState,
+    pub(crate) widget_state: WidgetState,
     pub state: ContextState,
 }
 impl LifeCycleCtx {
@@ -943,7 +943,7 @@ pub struct NonZeroU64();
 #[derive(Clone)]
 pub struct PaintCtx {
     pub state: &'static ContextState,
-    pub widget_state: WidgetState,
+    pub(crate) widget_state: WidgetState,
     pub render_ctx: Piet,
     pub z_ops: Vec<ZOrderPaintOp>,
     pub region: Region,
@@ -1123,7 +1123,7 @@ impl UnitPoint {
 
 #[derive(Clone)]
 pub struct UpdateCtx {
-    pub widget_state: WidgetState,
+    pub(crate) widget_state: WidgetState,
     pub state: ContextState,
 }
 impl UpdateCtx {
