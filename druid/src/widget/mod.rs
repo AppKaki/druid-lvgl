@@ -124,7 +124,7 @@ pub struct BoxedWidget<T> (
 );
 
 impl<T> BoxedWidget<T> {
-    pub fn new(child: impl Widget<T> + 'static) -> Self { BoxedWidget(None) }  ////TODO
+    pub fn new(child: impl Widget<T>) -> Self { BoxedWidget(None) }  ////TODO
     pub fn deref(&self) -> &Self { &self.clone() }
     pub fn deref_mut(&self) -> &Self { &self.clone() }
 }
