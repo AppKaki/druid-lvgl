@@ -1,0 +1,27 @@
+[
+	{
+		"path": "$ROOTPATH$/druid/src/window.rs.old",
+		"bookmarks": [
+			{
+				"line": 326,
+				"column": 11,
+				"label": ""
+			},
+			{
+				"line": 335,
+				"column": 34,
+				"label": ""
+			}
+		]
+	},
+	{
+		"path": "$ROOTPATH$/druid/src/contexts.rs.old",
+		"bookmarks": [
+			{
+				"line": 295,
+				"column": 16,
+				"label": ""
+			}
+		]
+	}
+]
