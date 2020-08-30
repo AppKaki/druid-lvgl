@@ -899,7 +899,7 @@ pub struct LayoutCtx {
 }
 impl LayoutCtx {
     pub fn text(&self) -> PietText { PietText{} }
-    pub fn set_paint_insets(self, insets: Insets) {}
+    pub fn set_paint_insets(&self, insets: Insets) {}
 }
 
 #[derive(Clone)]
