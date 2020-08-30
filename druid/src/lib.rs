@@ -1018,6 +1018,8 @@ impl PietTextLayout {
     pub fn build(self) -> Result<Self, ()> { Ok(self) }
 }
 
+pub type PlatformError = String; ////
+
 /// A region of a widget, generally used to describe what needs to be drawn.
 #[derive(Clone, Copy)]
 pub struct Region(Rect);
@@ -1140,9 +1142,6 @@ impl UpdateCtx {
 pub struct VecDeque<T>(Option<T>);
 
 #[derive(Clone)]
-pub struct ZOrderPaintOp();
-
-#[derive(Clone)]
 pub struct WindowBuilder<T> {
     app: Application<T>,
 }
@@ -1182,8 +1181,6 @@ pub mod theme {
     pub static FONT_NAME: KeyOrValue<&'static str> = KeyOrValue("standard_font");
 }
 
-pub type PlatformError = String; ////
-
-mod hello; ////
-
+#[derive(Clone)]
+pub struct ZOrderPaintOp();
 //// End
