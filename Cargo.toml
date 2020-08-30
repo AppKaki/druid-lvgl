@@ -6,9 +6,11 @@ members = [
     ####////"docs/book_examples",
     ####////"druid/examples/web",
     ####////"druid/examples/hello_web",
+    "druid-app", ####////
 ]
 default-members = [
     "druid",
     ####////"druid-shell",
     "druid-derive",
+    "druid-app", ####////
 ]

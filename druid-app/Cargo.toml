@@ -1,0 +1,9 @@
+# Sample app for druid-lvgl. See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[package]
+name = "druid-app"
+version = "0.1.0"
+authors = ["lupyuen <luppy@appkaki.com>"]
+edition = "2018"
+
+[dependencies]
+druid = { path = "../druid" }
