@@ -28,6 +28,12 @@ Completed Tasks:
 
 1. Change Vectors to [`heapless`](https://docs.rs/heapless/0.5.5/heapless/index.html), limit to 10 elements.  See [`druid/src/lib.rs`](druid/src/lib.rs#L129-L242)
 
+To debug this project with VSCodium or VSCode...
+
+1. Install the [CodeLLDB Extension](https://github.com/vadimcn/vscode-lldb)
+
+1. Here's the CodeLLDB config: [`.vscode/launch.json`](.vscode/launch.json)
+
 # Druid
 
 ## A data-first Rust-native UI toolkit.
