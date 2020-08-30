@@ -17,7 +17,7 @@
 ////use crate::kurbo::common::FloatExt;
 use crate::{Point, Rect, Size}; ////
 ////use crate::kurbo::{Point, Rect, Size};
-use crate::{BoxedWidget, ScreenCoord, ScreenFactor, Vec}; ////
+use crate::{BoxedWidget, ScreenCoord, ScreenFactor, Vec, WidgetId}; ////
 
 use crate::widget::SizedBox;
 use crate::{
@@ -142,6 +142,7 @@ use crate::{
 /// [`TextBox`]: struct.TextBox.html
 /// [`SizedBox`]: struct.SizedBox.html
 pub struct Flex<T> {
+    id: WidgetId, ////
     direction: Axis,
     cross_alignment: CrossAxisAlignment,
     main_alignment: MainAxisAlignment,
@@ -157,6 +158,7 @@ struct ChildWidget<T> {
 
 /// A dummy widget we use to do spacing.
 struct Spacer {
+    id: WidgetId, ////
     axis: Axis,
     len: KeyOrValue<ScreenFactor>, ////
     ////len: KeyOrValue<f64>,
@@ -340,6 +342,7 @@ impl<T: Data> Flex<T> {
     /// The child widgets are laid out horizontally, from left to right.
     pub fn row() -> Self {
         Flex {
+            id: WidgetId::next(), ////
             direction: Axis::Horizontal,
             children: Vec::new(),
             cross_alignment: CrossAxisAlignment::Center,
@@ -353,6 +356,7 @@ impl<T: Data> Flex<T> {
     /// The child widgets are laid out vertically, from top to bottom.
     pub fn column() -> Self {
         Flex {
+            id: WidgetId::next(), ////
             direction: Axis::Vertical,
             children: Vec::new(),
             cross_alignment: CrossAxisAlignment::Center,
@@ -520,6 +524,7 @@ impl<T: Data> Flex<T> {
     pub fn add_spacer(&mut self, len: impl Into<KeyOrValue<ScreenFactor>>) { ////
     ////pub fn add_spacer(&mut self, len: impl Into<KeyOrValue<f64>>) {
         let spacer = Spacer {
+            id: WidgetId::next(), ////
             axis: self.direction,
             len: len.into(),
         };
@@ -538,6 +543,8 @@ impl<T: Data> Flex<T> {
 }
 
 impl<T: Data> Widget<T> for Flex<T> {
+    fn id(&self) -> Option<WidgetId> { Some(self.id) } ////
+
     fn event(&mut self, ctx: &mut EventCtx, event: &Event, data: &mut T, env: &Env) {
         for child in &mut self.children {
             child.widget.event(ctx, event, data, env);
@@ -806,6 +813,7 @@ impl Iterator for Spacing {
 }
 
 impl<T: Data> Widget<T> for Spacer {
+    fn id(&self) -> Option<WidgetId> { Some(self.id) } ////
     fn event(&mut self, _: &mut EventCtx, _: &Event, _: &mut T, _: &Env) {}
     fn lifecycle(&mut self, _: &mut LifeCycleCtx, _: &LifeCycle, _: &T, _: &Env) {}
     fn update(&mut self, _: &mut UpdateCtx, _: &T, _: &T, _: &Env) {}

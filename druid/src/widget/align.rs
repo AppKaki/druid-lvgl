@@ -22,10 +22,11 @@ use crate::{
 };
 
 ////use crate::piet::UnitPoint;
-use crate::{BoxedWidget, ScreenCoord, ScreenFactor, UnitPoint}; ////
+use crate::{BoxedWidget, ScreenCoord, ScreenFactor, UnitPoint, WidgetId}; ////
 
 /// A widget that aligns its child.
 pub struct Align<T> {
+    id: WidgetId, ////
     align: UnitPoint,
     child: WidgetPod<T, BoxedWidget<T>>, ////
     ////child: WidgetPod<T, Box<dyn Widget<T>>>,
@@ -43,6 +44,7 @@ impl<T> Align<T> {
     /// and thus the API will change when druid gains bidi capability.
     pub fn new(align: UnitPoint, child: impl Widget<T> + 'static) -> Align<T> {
         Align {
+            id: WidgetId::next(), ////
             align,
             child: WidgetPod::new(child).boxed(),
             width_factor: None,
@@ -68,6 +70,7 @@ impl<T> Align<T> {
     /// Align only in the horizontal axis, keeping the child's size in the vertical.
     pub fn horizontal(align: UnitPoint, child: impl Widget<T> + 'static) -> Align<T> {
         Align {
+            id: WidgetId::next(), ////
             align,
             child: WidgetPod::new(child).boxed(),
             width_factor: None,
@@ -78,6 +81,7 @@ impl<T> Align<T> {
     /// Align only in the vertical axis, keeping the child's size in the horizontal.
     pub fn vertical(align: UnitPoint, child: impl Widget<T> + 'static) -> Align<T> {
         Align {
+            id: WidgetId::next(), ////
             align,
             child: WidgetPod::new(child).boxed(),
             width_factor: Some(1.0),
@@ -87,6 +91,8 @@ impl<T> Align<T> {
 }
 
 impl<T: Data> Widget<T> for Align<T> {
+    fn id(&self) -> Option<WidgetId> { Some(self.id) } ////
+    
     fn event(&mut self, ctx: &mut EventCtx, event: &Event, data: &mut T, env: &Env) {
         self.child.event(ctx, event, data, env)
     }

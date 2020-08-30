@@ -24,7 +24,7 @@ use crate::{
     ////Point, 
     Size, UpdateCtx, Widget,
 };
-use crate::{BoxedText, Color, String, PietText, PietTextLayout, ScreenCoord, ScreenFactor, UnitPoint}; ////
+use crate::{BoxedText, Color, String, PietText, PietTextLayout, ScreenCoord, ScreenFactor, UnitPoint, WidgetId}; ////
 
 // a fudgey way to get an approximate line height from a font size
 const LINE_HEIGHT_FACTOR: ScreenFactor = 1.2; ////
@@ -64,6 +64,7 @@ pub struct Dynamic<T> {
 
 /// A label that displays some text.
 pub struct Label<T> {
+    id: WidgetId, ////
     text: LabelText<T>,
     color: KeyOrValue<Color>,
     size: KeyOrValue<ScreenFactor>, ////
@@ -91,6 +92,7 @@ impl<T: Data> Label<T> {
     pub fn new(text: impl Into<LabelText<T>>) -> Self {
         let text = text.into();
         Self {
+            id: WidgetId::next(), ////
             text,
             color: theme::LABEL_COLOR.into(),
             size: theme::TEXT_SIZE_NORMAL.into(),
@@ -264,6 +266,8 @@ impl<T: Data> LabelText<T> {
 }
 
 impl<T: Data> Widget<T> for Label<T> {
+    fn id(&self) -> Option<WidgetId> { Some(self.id) } ////
+    
     fn event(&mut self, _ctx: &mut EventCtx, _event: &Event, _data: &mut T, _env: &Env) {}
 
     fn lifecycle(&mut self, _ctx: &mut LifeCycleCtx, event: &LifeCycle, data: &T, env: &Env) {

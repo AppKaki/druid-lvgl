@@ -172,9 +172,10 @@ pub trait Widget<T> {
     #[doc(hidden)]
     /// Get the identity of the widget; this is basically only implemented by
     /// `IdentityWrapper`. Widgets should not implement this on their own.
-    fn id(&self) -> Option<WidgetId> {
-        None
-    }
+    fn id(&self) -> Option<WidgetId>; ////
+    ////fn id(&self) -> Option<WidgetId> {
+        ////None
+    ////}
 
     #[doc(hidden)]
     /// Get the (verbose) type name of the widget for debugging purposes.

@@ -20,10 +20,11 @@ use crate::{
     BoxConstraints, Data, Env, Event, EventCtx, LayoutCtx, LifeCycle, LifeCycleCtx, PaintCtx,
     UpdateCtx, Widget, WidgetPod,
 };
-use crate::{BoxedWidget, ScreenCoord}; ////
+use crate::{BoxedWidget, ScreenCoord, WidgetId}; ////
 
 /// A widget that just adds padding around its child.
 pub struct Padding<T> {
+    id: WidgetId, ////
     left: ScreenCoord, ////
     ////left: f64,
     right: ScreenCoord, ////
@@ -70,6 +71,7 @@ impl<T> Padding<T> {
     pub fn new(insets: impl Into<Insets>, child: impl Widget<T> + 'static) -> Padding<T> {
         let insets = insets.into();
         Padding {
+            id: WidgetId::next(), ////
             left: insets.x0,
             right: insets.x1,
             top: insets.y0,
@@ -80,6 +82,7 @@ impl<T> Padding<T> {
 }
 
 impl<T: Data> Widget<T> for Padding<T> {
+    fn id(&self) -> Option<WidgetId> { Some(self.id) } ////
     fn event(&mut self, ctx: &mut EventCtx, event: &Event, data: &mut T, env: &Env) {
         self.child.event(ctx, event, data, env)
     }
