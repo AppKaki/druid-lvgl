@@ -200,7 +200,8 @@ impl WidgetId {
     /// widget at a time.
     pub fn next() -> WidgetId {
         ////use crate::shell::Counter;
-        static WIDGET_ID_COUNTER: Counter = Counter::new();
+        static WIDGET_ID_COUNTER: Counter = Counter{}; ////
+        ////static WIDGET_ID_COUNTER: Counter = Counter::new();
         WidgetId(WIDGET_ID_COUNTER.next_nonzero())
     }
 
