@@ -7,6 +7,9 @@ fn build_ui() -> impl Widget<()> {
 
 fn main() -> Result<(), PlatformError> {
     println!("In Rust: main()");
-    AppLauncher::with_window(WindowDesc::new(build_ui)).launch(())?;
+    let window = WindowDesc::new(build_ui);
+    let launcher = AppLauncher::with_window(window);
+    launcher.launch(())?;
+    ////AppLauncher::with_window(WindowDesc::new(build_ui)).launch(())?;
     Ok(())
 }

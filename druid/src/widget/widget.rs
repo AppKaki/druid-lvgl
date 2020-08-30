@@ -185,7 +185,7 @@ pub trait Widget<T> {
     }
 
     fn boxed(&self) -> BoxedWidget<T> { ////TODO
-        BoxedWidget::<T>{ 0: None }
+        BoxedWidget::<T>{ 0: None } ////TODO
     }
 }
 
