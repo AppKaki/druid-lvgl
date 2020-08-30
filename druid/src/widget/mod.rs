@@ -120,11 +120,22 @@ use crate::{ BoxConstraints, Env, Event, EventCtx, LayoutCtx, LifeCycle, LifeCyc
 
 #[derive(Clone)]
 pub struct BoxedWidget<T> (
+    WidgetId,
     Option<T> ////TODO
 );
 
 impl<T> BoxedWidget<T> {
-    pub fn new(child: impl Widget<T>) -> Self { BoxedWidget(None) }  ////TODO
+    pub fn new(child: impl Widget<T>) -> Self { 
+        Self::new_by_id(
+            child.id().unwrap()
+        )
+    }
+    pub fn new_by_id(id: WidgetId) -> Self {
+        BoxedWidget(
+            id,
+            None
+        ) 
+    }
     pub fn deref(&self) -> &Self { &self.clone() }
     pub fn deref_mut(&self) -> &Self { &self.clone() }
 }
@@ -152,7 +163,7 @@ impl<T> Widget<T> for BoxedWidget<T> { ////
     }
 
     fn id(&self) -> Option<WidgetId> {
-        None ////TODO
+        Some(self.0)
     }
 
     fn type_name(&self) -> &'static str {
