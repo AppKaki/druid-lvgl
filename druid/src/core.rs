@@ -214,7 +214,7 @@ impl<T, W: Widget<T>> WidgetPod<T, W> {
 
         if old_size.is_none() || old_size.unwrap() != new_size {
             let mut child_ctx = LifeCycleCtx {
-                widget_state: self.state, ////
+                widget_state: self.state.clone(), ////TODO
                 ////widget_state: &mut self.state,
                 state: ctx.state,
             };
@@ -225,7 +225,7 @@ impl<T, W: Widget<T>> WidgetPod<T, W> {
 
         if WidgetPod::set_hot_state(
             &mut self.inner,
-            self.state, ////
+            self.state.clone(), ////TODO
             ////&mut self.state,
             ctx.state,
             layout_rect,
@@ -343,6 +343,7 @@ impl<T, W: Widget<T>> WidgetPod<T, W> {
         data: &T,
         env: &Env,
     ) -> bool {
+        /* ////
         let had_hot = child_state.is_hot;
         child_state.is_hot = match mouse_pos {
             Some(pos) => rect.winding(pos) != 0,
@@ -363,6 +364,7 @@ impl<T, W: Widget<T>> WidgetPod<T, W> {
             */ ////
             return true;
         }
+        */ ////
         false
     }
 }
