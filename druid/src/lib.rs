@@ -1142,7 +1142,9 @@ pub struct WindowBuilder<T> {
 }
 impl<T> WindowBuilder<T> {
     pub fn new(app: Application<T>) -> Self { Self{ app } }
-    pub fn build(&mut self) -> Result<WindowHandle, PlatformError> { Ok(WindowHandle{}) }  ////TODO
+    pub fn build(&mut self) -> Result<WindowHandle, PlatformError> { 
+        Ok(WindowHandle{})   ////TODO
+    }
     pub fn resizable(&mut self, resizable: bool) {}
     pub fn show_titlebar(&mut self, show_titlebar: bool) {}
     pub fn set_handler(&mut self, handler: BoxedDruidHandler<T>) {}
@@ -1155,7 +1157,8 @@ impl<T> WindowBuilder<T> {
 #[derive(Clone, Copy)]
 pub struct WindowHandle();
 impl WindowHandle {
-    pub fn show(self) { }  ////TODO
+    pub fn show(self) { ////TODO    
+    }
 }
 
 #[derive(Clone, Copy)]
