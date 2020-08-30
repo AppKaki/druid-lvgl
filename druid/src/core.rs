@@ -394,7 +394,7 @@ impl<T: Data, W: Widget<T>> WidgetPod<T, W> {
             state: ctx.state,
             z_ops: Vec::new(),
             region: ctx.region.clone(),
-            widget_state: self.state, ////
+            widget_state: self.state.clone(), ////TODO
             ////widget_state: &self.state,
             depth: ctx.depth,
         };

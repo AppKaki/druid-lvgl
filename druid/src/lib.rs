@@ -610,7 +610,7 @@ impl fmt::Debug for Point {
 /// Currently this is only a 32 bit RGBA value, but it will likely
 /// extend to some form of wide-gamut colorspace, and in the meantime
 /// is useful for giving programs proper type.
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 pub enum Color {
     Rgba32(u32),
 }
@@ -746,9 +746,9 @@ impl<T: Clone> AppState<T> {
     ) -> Self { 
         Self{ app, data, env, delegate, ext_event_host }
     }
-    pub fn app(&self) -> Application<T> { self.app.clone() }
-    pub fn data(&self) -> T { self.data.clone() }
-    pub fn env(&self) -> Env { self.env.clone() }
+    pub fn app(&self) -> Application<T> { self.app.clone() } ////TODO
+    pub fn data(&self) -> T { self.data.clone() } ////TODO
+    pub fn env(&self) -> Env { self.env.clone() } ////TODO
     pub fn add_window(&self, id: WindowId, window: WindowDesc<T>) {}
 }
 
@@ -808,7 +808,7 @@ pub struct BoxedText (
 );
 impl BoxedText {
     pub fn new() -> BoxedText { BoxedText{} }
-    pub fn resolve<T>(self, data: T, env: &Env) -> String { String::new() }
+    pub fn resolve<T>(&self, data: T, env: &Env) -> String { String::new() }
 }
 
 #[derive(Clone)]
@@ -885,7 +885,7 @@ impl fmt::Debug for KeyEvent {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result { write!(f, "KeyEvent") }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 pub struct KeyOrValue<T>(T);
 impl<T> KeyOrValue<T> {
     pub fn resolve(self, env: &Env) -> T { self.0 } 
@@ -898,7 +898,7 @@ pub struct LayoutCtx {
     pub mouse_pos: Option<Point>,
 }
 impl LayoutCtx {
-    pub fn text(self) -> PietText { PietText{} }
+    pub fn text(&self) -> PietText { PietText{} }
     pub fn set_paint_insets(self, insets: Insets) {}
 }
 
@@ -917,8 +917,8 @@ impl LifeCycleCtx {
 pub struct LocalizedString<T>(Option<T>);
 impl<T> LocalizedString<T> {
     pub fn new(_app_name: &str) -> Self { Self(None) }
-    pub fn localized_str(self) -> &'static str { "localized_str" }
-    pub fn resolve(self, data: &T, env: &Env) -> bool { true }
+    pub fn localized_str(&self) -> &'static str { "localized_str" }
+    pub fn resolve(&self, data: &T, env: &Env) -> bool { true }
 }
 
 #[derive(Clone)]
@@ -934,7 +934,7 @@ impl fmt::Debug for MouseEvent {
 pub struct MenuDesc<T>(Option<T>);
 impl<T> MenuDesc<T> {
     pub fn platform_default() -> Option<Self> { Some(Self(None)) }
-    pub fn build_window_menu(self, data: &T, env: &Env) -> MenuDesc<T> { MenuDesc(None) }
+    pub fn build_window_menu(&self, data: &T, env: &Env) -> MenuDesc<T> { MenuDesc(None) }
 }
 
 #[derive(Clone, Copy)]
@@ -972,7 +972,7 @@ impl PaintCtx {
         let mut child_ctx = PaintCtx {
             render_ctx: self.render_ctx,
             state: self.state,
-            widget_state: self.widget_state,
+            widget_state: self.widget_state.clone(), ////TODO
             z_ops: Vec::new(),
             region: region.into(),
             depth: self.depth + 1,
@@ -992,9 +992,9 @@ impl Piet {
 #[derive(Clone)]
 pub struct PietText();
 impl PietText {
-    pub fn new_font_by_name(self, font_name: &str, font_size: ScreenFactor) -> Self { Self() }
+    pub fn new_font_by_name(&self, font_name: &str, font_size: ScreenFactor) -> Self { Self() }
     pub fn build(self) -> Result<Self, ()> { Ok(self) }
-    pub fn new_text_layout(self, font: &Self, text: &str, factor: ScreenFactor) -> PietTextLayout {
+    pub fn new_text_layout(&self, font: &Self, text: &str, factor: ScreenFactor) -> PietTextLayout {
         PietTextLayout {
             width: 10, ////TODO
             font: String::new(), ////TODO
@@ -1127,7 +1127,7 @@ pub struct UpdateCtx {
     pub state: ContextState,
 }
 impl UpdateCtx {
-    pub fn request_layout(self) {}  ////TODO
+    pub fn request_layout(&self) {}  ////TODO
 }
 
 #[derive(Clone)]
@@ -1149,7 +1149,7 @@ impl<T> WindowBuilder<T> {
     pub fn set_size(&mut self, size: Size) {}
     pub fn set_min_size(&mut self, min_size: Size) {}
     pub fn set_title(&mut self, title: &str) {}
-    pub fn set_menu(self, menu: MenuDesc<T>) {}
+    pub fn set_menu(&mut self, menu: MenuDesc<T>) {}
 }
 
 #[derive(Clone, Copy)]
