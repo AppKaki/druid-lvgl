@@ -764,14 +764,14 @@ impl<T: Eq + Clone> Bloom<T> {
         }
         false
     }
-    pub fn add(mut self, id: &T) {
+    pub fn add(&mut self, id: &T) {
         self.0.push(id.clone());
     }
     pub fn union(self, bloom: Bloom<T>) -> Bloom<T> {
         let mut result = Bloom(self.0.clone());
         for item in bloom.0 {
             if !result.may_contain(&item) {
-                result.0.push(item);
+                result.0.push(item.clone());
             }
         }
         result
@@ -823,7 +823,7 @@ impl fmt::Debug for Command {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result { write!(f, "Command") }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 pub struct ContextState();
 
 #[derive(Clone, Copy)]
@@ -942,7 +942,7 @@ pub struct NonZeroU64();
 
 #[derive(Clone)]
 pub struct PaintCtx {
-    pub state: ContextState,
+    pub state: &'static ContextState,
     pub widget_state: WidgetState,
     pub render_ctx: Piet,
     pub z_ops: Vec<ZOrderPaintOp>,
@@ -982,7 +982,7 @@ impl PaintCtx {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 pub struct Piet();
 impl Piet {
     pub fn save(self) -> Result<(), String> { Ok(()) } ////TODO
