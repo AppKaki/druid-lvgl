@@ -1163,7 +1163,8 @@ impl<T> WindowBuilder<T> {
 #[derive(Clone, Copy)]
 pub struct WindowHandle();
 impl WindowHandle {
-    pub fn show(self) { ////TODO  3   
+    pub fn show(self) { 
+        ////TODO  3   
     }
 }
 
