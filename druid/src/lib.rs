@@ -848,7 +848,7 @@ impl Counter {
         count
     }
 }
-static mut COUNTER: u8 = 22;
+static mut COUNTER: u8 = 0;
 
 #[derive(Clone)]
 pub struct DruidHandler<T> {
@@ -1158,7 +1158,17 @@ impl<T> WindowBuilder<T> {
     }
     pub fn build(&mut self) -> Result<WindowHandle, PlatformError> { ////TODO 2
         //  Calls Window.build, DruidHandler.WinHandler.connect, WinHandler.doWindowEvent, Window.event, Window.lifecycle, Label.lifecycle
-        //  lifecycle, layout, lifecycle, paint
+        let root = BoxedWidget::<T>(WidgetId(0), None);  //  TODO: Don't assume that root WidgetId is 0. Get from Application.
+        //  Render the root: lifecycle, layout, lifecycle, paint
+        //let data = T::
+        let env = Env{};
+        //  event: WidgetAdded
+        //  root.lifecycle(ctx: &mut LifeCycleCtx, event: &LifeCycle, &data, &env);        
+        //  bc: min: {width:500, height:400}, max: {width:500, height:400}
+        //  root.layout(ctx: &mut LayoutCtx, bc: &BoxConstraints, &data, &env);
+        //  event: WidgetAdded
+        //  root.lifecycle(ctx: &mut LifeCycleCtx, event: &LifeCycle, &data, &env);
+        //  root.paint(ctx: &mut PaintCtx, &data, &env);
         Ok(WindowHandle{})
     }
     pub fn resizable(&mut self, resizable: bool) {}

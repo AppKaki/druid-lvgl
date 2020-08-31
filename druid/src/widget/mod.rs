@@ -120,8 +120,8 @@ use crate::{ BoxConstraints, Env, Event, EventCtx, LayoutCtx, LifeCycle, LifeCyc
 
 #[derive(Clone)]
 pub struct BoxedWidget<T> (
-    WidgetId,
-    Option<T> ////TODO
+    pub WidgetId,
+    pub Option<T> ////TODO
 );
 
 impl<T> BoxedWidget<T> {
