@@ -15,11 +15,31 @@
 		]
 	},
 	{
+		"path": "$ROOTPATH$/druid-shell/src/platform/gtk/application.rs",
+		"bookmarks": [
+			{
+				"line": 62,
+				"column": 15,
+				"label": ""
+			}
+		]
+	},
+	{
 		"path": "$ROOTPATH$/druid/src/contexts.rs.old",
 		"bookmarks": [
 			{
 				"line": 295,
 				"column": 16,
+				"label": ""
+			}
+		]
+	},
+	{
+		"path": "$ROOTPATH$/druid-shell/src/application.rs",
+		"bookmarks": [
+			{
+				"line": 140,
+				"column": 13,
 				"label": ""
 			}
 		]
