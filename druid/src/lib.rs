@@ -1157,7 +1157,8 @@ impl<T> WindowBuilder<T> {
         Self{ app } 
     }
     pub fn build(&mut self) -> Result<WindowHandle, PlatformError> { ////TODO 2
-        //  Calls Window.build, DruidHandler.WinHandler.connect, WinHandler.doWindowEvent, Window.event, Window.lifecycle, Label.lifecycle
+        //  Called by AppLauncher::launch().  Standard druid should call Window.build, DruidHandler.WinHandler.connect, WinHandler.doWindowEvent, Window.event, Window.lifecycle, Label.lifecycle
+        //  But we shortcut the calls here.
         let root = BoxedWidget::<T>(WidgetId(0), None);  //  TODO: Don't assume that root WidgetId is 0. Get from Application.
         //  Render the root: lifecycle, layout, lifecycle, paint
         //let data = T::
