@@ -1156,6 +1156,20 @@ impl<T> WindowBuilder<T> {
     pub fn new(app: Application<T>) -> Self { 
         Self{ app } 
     }
+    pub fn resizable(&mut self, resizable: bool) {
+    }
+    pub fn show_titlebar(&mut self, show_titlebar: bool) {
+    }
+    pub fn set_handler(&mut self, handler: BoxedDruidHandler<T>) {
+    }
+    pub fn set_size(&mut self, size: Size) {
+    }
+    pub fn set_min_size(&mut self, min_size: Size) {
+    }
+    pub fn set_title(&mut self, title: &str) {
+    }
+    pub fn set_menu(&mut self, menu: MenuDesc<T>) {
+    }
     pub fn build(&mut self) -> Result<WindowHandle, PlatformError> { ////TODO 2
         //  Called by AppLauncher::launch().  Standard druid should call Window.build, DruidHandler.WinHandler.connect, WinHandler.doWindowEvent, Window.event, Window.lifecycle, Label.lifecycle
         //  But we shortcut the calls here.
@@ -1172,13 +1186,6 @@ impl<T> WindowBuilder<T> {
         //  root.paint(ctx: &mut PaintCtx, &data, &env);
         Ok(WindowHandle{})
     }
-    pub fn resizable(&mut self, resizable: bool) {}
-    pub fn show_titlebar(&mut self, show_titlebar: bool) {}
-    pub fn set_handler(&mut self, handler: BoxedDruidHandler<T>) {}
-    pub fn set_size(&mut self, size: Size) {}
-    pub fn set_min_size(&mut self, min_size: Size) {}
-    pub fn set_title(&mut self, title: &str) {}
-    pub fn set_menu(&mut self, menu: MenuDesc<T>) {}
 }
 
 #[derive(Clone, Copy)]
