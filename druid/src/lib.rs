@@ -1149,6 +1149,7 @@ impl<T> WindowBuilder<T> {
     pub fn new(app: Application<T>) -> Self { Self{ app } }
     pub fn build(&mut self) -> Result<WindowHandle, PlatformError> { 
         //  Calls Window.build, DruidHandler.WinHandler.connect, WinHandler.doWindowEvent, Window.event, Window.lifecycle, Label.lifecycle
+        //  lifecycle, layout, lifecycle, paint
         Ok(WindowHandle{})   ////TODO 2
     }
     pub fn resizable(&mut self, resizable: bool) {}
