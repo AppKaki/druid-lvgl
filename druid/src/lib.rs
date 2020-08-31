@@ -803,9 +803,9 @@ impl<T> BoxedAppHandler<T> {
 }
 
 #[derive(Clone)]
-pub struct BoxedDruidHandler<T> (Option<T>);
+pub struct BoxedDruidHandler<T> (DruidHandler<T>);
 impl<T> BoxedDruidHandler<T> {
-    pub fn new(_handler: DruidHandler<T>) -> Self { Self(None) }
+    pub fn new(handler: DruidHandler<T>) -> Self { Self(handler) }
 }
 
 #[derive(Clone)]
@@ -856,7 +856,9 @@ pub struct DruidHandler<T> {
     id: WindowId,
 }
 impl<T> DruidHandler<T> {
-    pub fn new_shared(state: AppState<T>, id: WindowId) -> Self { Self{ state, id } }
+    pub fn new_shared(state: AppState<T>, id: WindowId) -> Self { 
+        Self{ state, id } 
+    }
 }
 
 #[derive(Clone)]
@@ -1151,16 +1153,18 @@ pub struct VecDeque<T>(Option<T>);
 #[derive(Clone)]
 pub struct WindowBuilder<T> {
     app: Application<T>,
+    handler: Option<BoxedDruidHandler<T>>,
 }
-impl<T> WindowBuilder<T> {
+impl<T: Clone> WindowBuilder<T> {
     pub fn new(app: Application<T>) -> Self { 
-        Self{ app } 
+        Self{ app, handler: None } 
     }
     pub fn resizable(&mut self, resizable: bool) {
     }
     pub fn show_titlebar(&mut self, show_titlebar: bool) {
     }
     pub fn set_handler(&mut self, handler: BoxedDruidHandler<T>) {
+        self.handler = Some(handler);
     }
     pub fn set_size(&mut self, size: Size) {
     }
@@ -1175,15 +1179,20 @@ impl<T> WindowBuilder<T> {
         //  But we shortcut the calls here.
         let root = BoxedWidget::<T>(WidgetId(0), None);  //  TODO: Don't assume that root WidgetId is 0. Get from Application.
         //  Render the root: lifecycle, layout, lifecycle, paint
-        //let data = T::
+        let data = self.handler.as_ref().unwrap().0.state.data.clone();  //  TODO: Check cloning
         let env = Env{};
-        //  event: WidgetAdded
-        //  root.lifecycle(ctx: &mut LifeCycleCtx, event: &LifeCycle, &data, &env);        
+        //  Send WidgetAdded event
+        //  root.lifecycle(&mut LifeCycleCtx{}, &LifeCycle::WidgetAdded, &data, &env);        
+
+        //  Layout the widget
         //  bc: min: {width:500, height:400}, max: {width:500, height:400}
-        //  root.layout(ctx: &mut LayoutCtx, bc: &BoxConstraints, &data, &env);
-        //  event: WidgetAdded
-        //  root.lifecycle(ctx: &mut LifeCycleCtx, event: &LifeCycle, &data, &env);
-        //  root.paint(ctx: &mut PaintCtx, &data, &env);
+        //  root.layout(&mut LayoutCtx{}, bc: &BoxConstraints, &data, &env);
+
+        //  Send WidgetAdded event
+        //  root.lifecycle(ctx: &mut LifeCycleCtx, &LifeCycle::WidgetAdded, &data, &env);
+
+        //  Paint the widget
+        //  root.paint(&mut PaintCtx{}, &data, &env);
         Ok(WindowHandle{})
     }
 }
