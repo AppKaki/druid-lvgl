@@ -712,9 +712,17 @@ pub type KeyModifiers = Modifiers;
 use crate::core::WidgetState;
 
 #[derive(Clone)]
-pub struct Application<T>(Option<T>);
+pub struct Application<T>{
+    root: Option<BoxedWidget<T>>  //  TODO: Refactor this
+}
 impl<T> Application<T> {
-    pub fn new() -> Result<Self, PlatformError> { Ok(Self(None)) }
+    pub fn new() -> Result<Self, PlatformError> { 
+        Ok(
+            Self {
+                root: None,
+            }
+        ) 
+    }
     pub fn run(self, _: Option<BoxedAppHandler<T>>) { ////TODO 4
     }
 }
@@ -750,8 +758,9 @@ impl<T: Clone> AppState<T> {
     pub fn app(&self) -> Application<T> { self.app.clone() } ////TODO
     pub fn data(&self) -> T { self.data.clone() } ////TODO
     pub fn env(&self) -> Env { self.env.clone() } ////TODO
-    pub fn add_window(&self, id: WindowId, window: WindowDesc<T>) { ////TODO 1
+    pub fn add_window(&mut self, id: WindowId, window: WindowDesc<T>) { ////TODO 1
         let root = window.root;
+        self.app.root = Some(root.clone());
     }
 }
 
@@ -1144,7 +1153,9 @@ pub struct WindowBuilder<T> {
     app: Application<T>,
 }
 impl<T> WindowBuilder<T> {
-    pub fn new(app: Application<T>) -> Self { Self{ app } }
+    pub fn new(app: Application<T>) -> Self { 
+        Self{ app } 
+    }
     pub fn build(&mut self) -> Result<WindowHandle, PlatformError> { ////TODO 2
         //  Calls Window.build, DruidHandler.WinHandler.connect, WinHandler.doWindowEvent, Window.event, Window.lifecycle, Label.lifecycle
         //  lifecycle, layout, lifecycle, paint
