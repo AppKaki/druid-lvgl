@@ -711,6 +711,10 @@ pub type KeyModifiers = Modifiers;
 //// Begin
 use crate::core::WidgetState;
 
+const SCREEN_WIDTH:  ScreenCoord = 240;
+const SCREEN_HEIGHT: ScreenCoord = 240;
+static CONTEXT_STATE: ContextState = ContextState{};  //  TODO: May be mutable
+
 #[derive(Clone)]
 pub struct Application<T>{
     root: Option<BoxedWidget<T>>  //  TODO: Refactor this
@@ -1184,25 +1188,40 @@ impl<T: Clone> WindowBuilder<T> {
 
         //  Render the root: lifecycle, layout, lifecycle, paint
         //  Send WidgetAdded event
-        let state = ContextState{};
         let widget_state = WidgetState::new(widget_id);
-        let mut lifecycle_ctx = LifeCycleCtx { state, widget_state };
+        let mut lifecycle_ctx = LifeCycleCtx { 
+            state: CONTEXT_STATE, 
+            widget_state: widget_state.clone()  //  TODO: Check cloning
+        };
         root.lifecycle(&mut lifecycle_ctx, &LifeCycle::WidgetAdded, &data, &env);        
 
         //  Layout the widget
         //  bc: min: {width:500, height:400}, max: {width:500, height:400}
-        let bc = BoxConstraints{
-            min: Size { width: 240, height: 240 },  //  TODO: Refactor as constants
-            max: Size { width: 240, height: 240 },  //  TODO: Refactor as constants
+        let bc = BoxConstraints::new(
+            Size { width: SCREEN_WIDTH, height: SCREEN_HEIGHT },  //  Min Size
+            Size { width: SCREEN_WIDTH, height: SCREEN_HEIGHT },  //  Max Size
+        );
+        let mouse_pos = Some( Point{ x: 0, y: 0 } );
+        let mut layout_ctx = LayoutCtx { 
+            mouse_pos, 
+            state: CONTEXT_STATE, 
+            widget_state: widget_state.clone()  //  TODO: Check cloning
         };
-        let mut layout_ctx = LayoutCtx{};
         root.layout(&mut layout_ctx, &bc, &data, &env);
 
         //  Send WidgetAdded event
         root.lifecycle(&mut lifecycle_ctx, &LifeCycle::WidgetAdded, &data, &env);
 
         //  Paint the widget
-        let mut paint_ctx = PaintCtx{};
+        let region = Region( Rect{ x0: 0, y0: 0, x1: SCREEN_WIDTH, y1: SCREEN_HEIGHT } );
+        let render_ctx = Piet{};
+        let mut paint_ctx = PaintCtx{ 
+            region, render_ctx,
+            depth: 0, 
+            state: &CONTEXT_STATE, 
+            widget_state: widget_state.clone(),    //  TODO: Check cloning
+            z_ops: Vec::new() 
+        };
         root.paint(&mut paint_ctx, &data, &env);
         Ok(WindowHandle{})
     }
