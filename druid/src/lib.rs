@@ -1182,14 +1182,17 @@ impl<T: Clone> WindowBuilder<T> {
         let data = self.handler.as_ref().unwrap().0.state.data.clone();  //  TODO: Check cloning
         let env = Env{};
         //  Send WidgetAdded event
-        //  root.lifecycle(&mut LifeCycleCtx{}, &LifeCycle::WidgetAdded, &data, &env);        
+        let state = ContextState{};
+        let widget_state = WidgetState{};
+        let mut lifeCycleCtx = LifeCycleCtx { state, widget_state };
+        root.lifecycle(&mut lifeCycleCtx, &LifeCycle::WidgetAdded, &data, &env);        
 
         //  Layout the widget
         //  bc: min: {width:500, height:400}, max: {width:500, height:400}
         //  root.layout(&mut LayoutCtx{}, bc: &BoxConstraints, &data, &env);
 
         //  Send WidgetAdded event
-        //  root.lifecycle(ctx: &mut LifeCycleCtx, &LifeCycle::WidgetAdded, &data, &env);
+        root.lifecycle(&mut lifeCycleCtx, &LifeCycle::WidgetAdded, &data, &env);
 
         //  Paint the widget
         //  root.paint(&mut PaintCtx{}, &data, &env);
