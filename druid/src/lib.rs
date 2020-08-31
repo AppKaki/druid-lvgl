@@ -1177,25 +1177,26 @@ impl<T: Clone> WindowBuilder<T> {
     pub fn build(&mut self) -> Result<WindowHandle, PlatformError> { ////TODO 2
         //  Called by AppLauncher::launch().  Standard druid should call Window.build, DruidHandler.WinHandler.connect, WinHandler.doWindowEvent, Window.event, Window.lifecycle, Label.lifecycle
         //  But we shortcut the calls here.
-        let root = BoxedWidget::<T>(WidgetId(0), None);  //  TODO: Don't assume that root WidgetId is 0. Get from Application.
+        let widget_id = WidgetId(0);  //  TODO: Don't assume that root WidgetId is 0. Get from Application.
+        let mut root = BoxedWidget::<T>(widget_id, None);  
         //  Render the root: lifecycle, layout, lifecycle, paint
         let data = self.handler.as_ref().unwrap().0.state.data.clone();  //  TODO: Check cloning
         let env = Env{};
         //  Send WidgetAdded event
         let state = ContextState{};
-        let widget_state = WidgetState{};
-        let mut lifeCycleCtx = LifeCycleCtx { state, widget_state };
-        root.lifecycle(&mut lifeCycleCtx, &LifeCycle::WidgetAdded, &data, &env);        
+        let widget_state = WidgetState::new(widget_id);
+        let mut lifecycle_ctx = LifeCycleCtx { state, widget_state };
+        root.lifecycle(&mut lifecycle_ctx, &LifeCycle::WidgetAdded, &data, &env);        
 
         //  Layout the widget
         //  bc: min: {width:500, height:400}, max: {width:500, height:400}
-        //  root.layout(&mut LayoutCtx{}, bc: &BoxConstraints, &data, &env);
+        root.layout(&mut LayoutCtx{}, bc: &BoxConstraints, &data, &env);
 
         //  Send WidgetAdded event
-        root.lifecycle(&mut lifeCycleCtx, &LifeCycle::WidgetAdded, &data, &env);
+        root.lifecycle(&mut lifecycle_ctx, &LifeCycle::WidgetAdded, &data, &env);
 
         //  Paint the widget
-        //  root.paint(&mut PaintCtx{}, &data, &env);
+        root.paint(&mut PaintCtx{}, &data, &env);
         Ok(WindowHandle{})
     }
 }
