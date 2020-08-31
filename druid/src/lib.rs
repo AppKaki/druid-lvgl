@@ -1179,9 +1179,10 @@ impl<T: Clone> WindowBuilder<T> {
         //  But we shortcut the calls here.
         let widget_id = WidgetId(0);  //  TODO: Don't assume that root WidgetId is 0. Get from Application.
         let mut root = BoxedWidget::<T>(widget_id, None);  
-        //  Render the root: lifecycle, layout, lifecycle, paint
         let data = self.handler.as_ref().unwrap().0.state.data.clone();  //  TODO: Check cloning
         let env = Env{};
+
+        //  Render the root: lifecycle, layout, lifecycle, paint
         //  Send WidgetAdded event
         let state = ContextState{};
         let widget_state = WidgetState::new(widget_id);
@@ -1190,13 +1191,19 @@ impl<T: Clone> WindowBuilder<T> {
 
         //  Layout the widget
         //  bc: min: {width:500, height:400}, max: {width:500, height:400}
-        root.layout(&mut LayoutCtx{}, bc: &BoxConstraints, &data, &env);
+        let bc = BoxConstraints{
+            min: Size { width: 240, height: 240 },  //  TODO: Refactor as constants
+            max: Size { width: 240, height: 240 },  //  TODO: Refactor as constants
+        };
+        let mut layout_ctx = LayoutCtx{};
+        root.layout(&mut layout_ctx, &bc, &data, &env);
 
         //  Send WidgetAdded event
         root.lifecycle(&mut lifecycle_ctx, &LifeCycle::WidgetAdded, &data, &env);
 
         //  Paint the widget
-        root.paint(&mut PaintCtx{}, &data, &env);
+        let mut paint_ctx = PaintCtx{};
+        root.paint(&mut paint_ctx, &data, &env);
         Ok(WindowHandle{})
     }
 }
