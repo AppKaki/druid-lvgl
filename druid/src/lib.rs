@@ -715,8 +715,7 @@ use crate::core::WidgetState;
 pub struct Application<T>(Option<T>);
 impl<T> Application<T> {
     pub fn new() -> Result<Self, PlatformError> { Ok(Self(None)) }
-    pub fn run(self, _: Option<BoxedAppHandler<T>>) {
-        ////TODO 4
+    pub fn run(self, _: Option<BoxedAppHandler<T>>) { ////TODO 4
     }
 }
 
@@ -751,8 +750,8 @@ impl<T: Clone> AppState<T> {
     pub fn app(&self) -> Application<T> { self.app.clone() } ////TODO
     pub fn data(&self) -> T { self.data.clone() } ////TODO
     pub fn env(&self) -> Env { self.env.clone() } ////TODO
-    pub fn add_window(&self, id: WindowId, window: WindowDesc<T>) {
-        ////TODO 1
+    pub fn add_window(&self, id: WindowId, window: WindowDesc<T>) { ////TODO 1
+        let root = window.root;
     }
 }
 
@@ -840,8 +839,7 @@ impl Counter {
         count
     }
 }
-
-static mut COUNTER: u8 = 1;
+static mut COUNTER: u8 = 22;
 
 #[derive(Clone)]
 pub struct DruidHandler<T> {
@@ -1147,10 +1145,10 @@ pub struct WindowBuilder<T> {
 }
 impl<T> WindowBuilder<T> {
     pub fn new(app: Application<T>) -> Self { Self{ app } }
-    pub fn build(&mut self) -> Result<WindowHandle, PlatformError> { 
+    pub fn build(&mut self) -> Result<WindowHandle, PlatformError> { ////TODO 2
         //  Calls Window.build, DruidHandler.WinHandler.connect, WinHandler.doWindowEvent, Window.event, Window.lifecycle, Label.lifecycle
         //  lifecycle, layout, lifecycle, paint
-        Ok(WindowHandle{})   ////TODO 2
+        Ok(WindowHandle{})
     }
     pub fn resizable(&mut self, resizable: bool) {}
     pub fn show_titlebar(&mut self, show_titlebar: bool) {}
@@ -1164,8 +1162,7 @@ impl<T> WindowBuilder<T> {
 #[derive(Clone, Copy)]
 pub struct WindowHandle();
 impl WindowHandle {
-    pub fn show(self) { 
-        ////TODO  3   
+    pub fn show(self) { ////TODO 3           
     }
 }
 

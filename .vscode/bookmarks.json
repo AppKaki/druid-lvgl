@@ -43,5 +43,30 @@
 				"label": ""
 			}
 		]
+	},
+	{
+		"path": "$ROOTPATH$/druid/src/lib.rs",
+		"bookmarks": [
+			{
+				"line": 717,
+				"column": 13,
+				"label": ""
+			},
+			{
+				"line": 752,
+				"column": 17,
+				"label": ""
+			},
+			{
+				"line": 1147,
+				"column": 13,
+				"label": ""
+			},
+			{
+				"line": 1164,
+				"column": 13,
+				"label": ""
+			}
+		]
 	}
 ]
