@@ -39,7 +39,7 @@ pub struct Padding<T> {
     ////child: WidgetPod<T, Box<dyn Widget<T>>>,
 }
 
-impl<T: Clone> Padding<T> { ////
+impl<T: Data + Clone> Padding<T> { ////
 ////impl<T> Padding<T> {
     /// Create a new widget with the specified padding. This can either be an instance
     /// of [`kurbo::Insets`], a f64 for uniform padding, a 2-tuple for axis-uniform padding

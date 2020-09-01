@@ -1160,7 +1160,7 @@ pub struct WindowBuilder<T> {
     app: Application<T>,
     handler: Option<BoxedDruidHandler<T>>,
 }
-impl<T: Clone> WindowBuilder<T> {
+impl<T: Data + Clone> WindowBuilder<T> {
     pub fn new(app: Application<T>) -> Self { 
         Self{ app, handler: None } 
     }

@@ -910,7 +910,7 @@ impl<T: Data, W: Widget<T> + Clone> WidgetPod<T, W> { ////
     }
 }
 
-impl<T: Clone, W: Widget<T> + 'static + Clone> WidgetPod<T, W> { ////
+impl<T: Data + Clone, W: Widget<T> + 'static + Clone> WidgetPod<T, W> { ////
 ////impl<T, W: Widget<T> + 'static> WidgetPod<T, W> {
     /// Box the contained widget.
     ///

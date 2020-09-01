@@ -280,7 +280,7 @@ impl FlexParams {
     }
 }
 
-impl<T: Clone> ChildWidget<T> { ////
+impl<T: Data + Clone> ChildWidget<T> { ////
 ////impl<T> ChildWidget<T> {
     fn new(child: impl Widget<T> + 'static + Clone, params: FlexParams) -> Self { ////
     ////fn new(child: impl Widget<T> + 'static, params: FlexParams) -> Self {

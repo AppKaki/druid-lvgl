@@ -37,7 +37,7 @@ pub struct Align<T> {
     ////height_factor: Option<f64>,
 }
 
-impl<T: Clone> Align<T> { ////
+impl<T: Data + Clone> Align<T> { ////
 ////impl<T> Align<T> {
     /// Create widget with alignment.
     ///

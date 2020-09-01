@@ -46,10 +46,17 @@ impl<D: Clone> BoxedWidget<D> {
     }
 }
 
-impl<D> Widget<D> for BoxedWidget<D> { ////
+impl<D: Data> Widget<D> for BoxedWidget<D> { ////
 ////impl<D> Widget<D> for Box<dyn Widget<D>> {
     fn event(&mut self, ctx: &mut EventCtx, event: &Event, data: &mut D, env: &Env) {
-        ////TODO
+        match &mut self.get_widgets()[self.0.0 as usize] {
+            WidgetType::Align(w)   => w.event(ctx, event, data, env),
+            //  WidgetType::Button(w)  => w.event(ctx, event, data, env),
+            WidgetType::Flex(w)    => w.event(ctx, event, data, env),
+            WidgetType::Label(w)   => w.event(ctx, event, data, env),
+            WidgetType::Padding(w) => w.event(ctx, event, data, env),
+            WidgetType::None => {}
+        };
     }
 
     fn lifecycle(&mut self, ctx: &mut LifeCycleCtx, event: &LifeCycle, data: &D, env: &Env) {
