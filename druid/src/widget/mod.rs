@@ -49,6 +49,7 @@ mod svg;
 #[allow(clippy::module_inception)]
 mod widget;
 ////mod widget_ext;
+mod boxed_widget; ////
 
 ////pub use self::image::{Image, ImageData};
 pub use align::Align;
@@ -84,6 +85,7 @@ pub use svg::{Svg, SvgData};
 pub use widget::{Widget, WidgetId};
 #[doc(hidden)]
 ////pub use widget_ext::WidgetExt;
+pub use boxed_widget::{BoxedWidget}; ////
 
 /// The types required to implement a `Widget`.
 ///
@@ -114,79 +116,3 @@ pub mod prelude {
         Size, UpdateCtx, Widget, WidgetId,
     };
 }
-
-//// Begin
-use crate::{ BoxConstraints, Env, Event, EventCtx, LayoutCtx, LifeCycle, LifeCycleCtx, PaintCtx, Size, UpdateCtx };
-
-#[derive(Clone)]
-pub struct BoxedWidget<T> (
-    pub WidgetId,
-    pub Option<T> ////TODO
-);
-
-impl<T> BoxedWidget<T> {
-    pub fn new(child: impl Widget<T>) -> Self { 
-        Self::new_by_id(
-            child.id().unwrap()
-        )
-    }
-    pub fn new_by_id(id: WidgetId) -> Self {
-        BoxedWidget(
-            id,
-            None
-        ) 
-    }
-    pub fn deref(&self) -> &Self { &self.clone() }
-    pub fn deref_mut(&self) -> &Self { &self.clone() }
-}
-
-impl<T> Widget<T> for BoxedWidget<T> { ////
-////impl<T> Widget<T> for Box<dyn Widget<T>> {
-    fn event(&mut self, ctx: &mut EventCtx, event: &Event, data: &mut T, env: &Env) {
-        ////TODO
-    }
-
-    fn lifecycle(&mut self, ctx: &mut LifeCycleCtx, event: &LifeCycle, data: &T, env: &Env) {
-        ////TODO
-        /* impl<T: Data> WinHandler for DruidHandler<T> {
-            fn connect(&mut self, handle: &WindowHandle) {
-                self.app_state
-                    .connect_window(self.window_id, handle.clone());
-
-                let event = Event::WindowConnected;
-                self.app_state.do_window_event(event, self.window_id);
-            }
-        */
-    }
-
-    fn update(&mut self, ctx: &mut UpdateCtx, old_data: &T, data: &T, env: &Env) {
-        ////TODO
-    }
-
-    fn layout(&mut self, ctx: &mut LayoutCtx, bc: &BoxConstraints, data: &T, env: &Env) -> Size {
-        /* impl<T: Data> WinHandler for DruidHandler<T> {
-            fn prepare_paint(&mut self) {
-                self.app_state.prepare_paint_window(self.window_id);
-            }
-        */
-        Size::ZERO ////TODO
-    }
-
-    fn paint(&mut self, ctx: &mut PaintCtx, data: &T, env: &Env) {
-        ////TODO
-        /* impl<T: Data> WinHandler for DruidHandler<T> {
-            fn paint(&mut self, piet: &mut Piet, region: &Region) {
-                self.app_state.paint_window(self.window_id, piet, region);
-            }        
-        */
-    }
-
-    fn id(&self) -> Option<WidgetId> {
-        Some(self.0)
-    }
-
-    fn type_name(&self) -> &'static str {
-        "Unknown" ////TODO
-    }
-}
-//// End
