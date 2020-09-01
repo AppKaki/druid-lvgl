@@ -43,6 +43,23 @@ impl<D> BoxedWidget<D> {
     pub fn deref_mut(&self) -> &Self { &self.clone() }
 }
 
+/*
+/// Generic implementation of `BoxedWidget`
+impl<D: Data + 'static + Default> BoxedWidget<D> {
+    /// Create a new box for the `Widget`
+    pub fn new<W: Widget<D> + Clone>(widget: W) -> Self {
+        let id = widget.clone().get_id();
+        let widget_type: WidgetType<D> = widget.to_type();
+        let widget_box: BoxedWidget<D> = BoxedWidget(
+            id,
+            PhantomData,
+        );
+        widget_box.clone().add_widget(widget_type);
+        widget_box
+    }
+}
+*/
+
 impl<D> Widget<D> for BoxedWidget<D> { ////
 ////impl<D> Widget<D> for Box<dyn Widget<D>> {
     fn event(&mut self, ctx: &mut EventCtx, event: &Event, data: &mut D, env: &Env) {
@@ -96,39 +113,14 @@ impl<D> Widget<D> for BoxedWidget<D> { ////
     }
 }
 
-/// Enum to store each `Widget`
-#[derive(Clone)]
-pub enum WidgetType<D: Clone /* Data + 'static + Default */> {
-    None,
-    Align(Align<D>),
-    //  Button(Button<D>),
-    Flex(Flex<D>),
-    Label(Label<D>),
-    Padding(Padding<D>),
-}
-
 /*
+/// Default WidgetType is None
 impl<D: Data + 'static + Default> Default for WidgetType<D> {
     fn default() -> Self { WidgetType::None }
 }
 */
 
 /*
-/// Generic implementation of `BoxedWidget`
-impl<D: Data + 'static + Default> BoxedWidget<D> {
-    /// Create a new box for the `Widget`
-    pub fn new<W: Widget<D> + Clone>(widget: W) -> Self {
-        let id = widget.clone().get_id();
-        let widget_type: WidgetType<D> = widget.to_type();
-        let widget_box: BoxedWidget<D> = BoxedWidget(
-            id,
-            PhantomData,
-        );
-        widget_box.clone().add_widget(widget_type);
-        widget_box
-    }
-}
-
 /// Implementation of `Widget` trait for `BoxedWidget`. We just forward to the inner `Widget`.
 impl<D: Data + 'static + Default> Widget<D> for BoxedWidget<D> {
     fn paint(
@@ -219,3 +211,14 @@ impl<D: Data + 'static + Default> Widget<D> for BoxedWidget<D> {
     }
 }
 */
+
+/// Enum to store each `Widget`
+#[derive(Clone)]
+pub enum WidgetType<D: Clone /* Data + 'static + Default */> {
+    None,
+    Align(Align<D>),
+    //  Button(Button<D>),
+    Flex(Flex<D>),
+    Label(Label<D>),
+    Padding(Padding<D>),
+}
