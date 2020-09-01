@@ -21,23 +21,14 @@ impl<D: Clone /* Data + 'static + Default */> StaticWidgets<D> for BoxedWidget<D
     default fn add_widget(&self, _widget: WidgetType<D>) { panic!("no global widgets") }
 }
 
-/*
-/// Boxed version of a `Widget`
-#[derive(Clone, Default)]
-pub struct BoxedWidget<D: Data + 'static>(
-    pub WidgetId,    //  Widget ID
-    PhantomData<D>,  //  Needed to do compile-time checking for `Data`
-);
-*/
-
 #[derive(Clone)]
-pub struct BoxedWidget<T> (
+pub struct BoxedWidget<D> (
     pub WidgetId,
-    pub Option<T> ////TODO
+    pub Option<D> ////TODO: Remove this
 );
 
-impl<T> BoxedWidget<T> {
-    pub fn new(child: impl Widget<T>) -> Self { 
+impl<D> BoxedWidget<D> {
+    pub fn new(child: impl Widget<D>) -> Self { 
         Self::new_by_id(
             child.id().unwrap()
         )
@@ -52,44 +43,47 @@ impl<T> BoxedWidget<T> {
     pub fn deref_mut(&self) -> &Self { &self.clone() }
 }
 
-impl<T> Widget<T> for BoxedWidget<T> { ////
-////impl<T> Widget<T> for Box<dyn Widget<T>> {
-    fn event(&mut self, ctx: &mut EventCtx, event: &Event, data: &mut T, env: &Env) {
+impl<D> Widget<D> for BoxedWidget<D> { ////
+////impl<D> Widget<D> for Box<dyn Widget<D>> {
+    fn event(&mut self, ctx: &mut EventCtx, event: &Event, data: &mut D, env: &Env) {
         ////TODO
     }
 
-    fn lifecycle(&mut self, ctx: &mut LifeCycleCtx, event: &LifeCycle, data: &T, env: &Env) {
+    fn lifecycle(&mut self, ctx: &mut LifeCycleCtx, event: &LifeCycle, data: &D, env: &Env) {
         ////TODO
-        /* impl<T: Data> WinHandler for DruidHandler<T> {
-            fn connect(&mut self, handle: &WindowHandle) {
-                self.app_state
-                    .connect_window(self.window_id, handle.clone());
+        /*  Called by
+            impl<T: Data> WinHandler for DruidHandler<D> {
+                fn connect(&mut self, handle: &WindowHandle) {
+                    self.app_state
+                        .connect_window(self.window_id, handle.clone());
 
-                let event = Event::WindowConnected;
-                self.app_state.do_window_event(event, self.window_id);
-            }
+                    let event = Event::WindowConnected;
+                    self.app_state.do_window_event(event, self.window_id);
+                }
         */
     }
 
-    fn update(&mut self, ctx: &mut UpdateCtx, old_data: &T, data: &T, env: &Env) {
+    fn update(&mut self, ctx: &mut UpdateCtx, old_data: &D, data: &D, env: &Env) {
         ////TODO
     }
 
-    fn layout(&mut self, ctx: &mut LayoutCtx, bc: &BoxConstraints, data: &T, env: &Env) -> Size {
-        /* impl<T: Data> WinHandler for DruidHandler<T> {
-            fn prepare_paint(&mut self) {
-                self.app_state.prepare_paint_window(self.window_id);
-            }
+    fn layout(&mut self, ctx: &mut LayoutCtx, bc: &BoxConstraints, data: &D, env: &Env) -> Size {
+        /*  Called by
+            impl<T: Data> WinHandler for DruidHandler<D> {
+                fn prepare_paint(&mut self) {
+                    self.app_state.prepare_paint_window(self.window_id);
+                }
         */
         Size::ZERO ////TODO
     }
 
-    fn paint(&mut self, ctx: &mut PaintCtx, data: &T, env: &Env) {
+    fn paint(&mut self, ctx: &mut PaintCtx, data: &D, env: &Env) {
         ////TODO
-        /* impl<T: Data> WinHandler for DruidHandler<T> {
-            fn paint(&mut self, piet: &mut Piet, region: &Region) {
-                self.app_state.paint_window(self.window_id, piet, region);
-            }        
+        /*  Called by
+            impl<T: Data> WinHandler for DruidHandler<D> {
+                fn paint(&mut self, piet: &mut Piet, region: &Region) {
+                    self.app_state.paint_window(self.window_id, piet, region);
+                }        
         */
     }
 
