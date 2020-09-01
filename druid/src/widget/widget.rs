@@ -185,9 +185,11 @@ pub trait Widget<T> {
         ////std::any::type_name::<Self>()
     }
 
+    /*
     fn boxed(&self) -> BoxedWidget<T> { ////
         BoxedWidget::new_by_id(self.id().unwrap())
     }
+    */
 }
 
 impl WidgetId {
