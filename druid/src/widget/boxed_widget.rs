@@ -109,10 +109,10 @@ impl<T> Widget<T> for BoxedWidget<T> { ////
 /*
 /// Enum to store each `Widget`
 #[derive(Clone)]
-pub enum WidgetType<D: Data + 'static + Default> {
+pub enum WidgetType<D: Clone /* Data + 'static + Default */> {
     None,
     Align(Align<D>),
-    Button(Button<D>),
+    //  Button(Button<D>),
     Flex(Flex<D>),
     Label(Label<D>),
     Padding(Padding<D>),
