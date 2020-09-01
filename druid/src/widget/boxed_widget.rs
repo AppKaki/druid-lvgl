@@ -27,12 +27,24 @@ pub struct BoxedWidget<D> (
     pub Option<D> ////TODO: Remove this
 );
 
-impl<D> BoxedWidget<D> {
+/// Generic implementation of `BoxedWidget`
+impl<D: Clone> BoxedWidget<D> {
+    /// Create a new box for the `Widget`
+    pub fn new<W: Widget<D> + Clone>(widget: W) -> Self {
+        let id = widget.id().unwrap();
+        let boxed_widget = Self::new_by_id(id);
+        let widget_type: WidgetType<D> = WidgetType::None;//
+        //let widget_type: WidgetType<D> = widget.to_type();
+        boxed_widget.clone().add_widget(widget_type);
+        boxed_widget
+    }
+    /*
     pub fn new(child: impl Widget<D>) -> Self { 
         Self::new_by_id(
             child.id().unwrap()
         )
     }
+    */
     pub fn new_by_id(id: WidgetId) -> Self {
         BoxedWidget(
             id,
@@ -50,12 +62,12 @@ impl<D: Data + 'static + Default> BoxedWidget<D> {
     pub fn new<W: Widget<D> + Clone>(widget: W) -> Self {
         let id = widget.clone().get_id();
         let widget_type: WidgetType<D> = widget.to_type();
-        let widget_box: BoxedWidget<D> = BoxedWidget(
+        let boxed_widget: BoxedWidget<D> = BoxedWidget(
             id,
             PhantomData,
         );
-        widget_box.clone().add_widget(widget_type);
-        widget_box
+        boxed_widget.clone().add_widget(widget_type);
+        boxed_widget
     }
 }
 */

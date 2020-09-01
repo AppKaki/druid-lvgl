@@ -39,7 +39,8 @@ pub struct Padding<T> {
     ////child: WidgetPod<T, Box<dyn Widget<T>>>,
 }
 
-impl<T> Padding<T> {
+impl<T: Clone> Padding<T> { ////
+////impl<T> Padding<T> {
     /// Create a new widget with the specified padding. This can either be an instance
     /// of [`kurbo::Insets`], a f64 for uniform padding, a 2-tuple for axis-uniform padding
     /// or 4-tuple with (left, top, right, bottom) values.
@@ -69,7 +70,8 @@ impl<T> Padding<T> {
     /// ```
     ///
     /// [`kurbo::Insets`]: https://docs.rs/kurbo/0.5.3/kurbo/struct.Insets.html
-    pub fn new(insets: impl Into<Insets>, child: impl Widget<T> + 'static) -> Padding<T> {
+    pub fn new(insets: impl Into<Insets>, child: impl Widget<T> + 'static + Clone) -> Padding<T> { ////
+    ////pub fn new(insets: impl Into<Insets>, child: impl Widget<T> + 'static) -> Padding<T> {
         let insets = insets.into();
         Padding {
             id: WidgetId::next(), ////

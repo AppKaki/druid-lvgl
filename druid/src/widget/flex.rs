@@ -159,6 +159,7 @@ struct ChildWidget<T> {
 }
 
 /// A dummy widget we use to do spacing.
+#[derive(Clone)] ////
 struct Spacer {
     id: WidgetId, ////
     axis: Axis,
@@ -279,8 +280,10 @@ impl FlexParams {
     }
 }
 
-impl<T> ChildWidget<T> {
-    fn new(child: impl Widget<T> + 'static, params: FlexParams) -> Self {
+impl<T: Clone> ChildWidget<T> { ////
+////impl<T> ChildWidget<T> {
+    fn new(child: impl Widget<T> + 'static + Clone, params: FlexParams) -> Self { ////
+    ////fn new(child: impl Widget<T> + 'static, params: FlexParams) -> Self {
         ChildWidget {
             widget: WidgetPod::new(BoxedWidget::new(child)), ////
             ////widget: WidgetPod::new(Box::new(child)),
@@ -405,7 +408,8 @@ impl<T: Data> Flex<T> {
     /// Builder-style variant of `add_child`.
     ///
     /// Convenient for assembling a group of widgets in a single expression.
-    pub fn with_child(mut self, child: impl Widget<T> + 'static) -> Self {
+    pub fn with_child(mut self, child: impl Widget<T> + 'static + Clone) -> Self { ////
+    ////pub fn with_child(mut self, child: impl Widget<T> + 'static) -> Self {
         self.add_flex_child(child, 0.0);
         self
     }
@@ -438,7 +442,8 @@ impl<T: Data> Flex<T> {
     /// [`CrossAxisAlignment`]: enum.CrossAxisAlignment.html
     pub fn with_flex_child(
         mut self,
-        child: impl Widget<T> + 'static,
+        child: impl Widget<T> + 'static + Clone, ////
+        ////child: impl Widget<T> + 'static,
         params: impl Into<FlexParams>,
     ) -> Self {
         self.add_flex_child(child, params);
@@ -484,7 +489,8 @@ impl<T: Data> Flex<T> {
     /// See also [`with_child`].
     ///
     /// [`with_child`]: #method.with_child
-    pub fn add_child(&mut self, child: impl Widget<T> + 'static) {
+    pub fn add_child(&mut self, child: impl Widget<T> + 'static + Clone) { ////
+    ////pub fn add_child(&mut self, child: impl Widget<T> + 'static) {
         self.add_flex_child(child, 0.0);
     }
 
@@ -515,7 +521,8 @@ impl<T: Data> Flex<T> {
     /// [`with_flex_child`]: #method.with_flex_child
     pub fn add_flex_child(
         &mut self,
-        child: impl Widget<T> + 'static,
+        child: impl Widget<T> + 'static + Clone, ////
+        ////child: impl Widget<T> + 'static,
         params: impl Into<FlexParams>,
     ) {
         let child = ChildWidget::new(child, params.into());

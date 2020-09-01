@@ -135,7 +135,8 @@ pub(crate) enum FocusChange {
     Previous,
 }
 
-impl<T, W: Widget<T>> WidgetPod<T, W> {
+impl<T: Clone, W: Widget<T> + Clone> WidgetPod<T, W> { ////
+////impl<T, W: Widget<T>> WidgetPod<T, W> {
     /// Create a new widget pod.
     ///
     /// In a widget hierarchy, each widget is wrapped in a `WidgetPod`
@@ -370,7 +371,8 @@ impl<T, W: Widget<T>> WidgetPod<T, W> {
     }
 }
 
-impl<T: Data, W: Widget<T>> WidgetPod<T, W> {
+impl<T: Data, W: Widget<T> + Clone> WidgetPod<T, W> { ////
+////impl<T: Data, W: Widget<T>> WidgetPod<T, W> {
     /// Paint a child widget.
     ///
     /// Generally called by container widgets as part of their [`Widget::paint`]
@@ -908,7 +910,8 @@ impl<T: Data, W: Widget<T>> WidgetPod<T, W> {
     }
 }
 
-impl<T, W: Widget<T> + 'static> WidgetPod<T, W> {
+impl<T: Clone, W: Widget<T> + 'static + Clone> WidgetPod<T, W> { ////
+////impl<T, W: Widget<T> + 'static> WidgetPod<T, W> {
     /// Box the contained widget.
     ///
     /// Convert a `WidgetPod` containing a widget of a specific concrete type
