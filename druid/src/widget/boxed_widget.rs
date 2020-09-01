@@ -1,32 +1,38 @@
 //! `BoxedWidget` contains a `Widget`. Allows for dynamic dispatch with static `Widgets` in `[no_std]`.
 use crate::{
-    BaseState, BoxConstraints, Data, Env, Event, EventCtx, LayoutCtx, LifeCycle, LifeCycleCtx, PaintCtx, Size, UpdateCtx, Widget, WindowBox,
+    BoxConstraints, Data, Env, Event, EventCtx, LayoutCtx, LifeCycle, LifeCycleCtx, PaintCtx, Size, UpdateCtx, Widget, WidgetId,
     widget::{Align, Flex, Label, Padding},
 };
 
 /// Max number of `Widgets` on embedded platforms
 pub const MAX_WIDGETS: usize = 10;
 
+/*
 /// Specialised Trait for handling static `Widgets` on embedded platforms
-pub trait GlobalWidgets<D: Data + 'static + Default> {
+pub trait StaticWidgets<D: Data + 'static + Default> {
     /// Fetch the static `Widgets` for the Data type
     fn get_widgets(&self) -> &'static mut [ WidgetType<D> ];
     /// Add a `Widget` for the Data type
     fn add_widget(&self, widget: WidgetType<D>);
 }
+*/
 
+/*
 /// Default Trait will not have static `Widgets`
-impl<D: Data + 'static + Default> GlobalWidgets<D> for BoxedWidget<D> {
+impl<D: Data + 'static + Default> StaticWidgets<D> for BoxedWidget<D> {
     default fn get_widgets(&self) -> &'static mut [ WidgetType<D> ] { panic!("no global widgets") }
     default fn add_widget(&self, _widget: WidgetType<D>) { panic!("no global widgets") }
 }
+*/
 
+/*
 /// Boxed version of a `Widget`
 #[derive(Clone, Default)]
 pub struct BoxedWidget<D: Data + 'static>(
     pub WidgetId,    //  Widget ID
     PhantomData<D>,  //  Needed to do compile-time checking for `Data`
 );
+*/
 
 #[derive(Clone)]
 pub struct BoxedWidget<T> (
@@ -100,6 +106,7 @@ impl<T> Widget<T> for BoxedWidget<T> { ////
     }
 }
 
+/*
 /// Enum to store each `Widget`
 #[derive(Clone)]
 pub enum WidgetType<D: Data + 'static + Default> {
@@ -110,11 +117,15 @@ pub enum WidgetType<D: Data + 'static + Default> {
     Label(Label<D>),
     Padding(Padding<D>),
 }
+*/
 
+/*
 impl<D: Data + 'static + Default> Default for WidgetType<D> {
     fn default() -> Self { WidgetType::None }
 }
+*/
 
+/*
 /// Generic implementation of `BoxedWidget`
 impl<D: Data + 'static + Default> BoxedWidget<D> {
     /// Create a new box for the `Widget`
@@ -219,3 +230,4 @@ impl<D: Data + 'static + Default> Widget<D> for BoxedWidget<D> {
         }
     }
 }
+*/
