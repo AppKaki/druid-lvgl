@@ -38,39 +38,13 @@ impl<D: Clone> BoxedWidget<D> {
         boxed_widget.clone().add_widget(widget_type);
         boxed_widget
     }
-    /*
-    pub fn new(child: impl Widget<D>) -> Self { 
-        Self::new_by_id(
-            child.id().unwrap()
-        )
-    }
-    */
     pub fn new_by_id(id: WidgetId) -> Self {
         BoxedWidget(
             id,
             None
         ) 
     }
-    pub fn deref(&self) -> &Self { &self.clone() }
-    pub fn deref_mut(&self) -> &Self { &self.clone() }
 }
-
-/*
-/// Generic implementation of `BoxedWidget`
-impl<D: Data + 'static + Default> BoxedWidget<D> {
-    /// Create a new box for the `Widget`
-    pub fn new<W: Widget<D> + Clone>(widget: W) -> Self {
-        let id = widget.clone().get_id();
-        let widget_type: WidgetType<D> = widget.to_type();
-        let boxed_widget: BoxedWidget<D> = BoxedWidget(
-            id,
-            PhantomData,
-        );
-        boxed_widget.clone().add_widget(widget_type);
-        boxed_widget
-    }
-}
-*/
 
 impl<D> Widget<D> for BoxedWidget<D> { ////
 ////impl<D> Widget<D> for Box<dyn Widget<D>> {
