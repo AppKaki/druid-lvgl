@@ -48,6 +48,7 @@ impl<D: Clone> BoxedWidget<D> {
 
 impl<D: Data> Widget<D> for BoxedWidget<D> { ////
 ////impl<D> Widget<D> for Box<dyn Widget<D>> {
+
     fn event(&mut self, ctx: &mut EventCtx, event: &Event, data: &mut D, env: &Env) {
         match &mut self.get_widgets()[self.0.0 as usize] {
             WidgetType::Align(w)   => w.event(ctx, event, data, env),
@@ -59,44 +60,72 @@ impl<D: Data> Widget<D> for BoxedWidget<D> { ////
         };
     }
 
+    /*  Called by
+        impl<T: Data> WinHandler for DruidHandler<D> {
+            fn connect(&mut self, handle: &WindowHandle) {
+                self.app_state
+                    .connect_window(self.window_id, handle.clone());
+
+                let event = Event::WindowConnected;
+                self.app_state.do_window_event(event, self.window_id);
+            }
+    */
     fn lifecycle(&mut self, ctx: &mut LifeCycleCtx, event: &LifeCycle, data: &D, env: &Env) {
-        ////TODO
-        /*  Called by
-            impl<T: Data> WinHandler for DruidHandler<D> {
-                fn connect(&mut self, handle: &WindowHandle) {
-                    self.app_state
-                        .connect_window(self.window_id, handle.clone());
-
-                    let event = Event::WindowConnected;
-                    self.app_state.do_window_event(event, self.window_id);
-                }
-        */
+        match &mut self.get_widgets()[self.0.0 as usize] {
+            WidgetType::Align(w)   => w.lifecycle(ctx, event, data, env),
+            //  WidgetType::Button(w)  => w.lifecycle(ctx, event, data, env),
+            WidgetType::Flex(w)    => w.lifecycle(ctx, event, data, env),
+            WidgetType::Label(w)   => w.lifecycle(ctx, event, data, env),
+            WidgetType::Padding(w) => w.lifecycle(ctx, event, data, env),
+            WidgetType::None => {}
+        };
     }
-
+    
     fn update(&mut self, ctx: &mut UpdateCtx, old_data: &D, data: &D, env: &Env) {
-        ////TODO
+        match &mut self.get_widgets()[self.0.0 as usize] {
+            WidgetType::Align(w)   => w.update(ctx, old_data, data, env),
+            //  WidgetType::Button(w)  => w.update(ctx, old_data, data, env),
+            WidgetType::Flex(w)    => w.update(ctx, old_data, data, env),
+            WidgetType::Label(w)   => w.update(ctx, old_data, data, env),
+            WidgetType::Padding(w) => w.update(ctx, old_data, data, env),
+            WidgetType::None => {}
+        };
     }
-
+    
+    /*  Called by
+        impl<T: Data> WinHandler for DruidHandler<D> {
+            fn prepare_paint(&mut self) {
+                self.app_state.prepare_paint_window(self.window_id);
+            }
+    */
     fn layout(&mut self, ctx: &mut LayoutCtx, bc: &BoxConstraints, data: &D, env: &Env) -> Size {
-        /*  Called by
-            impl<T: Data> WinHandler for DruidHandler<D> {
-                fn prepare_paint(&mut self) {
-                    self.app_state.prepare_paint_window(self.window_id);
-                }
-        */
-        Size::ZERO ////TODO
+        match &mut self.get_widgets()[self.0.0 as usize] {
+            WidgetType::Align(w)   => w.layout(ctx, bc, data, env),
+            //  WidgetType::Button(w)  => w.layout(ctx, bc, data, env),
+            WidgetType::Flex(w)    => w.layout(ctx, bc, data, env),
+            WidgetType::Label(w)   => w.layout(ctx, bc, data, env),
+            WidgetType::Padding(w) => w.layout(ctx, bc, data, env),
+            WidgetType::None => Size::ZERO
+        }
     }
-
+    
+    /*  Called by
+        impl<T: Data> WinHandler for DruidHandler<D> {
+            fn paint(&mut self, piet: &mut Piet, region: &Region) {
+                self.app_state.paint_window(self.window_id, piet, region);
+            }        
+    */
     fn paint(&mut self, ctx: &mut PaintCtx, data: &D, env: &Env) {
-        ////TODO
-        /*  Called by
-            impl<T: Data> WinHandler for DruidHandler<D> {
-                fn paint(&mut self, piet: &mut Piet, region: &Region) {
-                    self.app_state.paint_window(self.window_id, piet, region);
-                }        
-        */
+        match &mut self.get_widgets()[self.0.0 as usize] {
+            WidgetType::Align(w)   => w.paint(ctx, data, env),
+            //  WidgetType::Button(w)  => w.paint(ctx, data, env),
+            WidgetType::Flex(w)    => w.paint(ctx, data, env),
+            WidgetType::Label(w)   => w.paint(ctx, data, env),
+            WidgetType::Padding(w) => w.paint(ctx, data, env),
+            WidgetType::None => {}
+        };
     }
-
+    
     fn id(&self) -> Option<WidgetId> {
         Some(self.0)
     }
