@@ -120,7 +120,8 @@
 //! [`usvg` crate]: https://crates.io/crates/usvg
 //! [`image` crate]: https://crates.io/crates/image
 
-#![no_std] //  Don't link with standard Rust library, which is not compatible with embedded systems ////
+#![no_std]  ////  Don't link with standard Rust library, which is not compatible with embedded systems
+#![feature(specialization)]  ////  Needed by BoxedWidget
 #![deny(intra_doc_link_resolution_failure, /* unsafe_code */)] ////
 ////#![allow(clippy::new_ret_no_self, clippy::needless_doctest_main)]
 ////#![deny(clippy::trivially_copy_pass_by_ref)]

@@ -25,6 +25,7 @@ use crate::{
 use crate::{BoxedWidget, ScreenCoord, ScreenFactor, UnitPoint, WidgetId}; ////
 
 /// A widget that aligns its child.
+#[derive(Clone)] ////
 pub struct Align<T> {
     id: WidgetId, ////
     align: UnitPoint,

@@ -141,6 +141,7 @@ use crate::{
 /// [`expand_width`]: ../trait.WidgetExt.html#method.expand_width
 /// [`TextBox`]: struct.TextBox.html
 /// [`SizedBox`]: struct.SizedBox.html
+#[derive(Clone)] ////
 pub struct Flex<T> {
     id: WidgetId, ////
     direction: Axis,
@@ -150,6 +151,7 @@ pub struct Flex<T> {
     children: Vec<ChildWidget<T>>,
 }
 
+#[derive(Clone)] ////
 struct ChildWidget<T> {
     widget: WidgetPod<T, BoxedWidget<T>>, ////
     ////widget: WidgetPod<T, Box<dyn Widget<T>>>,

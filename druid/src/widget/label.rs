@@ -43,6 +43,7 @@ const LABEL_X_PADDING: ScreenFactor = 2.0; ////
 /// the `Data` at this point in the tree.
 ///
 /// [`LocalizedString`]: ../struct.LocalizedString.html
+#[derive(Clone)] ////
 pub enum LabelText<T> {
     /// Localized string that will be resolved through `Env`.
     Localized(LocalizedString<T>),
@@ -55,6 +56,7 @@ pub enum LabelText<T> {
 
 /// Text that is computed dynamically.
 #[doc(hidden)]
+#[derive(Clone)] ////
 pub struct Dynamic<T> {
     f: BoxedText, ////
     ////f: Box<dyn Fn(&T, &Env) -> String>,
@@ -63,6 +65,7 @@ pub struct Dynamic<T> {
 }
 
 /// A label that displays some text.
+#[derive(Clone)] ////
 pub struct Label<T> {
     id: WidgetId, ////
     text: LabelText<T>,
@@ -267,7 +270,7 @@ impl<T: Data> LabelText<T> {
 
 impl<T: Data> Widget<T> for Label<T> {
     fn id(&self) -> Option<WidgetId> { Some(self.id) } ////
-    
+
     fn event(&mut self, _ctx: &mut EventCtx, _event: &Event, _data: &mut T, _env: &Env) {}
 
     fn lifecycle(&mut self, _ctx: &mut LifeCycleCtx, event: &LifeCycle, data: &T, env: &Env) {

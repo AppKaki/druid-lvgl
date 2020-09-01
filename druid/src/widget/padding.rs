@@ -23,6 +23,7 @@ use crate::{
 use crate::{BoxedWidget, ScreenCoord, WidgetId}; ////
 
 /// A widget that just adds padding around its child.
+#[derive(Clone)] ////
 pub struct Padding<T> {
     id: WidgetId, ////
     left: ScreenCoord, ////

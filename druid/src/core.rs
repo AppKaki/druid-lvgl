@@ -49,6 +49,7 @@ pub(crate) type CommandQueue = VecDeque<(Target, Command)>;
 /// widget can process a diff between the old value and the new.
 ///
 /// [`update`]: trait.Widget.html#tymethod.update
+#[derive(Clone)] ////
 pub struct WidgetPod<T, W> {
     state: WidgetState,
     old_data: Option<T>,

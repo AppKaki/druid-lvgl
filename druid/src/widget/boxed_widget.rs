@@ -7,23 +7,19 @@ use crate::{
 /// Max number of `Widgets` on embedded platforms
 pub const MAX_WIDGETS: usize = 10;
 
-/*
 /// Specialised Trait for handling static `Widgets` on embedded platforms
-pub trait StaticWidgets<D: Data + 'static + Default> {
+pub trait StaticWidgets<D: Clone /* Data + 'static + Default */> {
     /// Fetch the static `Widgets` for the Data type
     fn get_widgets(&self) -> &'static mut [ WidgetType<D> ];
     /// Add a `Widget` for the Data type
     fn add_widget(&self, widget: WidgetType<D>);
 }
-*/
 
-/*
 /// Default Trait will not have static `Widgets`
-impl<D: Data + 'static + Default> StaticWidgets<D> for BoxedWidget<D> {
+impl<D: Clone /* Data + 'static + Default */> StaticWidgets<D> for BoxedWidget<D> {
     default fn get_widgets(&self) -> &'static mut [ WidgetType<D> ] { panic!("no global widgets") }
     default fn add_widget(&self, _widget: WidgetType<D>) { panic!("no global widgets") }
 }
-*/
 
 /*
 /// Boxed version of a `Widget`
@@ -106,7 +102,6 @@ impl<T> Widget<T> for BoxedWidget<T> { ////
     }
 }
 
-/*
 /// Enum to store each `Widget`
 #[derive(Clone)]
 pub enum WidgetType<D: Clone /* Data + 'static + Default */> {
@@ -117,7 +112,6 @@ pub enum WidgetType<D: Clone /* Data + 'static + Default */> {
     Label(Label<D>),
     Padding(Padding<D>),
 }
-*/
 
 /*
 impl<D: Data + 'static + Default> Default for WidgetType<D> {

@@ -229,9 +229,8 @@ impl WidgetId {
     }
 }
 
-/* //// Moved to BoxWidget in druid/src/widget/mod.rs
-impl<T> Widget<T> for BoxedWidget<T> { ////
-////impl<T> Widget<T> for Box<dyn Widget<T>> {
+/* //// Moved to BoxedWidget in druid/src/widget/boxed_widget.rs
+impl<T> Widget<T> for Box<dyn Widget<T>> {
     fn event(&mut self, ctx: &mut EventCtx, event: &Event, data: &mut T, env: &Env) {
         self.deref_mut().event(ctx, event, data, env)
     }
