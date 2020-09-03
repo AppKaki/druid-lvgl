@@ -685,6 +685,7 @@ pub use event::{Event, InternalEvent, InternalLifeCycle, LifeCycle};
 ////pub use menu::{sys as platform_menus, ContextMenu, MenuDesc, MenuItem};
 ////pub use mouse::MouseEvent;
 pub use widget::{Widget, 
+    WidgetType, ////
     ////WidgetExt, 
 WidgetId};
 pub use widget::BoxedWidget; ////

@@ -17,7 +17,7 @@
 ////use crate::kurbo::common::FloatExt;
 use crate::{Point, Rect, Size}; ////
 ////use crate::kurbo::{Point, Rect, Size};
-use crate::{BoxedWidget, ScreenCoord, ScreenFactor, Vec, WidgetId}; ////
+use crate::{BoxedWidget, ScreenCoord, ScreenFactor, Vec, WidgetId, WidgetType}; ////
 
 use crate::widget::SizedBox;
 use crate::{
@@ -700,6 +700,10 @@ impl<T: Data> Widget<T> for Flex<T> {
             child.widget.paint(ctx, data, env);
         }
     }
+
+    fn to_type(self) -> WidgetType<T> { ////
+        WidgetType::None ////TODO
+    }
 }
 
 impl CrossAxisAlignment {
@@ -831,6 +835,9 @@ impl<T: Data> Widget<T> for Spacer {
         self.axis.pack(major, 0.0).into()
     }
     fn paint(&mut self, _: &mut PaintCtx, _: &T, _: &Env) {}
+    fn to_type(self) -> WidgetType<T> { ////
+        WidgetType::None ////TODO
+    }
 }
 
 impl From<ScreenFactor> for FlexParams { ////

@@ -22,7 +22,7 @@ use crate::{
 };
 
 ////use crate::piet::UnitPoint;
-use crate::{BoxedWidget, ScreenCoord, ScreenFactor, UnitPoint, WidgetId}; ////
+use crate::{BoxedWidget, ScreenCoord, ScreenFactor, UnitPoint, WidgetId, WidgetType}; ////
 
 /// A widget that aligns its child.
 #[derive(Clone)] ////
@@ -156,6 +156,10 @@ impl<T: Data> Widget<T> for Align<T> {
 
     fn paint(&mut self, ctx: &mut PaintCtx, data: &T, env: &Env) {
         self.child.paint(ctx, data, env);
+    }
+
+    fn to_type(self) -> WidgetType<T> { ////
+        WidgetType::None ////TODO
     }
 }
 

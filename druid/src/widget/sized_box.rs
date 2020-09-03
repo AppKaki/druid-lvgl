@@ -17,7 +17,7 @@
 ////use std::f64::INFINITY;
 
 ////use crate::shell::kurbo::Size;
-use crate::{BoxedWidget, Size, ScreenCoord}; ////
+use crate::{BoxedWidget, Size, ScreenCoord, WidgetType}; ////
 use crate::{
     BoxConstraints, Data, Env, Event, EventCtx, LayoutCtx, LifeCycle, LifeCycleCtx, PaintCtx,
     UpdateCtx, Widget, WidgetId,
@@ -191,6 +191,10 @@ impl<T: Data> Widget<T> for SizedBox<T> {
 
     fn id(&self) -> Option<WidgetId> {
         self.inner.as_ref().and_then(|inner| inner.id())
+    }
+
+    fn to_type(self) -> WidgetType<T> { ////
+        WidgetType::None ////TODO
     }
 }
 

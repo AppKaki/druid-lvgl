@@ -16,7 +16,7 @@
 ////use std::ops::{Deref, DerefMut};
 
 use super::prelude::*;
-use crate::{BoxedWidget, Counter, CounterType}; ////
+use crate::{BoxedWidget, Counter, CounterType, WidgetType}; ////
 
 /// A unique identifier for a single [`Widget`].
 ///
@@ -91,7 +91,8 @@ pub struct WidgetId(pub CounterType); ////
 /// [`Data`]: trait.Data.html
 /// [`Env`]: struct.Env.html
 /// [`WidgetPod`]: struct.WidgetPod.html
-pub trait Widget<T> {
+pub trait Widget<T: Clone> { ////
+////pub trait Widget<T> {
     /// Handle an event.
     ///
     /// A number of different events (in the [`Event`] enum) are handled in this
@@ -184,6 +185,8 @@ pub trait Widget<T> {
         "widget" ////
         ////std::any::type_name::<Self>()
     }
+
+    fn to_type(self) -> WidgetType<T>; ////
 }
 
 impl WidgetId {

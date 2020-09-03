@@ -24,7 +24,7 @@ use crate::{
     ////Point, 
     Size, UpdateCtx, Widget,
 };
-use crate::{BoxedText, Color, String, PietText, PietTextLayout, ScreenCoord, ScreenFactor, UnitPoint, WidgetId}; ////
+use crate::{BoxedText, Color, String, PietText, PietTextLayout, ScreenCoord, ScreenFactor, UnitPoint, WidgetId, WidgetType}; ////
 
 // a fudgey way to get an approximate line height from a font size
 const LINE_HEIGHT_FACTOR: ScreenFactor = 1.2; ////
@@ -318,6 +318,10 @@ impl<T: Data> Widget<T> for Label<T> {
 
         ctx.draw_text(&text_layout, origin, &color);
         */ ////
+    }
+
+    fn to_type(self) -> WidgetType<T> { ////
+        WidgetType::None ////TODO
     }
 }
 

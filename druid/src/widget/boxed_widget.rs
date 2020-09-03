@@ -133,6 +133,10 @@ impl<D: Data> Widget<D> for BoxedWidget<D> { ////
     fn type_name(&self) -> &'static str {
         "Unknown" ////TODO
     }
+
+    fn to_type(self) -> WidgetType<D> {
+        WidgetType::None
+    }
 }
 
 /*

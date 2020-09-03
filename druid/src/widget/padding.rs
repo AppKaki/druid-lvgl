@@ -20,7 +20,7 @@ use crate::{
     BoxConstraints, Data, Env, Event, EventCtx, LayoutCtx, LifeCycle, LifeCycleCtx, PaintCtx,
     UpdateCtx, Widget, WidgetPod,
 };
-use crate::{BoxedWidget, ScreenCoord, WidgetId}; ////
+use crate::{BoxedWidget, ScreenCoord, WidgetId, WidgetType}; ////
 
 /// A widget that just adds padding around its child.
 #[derive(Clone)] ////
@@ -118,5 +118,9 @@ impl<T: Data> Widget<T> for Padding<T> {
 
     fn paint(&mut self, ctx: &mut PaintCtx, data: &T, env: &Env) {
         self.child.paint(ctx, data, env);
+    }
+
+    fn to_type(self) -> WidgetType<T> { ////
+        WidgetType::None ////TODO
     }
 }
