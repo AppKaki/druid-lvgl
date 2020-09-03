@@ -1,5 +1,55 @@
 [
 	{
+		"path": "$ROOTPATH$/druid/src/widget/label.rs",
+		"bookmarks": [
+			{
+				"line": 95,
+				"column": 31,
+				"label": ""
+			},
+			{
+				"line": 276,
+				"column": 47,
+				"label": ""
+			},
+			{
+				"line": 282,
+				"column": 18,
+				"label": ""
+			},
+			{
+				"line": 288,
+				"column": 18,
+				"label": ""
+			},
+			{
+				"line": 320,
+				"column": 5,
+				"label": ""
+			},
+			{
+				"line": 329,
+				"column": 32,
+				"label": ""
+			},
+			{
+				"line": 335,
+				"column": 51,
+				"label": ""
+			},
+			{
+				"line": 342,
+				"column": 33,
+				"label": ""
+			},
+			{
+				"line": 348,
+				"column": 42,
+				"label": ""
+			}
+		]
+	},
+	{
 		"path": "$ROOTPATH$/druid/src/window.rs.old",
 		"bookmarks": [
 			{
@@ -35,6 +85,91 @@
 		]
 	},
 	{
+		"path": "$ROOTPATH$/druid/src/core.rs",
+		"bookmarks": [
+			{
+				"line": 145,
+				"column": 84,
+				"label": ""
+			},
+			{
+				"line": 209,
+				"column": 36,
+				"label": ""
+			},
+			{
+				"line": 293,
+				"column": 31,
+				"label": ""
+			},
+			{
+				"line": 311,
+				"column": 31,
+				"label": ""
+			},
+			{
+				"line": 325,
+				"column": 62,
+				"label": ""
+			},
+			{
+				"line": 369,
+				"column": 13,
+				"label": ""
+			},
+			{
+				"line": 394,
+				"column": 38,
+				"label": ""
+			},
+			{
+				"line": 426,
+				"column": 46,
+				"label": ""
+			},
+			{
+				"line": 432,
+				"column": 45,
+				"label": ""
+			},
+			{
+				"line": 437,
+				"column": 87,
+				"label": ""
+			},
+			{
+				"line": 465,
+				"column": 5,
+				"label": ""
+			},
+			{
+				"line": 520,
+				"column": 40,
+				"label": ""
+			},
+			{
+				"line": 752,
+				"column": 5,
+				"label": ""
+			},
+			{
+				"line": 757,
+				"column": 35,
+				"label": ""
+			},
+			{
+				"line": 883,
+				"column": 20,
+				"label": ""
+			},
+			{
+				"line": 958,
+				"column": 59,
+				"label": ""
+			}
+		]
+	},
+	{
 		"path": "$ROOTPATH$/druid-shell/src/application.rs",
 		"bookmarks": [
 			{
@@ -48,8 +183,18 @@
 		"path": "$ROOTPATH$/druid/src/lib.rs",
 		"bookmarks": [
 			{
+				"line": 726,
+				"column": 18,
+				"label": ""
+			},
+			{
 				"line": 746,
 				"column": 13,
+				"label": ""
+			},
+			{
+				"line": 763,
+				"column": 69,
 				"label": ""
 			},
 			{
@@ -63,8 +208,68 @@
 				"label": ""
 			},
 			{
+				"line": 1226,
+				"column": 48,
+				"label": ""
+			},
+			{
+				"line": 1227,
+				"column": 17,
+				"label": ""
+			},
+			{
 				"line": 1237,
 				"column": 13,
+				"label": ""
+			}
+		]
+	},
+	{
+		"path": "$ROOTPATH$/druid/src/widget/boxed_widget.rs",
+		"bookmarks": [
+			{
+				"line": 51,
+				"column": 58,
+				"label": ""
+			},
+			{
+				"line": 73,
+				"column": 58,
+				"label": ""
+			},
+			{
+				"line": 85,
+				"column": 29,
+				"label": ""
+			},
+			{
+				"line": 103,
+				"column": 30,
+				"label": ""
+			},
+			{
+				"line": 121,
+				"column": 29,
+				"label": ""
+			},
+			{
+				"line": 133,
+				"column": 11,
+				"label": ""
+			},
+			{
+				"line": 137,
+				"column": 14,
+				"label": ""
+			},
+			{
+				"line": 198,
+				"column": 41,
+				"label": ""
+			},
+			{
+				"line": 203,
+				"column": 11,
 				"label": ""
 			}
 		]
