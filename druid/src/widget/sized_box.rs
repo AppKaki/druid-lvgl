@@ -194,7 +194,7 @@ impl<T: Data> Widget<T> for SizedBox<T> {
     }
 
     fn to_type(self) -> WidgetType<T> { ////
-        WidgetType::None ////TODO
+        WidgetType::SizedBox(self)
     }
 }
 

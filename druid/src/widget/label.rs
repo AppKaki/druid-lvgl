@@ -321,7 +321,7 @@ impl<T: Data> Widget<T> for Label<T> {
     }
 
     fn to_type(self) -> WidgetType<T> { ////
-        WidgetType::None ////TODO
+        WidgetType::Label(self)
     }
 }
 

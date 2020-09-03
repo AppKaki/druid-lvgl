@@ -121,6 +121,6 @@ impl<T: Data> Widget<T> for Padding<T> {
     }
 
     fn to_type(self) -> WidgetType<T> { ////
-        WidgetType::None ////TODO
+        WidgetType::Padding(self)
     }
 }

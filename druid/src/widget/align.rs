@@ -159,7 +159,7 @@ impl<T: Data> Widget<T> for Align<T> {
     }
 
     fn to_type(self) -> WidgetType<T> { ////
-        WidgetType::None ////TODO
+        WidgetType::Align(self)
     }
 }
 

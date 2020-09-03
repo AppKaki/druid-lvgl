@@ -1,7 +1,7 @@
 //! `BoxedWidget` contains a `Widget`. Allows for dynamic dispatch with static `Widgets` in `[no_std]`.
 use crate::{
     BoxConstraints, Data, Env, Event, EventCtx, LayoutCtx, LifeCycle, LifeCycleCtx, PaintCtx, Size, UpdateCtx, Widget, WidgetId,
-    widget::{Align, Flex, Label, Padding},
+    widget::{Align, Flex, Label, Padding, SizedBox, Spacer},
 };
 
 /// Max number of `Widgets` on embedded platforms
@@ -33,8 +33,7 @@ impl<D: Clone> BoxedWidget<D> {
     pub fn new<W: Widget<D> + Clone>(widget: W) -> Self {
         let id = widget.id().unwrap();
         let boxed_widget = Self::new_by_id(id);
-        let widget_type: WidgetType<D> = WidgetType::None;//
-        //let widget_type: WidgetType<D> = widget.to_type();
+        let widget_type: WidgetType<D> = widget.to_type();
         boxed_widget.clone().add_widget(widget_type);
         boxed_widget
     }
@@ -56,6 +55,7 @@ impl<D: Data> Widget<D> for BoxedWidget<D> { ////
             WidgetType::Flex(w)    => w.event(ctx, event, data, env),
             WidgetType::Label(w)   => w.event(ctx, event, data, env),
             WidgetType::Padding(w) => w.event(ctx, event, data, env),
+            WidgetType::SizedBox(w) => w.event(ctx, event, data, env),
             WidgetType::None => {}
         };
     }
@@ -77,6 +77,7 @@ impl<D: Data> Widget<D> for BoxedWidget<D> { ////
             WidgetType::Flex(w)    => w.lifecycle(ctx, event, data, env),
             WidgetType::Label(w)   => w.lifecycle(ctx, event, data, env),
             WidgetType::Padding(w) => w.lifecycle(ctx, event, data, env),
+            WidgetType::SizedBox(w) => w.lifecycle(ctx, event, data, env),
             WidgetType::None => {}
         };
     }
@@ -88,6 +89,7 @@ impl<D: Data> Widget<D> for BoxedWidget<D> { ////
             WidgetType::Flex(w)    => w.update(ctx, old_data, data, env),
             WidgetType::Label(w)   => w.update(ctx, old_data, data, env),
             WidgetType::Padding(w) => w.update(ctx, old_data, data, env),
+            WidgetType::SizedBox(w) => w.update(ctx, old_data, data, env),
             WidgetType::None => {}
         };
     }
@@ -105,6 +107,7 @@ impl<D: Data> Widget<D> for BoxedWidget<D> { ////
             WidgetType::Flex(w)    => w.layout(ctx, bc, data, env),
             WidgetType::Label(w)   => w.layout(ctx, bc, data, env),
             WidgetType::Padding(w) => w.layout(ctx, bc, data, env),
+            WidgetType::SizedBox(w) => w.layout(ctx, bc, data, env),
             WidgetType::None => Size::ZERO
         }
     }
@@ -122,6 +125,7 @@ impl<D: Data> Widget<D> for BoxedWidget<D> { ////
             WidgetType::Flex(w)    => w.paint(ctx, data, env),
             WidgetType::Label(w)   => w.paint(ctx, data, env),
             WidgetType::Padding(w) => w.paint(ctx, data, env),
+            WidgetType::SizedBox(w) => w.paint(ctx, data, env),
             WidgetType::None => {}
         };
     }
@@ -247,4 +251,6 @@ pub enum WidgetType<D: Clone /* Data + 'static + Default */> {
     Flex(Flex<D>),
     Label(Label<D>),
     Padding(Padding<D>),
+    SizedBox(SizedBox<D>),
+    ////Spacer(Spacer<D>), ////TODO
 }

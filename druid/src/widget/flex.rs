@@ -160,7 +160,8 @@ struct ChildWidget<T> {
 
 /// A dummy widget we use to do spacing.
 #[derive(Clone)] ////
-struct Spacer {
+pub struct Spacer { ////
+////struct Spacer {
     id: WidgetId, ////
     axis: Axis,
     len: KeyOrValue<ScreenFactor>, ////
@@ -702,7 +703,7 @@ impl<T: Data> Widget<T> for Flex<T> {
     }
 
     fn to_type(self) -> WidgetType<T> { ////
-        WidgetType::None ////TODO
+        WidgetType::Flex(self)
     }
 }
 
@@ -836,7 +837,7 @@ impl<T: Data> Widget<T> for Spacer {
     }
     fn paint(&mut self, _: &mut PaintCtx, _: &T, _: &Env) {}
     fn to_type(self) -> WidgetType<T> { ////
-        WidgetType::None ////TODO
+        WidgetType::None ////TODO Spacer(self)
     }
 }
 
