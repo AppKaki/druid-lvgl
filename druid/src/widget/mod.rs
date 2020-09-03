@@ -86,7 +86,7 @@ pub use svg::{Svg, SvgData};
 pub use widget::{Widget, WidgetId};
 #[doc(hidden)]
 ////pub use widget_ext::WidgetExt;
-pub use boxed_widget::{BoxedWidget, WidgetType}; ////
+pub use boxed_widget::{BoxedWidget, MAX_WIDGETS, StaticWidgets, WidgetType}; ////
 
 /// The types required to implement a `Widget`.
 ///

@@ -688,7 +688,7 @@ pub use widget::{Widget,
     WidgetType, ////
     ////WidgetExt, 
 WidgetId};
-pub use widget::BoxedWidget; ////
+pub use widget::{BoxedWidget, MAX_WIDGETS, StaticWidgets}; ////
 ////pub use win_handler::DruidHandler;
 ////pub use window::{Window, WindowId};
 
