@@ -1,7 +1,7 @@
 use druid::{AppLauncher, WindowDesc, Widget, PlatformError};
 use druid::widget::Label;
 
-fn build_ui() -> impl Widget<()> {
+fn build_ui() -> impl Widget<()> + Clone {
     Label::new("Hello world")
 }
 
