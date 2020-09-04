@@ -169,14 +169,14 @@ impl<T: Data> WindowDesc<T> {
     /// [`Widget`]: trait.Widget.html
     pub fn new<W, F>(root: F) -> WindowDesc<T>
     where
-        W: Widget<T> + 'static,
+        W: Widget<T> + 'static + Clone, ////
+        ////W: Widget<T> + 'static,
         F: FnOnce() -> W + 'static,
     {
         // wrap this closure in another closure that boxes the created widget.
         // this just makes our API slightly cleaner; callers don't need to explicitly box.
-        let widget_id = root().id().unwrap(); ////
         WindowDesc {
-            root: BoxedWidget::new_by_id(widget_id), ////
+            root: BoxedWidget::new(root()), ////
             ////root: root().boxed(),
             title: LocalizedString::new("app-name").into(),
             size: None,
