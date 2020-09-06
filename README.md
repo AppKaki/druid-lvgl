@@ -2,9 +2,11 @@
 
 So that we can have a Declarative Rust UI for PineTime Watch Faces based on LVGL...
 
-[`lvgl-wasm`: PineTime Watch Face Simulator with LVGL ported to WebAssembly (Rust Branch)](https://github.com/AppKaki/lvgl-wasm/blob/rust/README.md)
+1. [Safer, Simpler Embedded Programs with Rust on RIOT](https://docs.google.com/presentation/d/1IgCsWJ5TYpPaHXZlaETlM2rYQrBmOpN2WeFsNjmYO_k/edit?usp=sharing)
 
-[Porting PineTime Watch Face from C to Rust On RIOT with LVGL](https://lupyuen.github.io/pinetime-rust-riot/articles/watch_face)
+1. [`lvgl-wasm`: PineTime Watch Face Simulator with LVGL ported to WebAssembly (Rust Branch)](https://github.com/AppKaki/lvgl-wasm/blob/rust/README.md)
+
+1. [Porting PineTime Watch Face from C to Rust On RIOT with LVGL](https://lupyuen.github.io/pinetime-rust-riot/articles/watch_face)
 
 TODO Tasks:
 
