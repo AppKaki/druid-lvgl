@@ -1,10 +1,12 @@
 # Experimental Port of Druid to LVGL
 
-So that we can have a Declarative Rust UI for PineTime Watch Faces based on LVGL...
+So that we can have a Declarative Rust UI for Rust on RIOT PineTime Watch Faces based on LVGL...
 
 1. [Safer, Simpler Embedded Programs with Rust on RIOT](https://docs.google.com/presentation/d/1IgCsWJ5TYpPaHXZlaETlM2rYQrBmOpN2WeFsNjmYO_k/edit?usp=sharing)
 
-1. [`lvgl-wasm`: PineTime Watch Face Simulator with LVGL ported to WebAssembly (Rust Branch)](https://github.com/AppKaki/lvgl-wasm/blob/rust/README.md)
+1. [Video Presentation](https://youtu.be/rTxeXnlH-mM)
+
+1. [WebAssembly Simulator for Rust on RIOT with LVGL](https://github.com/AppKaki/lvgl-wasm/blob/rust/README.md)
 
 1. [Porting PineTime Watch Face from C to Rust On RIOT with LVGL](https://lupyuen.github.io/pinetime-rust-riot/articles/watch_face)
 
